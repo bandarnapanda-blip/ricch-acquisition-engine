@@ -972,9 +972,15 @@ with tab_show:
             with cols[i % 3]:
                 meta = generate_preview_metadata(lead)
                 is_approved = lead.get('is_approved', False)
+                opp_score = lead.get('opportunity_score', 0)
+                is_a_tier = opp_score >= 75
+                
+                border_color = "var(--accent-pink)" if not is_a_tier else "#ffd700"
+                tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
                 st.markdown(f"""
-                <div class="lx-card" style="margin-bottom:10px; border-top:3px solid var(--accent-pink);">
+                <div class="lx-card" style="margin-bottom:10px; border-top:3px solid {border_color};">
+                    {tier_label}
                     <div style="font-size:0.6rem; color:var(--accent-pink); font-weight:800;">{meta['niche'].upper()}</div>
                     <div style="font-size:1.1rem; font-weight:900; margin:5px 0;">{meta['business_name']}</div>
                     <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:15px;">{meta['city']}</div>

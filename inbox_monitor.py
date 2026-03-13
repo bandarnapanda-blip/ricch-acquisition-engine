@@ -58,7 +58,7 @@ def push_log(service, message):
 
 def fetch_known_domains():
     """Fetch all known lead domains from Supabase."""
-    endpoint = f"{SUPABASE_URL}/rest/v1/leads?select=id,website,status,niche,is_approved"
+    endpoint = f"{SUPABASE_URL}/rest/v1/leads?select=id,website,status,niche,is_approved,opportunity_score"
     try:
         response = request_with_retry("GET", endpoint, headers=get_headers())
         if response:
@@ -228,7 +228,8 @@ def process_lead_reply(msg, sender_email, lead, sender_domain):
             safe_name = re.sub(r'[^a-zA-Z0-9]', '-', business_name.lower()).strip('-')
             filename = f"{safe_name}-{city.lower()}-redesign.html"
             
-            html = generate_page(business_name, niche, city)
+            opp_score = lead.get('opportunity_score', 0)
+            html = generate_page(business_name, niche, city, lead_id=lead['id'], score=opp_score)
             demo_link = upload_to_supabase_storage(html, filename) if html else None
             
             if demo_link:

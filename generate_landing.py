@@ -18,9 +18,14 @@ def get_headers():
         "Content-Type": "application/json"
     }
 
-def select_archetype(niche):
-    """Select the best design archetype based on the niche."""
+def select_archetype(niche, score=0):
+    """Select the best design archetype based on the niche and lead value."""
     niche_lower = niche.lower()
+    
+    # FORCED PREMIUM: A-Tier leads ALWAYS get high-authority dark/gold templates
+    if score >= 75:
+        # A-Tier leads get Gold Standard for maximum "elite" feel
+        return "gold_standard.html"
     
     # Midnight Noir: Tech, Solar, Modern Trades, Engineering
     if any(word in niche_lower for word in ["solar", "tech", "electric", "security", "engineering", "ai", "digital"]):
@@ -89,9 +94,9 @@ def get_conversion_copy(niche):
     
     return copy
 
-def generate_page(business_name, niche, city, lead_id=None):
+def generate_page(business_name, niche, city, lead_id=None, score=0):
     """Generate a high-authority landing page from an archetype."""
-    template_name = select_archetype(niche)
+    template_name = select_archetype(niche, score)
     template_path = os.path.join(TEMPLATE_DIR, template_name)
     
     if not os.path.exists(template_path):
@@ -118,6 +123,10 @@ def generate_page(business_name, niche, city, lead_id=None):
     html = html.replace("{{BENEFIT_3}}", copy["benefit_3"])
     html = html.replace("{{DESC_3}}", copy["desc_3"])
     
+    # Tier Indicator (Elite Branding)
+    tier_badge = '<div style="background:gold; color:black; padding:5px 15px; border-radius:50px; font-weight:bold; font-size:12px; display:inline-block; margin-bottom:10px;">ELITE A-TIER PARTNER</div>' if score >= 75 else ''
+    html = html.replace("{{TIER_BADGE}}", tier_badge)
+    
     return html
 
 def upload_to_supabase_storage(html_content, filename):
@@ -142,7 +151,7 @@ def upload_to_supabase_storage(html_content, filename):
         return public_url
     except Exception as e:
         print(f"Error uploading to Supabase Storage: {e}")
-        if hasattr(e, 'response') and e.response:
+        if hasattr(e, 'response') and getattr(e, 'response', None):
             print(f"Response: {e.response.text}")
         return None
 
