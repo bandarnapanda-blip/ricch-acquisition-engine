@@ -40,6 +40,7 @@ def generate_preview_metadata(lead):
         "business_name": domain.split('.')[0].replace('-', ' ').title(),
         "niche": niche,
         "city": city,
+        "theme_name": theme_key,
         "theme": theme,
         "headline": f"The New Standard of {niche} in {city}",
         "subheadline": f"Modernizing {domain} for Maximum Lead Acquisition.",

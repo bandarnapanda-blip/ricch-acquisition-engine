@@ -12,16 +12,18 @@ def generate_portfolio_html(leads_df):
     cards_html = ""
     for _, lead in leads_to_show.iterrows():
         meta = generate_preview_metadata(lead)
-        
-        # Determine a color scheme based on the theme
+        if not meta:
+            continue
+            
+        # Determine a color scheme based on the theme name (returned as string)
+        theme_name = meta.get('theme_name', 'Modern Professional')
         theme_colors = {
-            "Modern Dark": "linear-gradient(135deg, #1a1c2c, #4a192c)",
-            "Executive Gold": "linear-gradient(135deg, #1c1c1c, #4d3d1a)",
-            "Vibrant Growth": "linear-gradient(135deg, #1a2c1c, #194a2c)",
-            "Clean Professional": "linear-gradient(135deg, #f0f4f8, #d9e2ec)"
+            "Modern Professional": "linear-gradient(135deg, #1a1c2c, #4a192c)",
+            "High-Ticket Luxury": "linear-gradient(135deg, #1c1c1c, #4d3d1a)",
+            "Rugged Industrial": "linear-gradient(135deg, #1a2c1c, #194a2c)"
         }
-        bg = theme_colors.get(meta['theme'], "linear-gradient(135deg, #1a1d28, #11131a)")
-        txt_color = "#fff" if "Dark" in meta['theme'] or "Gold" in meta['theme'] or "Growth" in meta['theme'] else "#333"
+        bg = theme_colors.get(theme_name, "linear-gradient(135deg, #1a1d28, #11131a)")
+        txt_color = "#fff" if "Luxury" in theme_name or "Industrial" in theme_name or "Modern" in theme_name else "#333"
         
         cards_html += f"""
         <div class="portfolio-card" style="background:{bg}; color:{txt_color};">
