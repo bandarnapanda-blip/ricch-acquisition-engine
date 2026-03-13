@@ -415,6 +415,8 @@ if not df.empty:
     df['speed_score'] = df['speed_score'].fillna(0).astype(int)
     df['seo_score'] = df['seo_score'].fillna(0).astype(int)
     df['monthly_value'] = df.get('monthly_value', pd.Series([0]*len(df))).fillna(0).astype(float)
+    df['revenue_loss'] = df.get('revenue_loss', pd.Series([0]*len(df))).fillna(0).astype(float)
+    df['reply_status'] = df.get('reply_status', pd.Series(['']*len(df))).fillna('')
     
     total_rev = df['revenue'].sum()
     total_leads = len(df)
