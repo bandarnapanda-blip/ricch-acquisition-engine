@@ -147,29 +147,21 @@ st.markdown("""
         padding: 24px;
         position: relative;
         overflow: hidden;
-        transition: transform 0.3s ease, border-color 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     .lx-card:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
-    .lx-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    .lx-card.elite-card {
+        border: 2px solid #ffd70033;
+        background: linear-gradient(145deg, #1f1a0a, #11131a);
     }
-    
-    /* Hover Glow Effect */
-    .lx-card:hover::after {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 77, 148, 0.05) 0%, transparent 70%);
-        pointer-events: none;
+    .lx-card.elite-card:hover {
+        border-color: #ffd700;
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
     }
 
     /* Circular Progress */
@@ -349,9 +341,15 @@ if "preview_id" in st.query_params:
     found_lead = next((l for l in leads if str(l.get('id')) == str(pid)), None)
     
     if found_lead:
-        from preview_engine import generate_preview_metadata, render_shadow_site_html
-        p_meta = generate_preview_metadata(found_lead)
-        html_code = render_shadow_site_html(p_meta)
+        from generate_landing import generate_page
+        opp_score = found_lead.get('opportunity_score', 0)
+        html_code = generate_page(
+            found_lead.get('business_name', 'Lead'),
+            found_lead.get('niche', 'Niche'),
+            found_lead.get('city', 'City'),
+            lead_id=found_lead.get('id'),
+            score=opp_score
+        )
         
         # Display the redesign in a clean full-screen wrapper
         st.markdown("""
@@ -975,16 +973,20 @@ with tab_show:
                 opp_score = lead.get('opportunity_score', 0)
                 is_a_tier = opp_score >= 75
                 
-                border_color = "var(--accent-pink)" if not is_a_tier else "#ffd700"
-                tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
+                card_class = "elite-card" if is_a_tier else ""
+                tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px; letter-spacing:1px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
                 st.markdown(f"""
-                <div class="lx-card" style="margin-bottom:10px; border-top:3px solid {border_color};">
+                <div class="lx-card {card_class}">
                     {tier_label}
-                    <div style="font-size:0.6rem; color:var(--accent-pink); font-weight:800;">{meta['niche'].upper()}</div>
-                    <div style="font-size:1.1rem; font-weight:900; margin:5px 0;">{meta['business_name']}</div>
-                    <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:15px;">{meta['city']}</div>
-                    <a href="{meta['preview_url']}" target="_blank" style="display:block; width:100%; text-align:center; padding:10px; background:#fff; color:#000; border-radius:12px; text-decoration:none; font-weight:900; font-size:0.8rem; margin-bottom:10px;">View Redesign</a>
+                    <div style="font-size:0.55rem; color:var(--text-dim); font-weight:800; letter-spacing:1px;">{meta['niche'].upper()}</div>
+                    <div style="font-size:1.2rem; font-weight:900; margin:10px 0; color:#fff;">{meta['business_name']}</div>
+                    <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:20px; display:flex; align-items:center;">
+                        <span style="margin-right:5px;">📍</span> {meta['city']}
+                    </div>
+                    <a href="{meta['preview_url']}" target="_blank" style="display:block; width:100%; text-align:center; padding:12px; background:#fff; color:#000; border-radius:14px; text-decoration:none; font-weight:900; font-size:0.85rem; transition:0.3s; box-shadow: 0 4px 15px rgba(255,255,255,0.2);">
+                        View Elite Prototype →
+                    </a>
                 </div>
                 """, unsafe_allow_html=True)
                 
