@@ -112,7 +112,7 @@ def scrape_query_playwright(query):
 
             # Extract links
             results = page.locator('a[data-testid="result-title-a"]').all()
-            for r in await results if hasattr(results, '__await__') else results:
+            for r in results:
                 href = r.get_attribute('href')
                 if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS):
                     leads_urls.append(href)
