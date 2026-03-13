@@ -490,6 +490,9 @@ with st.status("📡 Synchronizing Intelligence OS...", expanded=False) as statu
         df['monthly_value'] = df.get('monthly_value', pd.Series([0]*len(df))).fillna(0).astype(float)
         df['revenue_loss'] = df.get('revenue_loss', pd.Series([0]*len(df))).fillna(0).astype(float)
         df['opportunity_score'] = df.get('opportunity_score', pd.Series([0]*len(df))).fillna(0).astype(float)
+        df['speed_score'] = df.get('speed_score', pd.Series([0]*len(df))).fillna(0).astype(int)
+        df['seo_score'] = df.get('seo_score', pd.Series([0]*len(df))).fillna(0).astype(int)
+        df['missing_quote_form'] = df.get('missing_quote_form', pd.Series([True]*len(df))).fillna(True).astype(bool)
         
         total_rev = df.get('revenue', pd.Series([0]*len(df))).sum()
         total_leads = len(df)
@@ -501,13 +504,17 @@ with st.status("📡 Synchronizing Intelligence OS...", expanded=False) as statu
         
         actual_mrr = df[df['status'] == 'Closed']['monthly_value'].sum()
         potential_mrr = df[df['status'].isin(['Replied', 'Demo Sent'])]['monthly_value'].sum()
-        pipeline_mrr = df[df['status'] == 'Contacted']['monthly_value'].sum() * 0.15 # Better conservative conversion
-        expected_mrr = actual_mrr + potential_mrr + pipeline_mrr
-        
         avg_opp = df['opportunity_score'].mean()
+        
+        # Outreach & Reply Intelligence
+        total_sent = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent', 'Closed'])])
+        total_replies = len(df[df['status'].isin(['Replied', 'Demo Sent', 'Closed'])])
+        reply_rate = (total_replies / total_sent * 100) if total_sent > 0 else 0
+        hot_leads = len(df[df['reply_status'] == 'positive'])
     else:
         total_rev, total_leads, leads_contacted, expected_mrr, avg_opp = 0, 0, 0, 0, 0
         a_tier_targets, total_leakage = 0, 0
+        total_sent, total_replies, reply_rate, hot_leads = 0, 0, 0, 0
     
     status.update(label="✅ Revenue Intelligence Ready", state="complete")
 
@@ -595,6 +602,14 @@ with tab_ana:
         with col2: render_circle_metric("Total Leads", total_leads, 5000, "#00e5ff", prefix="")
         with col3: render_circle_metric("Annual Leakage", int((total_leakage * 12)/1000), 5000, "#ff6464", prefix="$", suffix="k")
         with col4: render_circle_metric("Expected MRR", int(expected_mrr), 10000, "#00ff88")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("#### 🦾 Outreach Command Centers")
+        c1, c2, c3, c4 = st.columns(4)
+        with c1: render_circle_metric("Total Sent", total_sent, total_leads, "#ffcc00", prefix="")
+        with c2: render_circle_metric("Total Replies", total_replies, total_sent if total_sent > 0 else 100, "#ff4d94", prefix="")
+        with c3: render_circle_metric("Reply Rate", int(reply_rate), 100, "#00e5ff", prefix="", suffix="%")
+        with c4: render_circle_metric("Hot Leads", hot_leads, total_replies if total_replies > 0 else 20, "#00ff88", prefix="")
 
         st.markdown("<br>", unsafe_allow_html=True)
         

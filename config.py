@@ -43,7 +43,7 @@ NICHES = [
 # Outreach identity
 AGENCY_NAME = "Ri2ch Growth Lab"
 AGENCY_EMAIL = "ri2ch.digital@gmail.com"
-AGENCY_DOMAIN = "ricchkhalil.store"
+AGENCY_DOMAIN = "control-ri2ch.streamlit.app"
 
 # Phase 4 Infrastructure: 10x Scaling
 # Fill these to enable 24/7 autonomous hunting

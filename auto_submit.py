@@ -174,9 +174,69 @@ async def auto_submit_form(page, contact_url, pitch):
         
     return False
 
+async def process_lead(semaphore, context, lead, headers):
+    """Worker function to process a single lead."""
+    async with semaphore:
+        website = lead.get("website", "")
+        contact_url = lead.get("contact_url", "")
+        lead_id = lead.get("id")
+        
+        if not contact_url:
+            return False
+            
+        domain = urlparse(website).netloc.replace("www.", "")
+        print(f"[{domain}] Initiating Submission...")
+        
+        page = await context.new_page()
+        try:
+            # Get homepage text for AI context
+            text_content = ""
+            try:
+                probe_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+                response = requests.get(website, headers=probe_headers, timeout=12)
+                soup = BeautifulSoup(response.text, 'html.parser')
+                text_content = ' '.join([p.text for p in soup.find_all(['p', 'h1', 'h2', 'h3'])])
+            except Exception as req_err:
+                print(f"[{domain}] Warning: Homepage text scrape failed: {req_err}")
+            
+            # Generate pitch
+            niche = lead.get("niche", "Default")
+            loss = lead.get("revenue_loss", 5000)
+            
+            from preview_engine import generate_preview_metadata
+            preview_meta = generate_preview_metadata(lead)
+            preview_url = preview_meta.get("public_preview_url", "")
+            
+            pitch = await generate_ai_pitch(text_content, domain, niche=niche, loss=loss, preview_url=preview_url)
+            
+            # Submit form
+            success = await auto_submit_form(page, contact_url, pitch)
+            
+            if success:
+                print(f"[{domain}] SUCCESS!")
+                push_log("Outreach", f"Submission Success: {domain} contacted successfully.")
+                
+                # Update status in Supabase
+                try:
+                    patch_endpoint = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead_id}"
+                    requests.patch(patch_endpoint, headers=headers, json={"status": "Contacted"})
+                except: pass
+                return True
+            else:
+                print(f"[{domain}] FAILED auto-submit.")
+                return False
+                
+        except Exception as e:
+            print(f"[{domain}] Error: {e}")
+            return False
+        finally:
+            await page.close()
+            # Random delay for stealth
+            await asyncio.sleep(random.randint(5, 10))
+
 async def main():
     if not SUPABASE_URL or not SUPABASE_KEY:
-        print("Error: Supabase credentials not found in .env file.")
+        print("Error: Supabase credentials not found.")
         return
         
     headers = {
@@ -185,122 +245,48 @@ async def main():
         "Content-Type": "application/json"
     }
     
-    # Query uncontacted leads (High Priority first, then New)
-    print("Fetching uncontacted leads from Supabase...")
-    leads = []
-    import time
-    leads = []
-    max_retries = 5
-    retry_delay = 30
-    
-    for attempt in range(max_retries):
-        try:
-            # Fetch High Intel leads first (Processed by analyzer)
-            intel_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Intel%20Ready&select=*"
-            intel_response = requests.get(intel_endpoint, headers=headers, timeout=15)
-            intel_leads = intel_response.json() if intel_response.status_code == 200 else []
-            
-            # Then High Priority leads
-            hp_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Priority&select=*"
-            hp_response = requests.get(hp_endpoint, headers=headers, timeout=15)
-            hp_leads = hp_response.json() if hp_response.status_code == 200 else []
-            
-            # Then New leads
-            new_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.New&select=*"
-            new_response = requests.get(new_endpoint, headers=headers, timeout=15)
-            new_leads = new_response.json() if new_response.status_code == 200 else []
-            
-            leads = intel_leads + hp_leads + new_leads
-            if leads: break
-        except Exception as e:
-            print(f"  => [Attempt {attempt+1}/{max_retries}] Connection failed: {e}")
-            if attempt < max_retries - 1:
-                print(f"     Retrying in {retry_delay}s...")
-                time.sleep(retry_delay)
-            else:
-                print("     CRITICAL: Lead fetch failed after multiple retries. Exiting.")
-                return
+    print("Fetching uncontacted leads...")
+    try:
+        # Fetch High Intel leads first
+        intel_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Intel%20Ready&select=*"
+        res = requests.get(intel_endpoint, headers=headers)
+        leads = res.json() if res.status_code == 200 else []
         
-    print(f"Loaded {len(leads)} leads ({len([l for l in leads if l.get('status') == 'High Priority'])} high priority).")
+        hp_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Priority&select=*"
+        res = requests.get(hp_endpoint, headers=headers)
+        leads += res.json() if res.status_code == 200 else []
+        
+        new_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.New&select=*"
+        res = requests.get(new_endpoint, headers=headers)
+        leads += res.json() if res.status_code == 200 else []
+    except Exception as e:
+        print(f"Fetch failed: {e}")
+        return
+        
     if not leads:
-        print("No new leads to contact.")
-        push_log("Outreach", "Mission Standby: No new uncontacted leads found.")
+        print("No new leads.")
         return
     
-    push_log("Outreach", f"Initiating Outreach Sequence for {len(leads)} leads.")
+    # Industrial Scaling: Parallel Processing
+    CONCURRENCY_LIMIT = 3
+    semaphore = asyncio.Semaphore(CONCURRENCY_LIMIT)
     
+    print(f"Processing {len(leads)} leads with {CONCURRENCY_LIMIT} parallel workers...")
+    push_log("Outreach", f"Initiating 10x Parallel Outreach for {len(leads)} leads.")
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
-        page = await context.new_page()
         
-        success_count = 0
-        try:
-            for lead in leads:
-                website = lead.get("website", "")
-                contact_url = lead.get("contact_url", "")
-                lead_id = lead.get("id")
-                
-                if not contact_url:
-                    continue
-                    
-                domain = urlparse(website).netloc.replace("www.", "")
-                print(f"Processing: {domain} ({contact_url})")
-                
-                try:
-                    # Get homepage text for AI context using requests
-                    text_content = ""
-                    try:
-                        probe_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
-                        response = requests.get(website, headers=probe_headers, timeout=15)
-                        soup = BeautifulSoup(response.text, 'html.parser')
-                        text_content = ' '.join([p.text for p in soup.find_all(['p', 'h1', 'h2', 'h3'])])
-                    except Exception as req_err:
-                        print(f"  => Warning: Homepage text scrape failed: {req_err}")
-                    
-                    # Generate pitch
-                    niche = lead.get("niche", "Default")
-                    loss = lead.get("revenue_loss", 5000)
-                    
-                    # Generate Preview URL
-                    from preview_engine import generate_preview_metadata
-                    preview_meta = generate_preview_metadata(lead)
-                    preview_url = preview_meta.get("public_preview_url", "")
-                    
-                    pitch = await generate_ai_pitch(text_content, domain, niche=niche, loss=loss, preview_url=preview_url)
-                    safe_pitch = pitch.encode('ascii', 'replace').decode('ascii')
-                    print(f"  => Generated Recovery Pitch (${loss:,}/mo leakage): {safe_pitch[:50]}...")
-                    
-                    # Submit form
-                    success = await auto_submit_form(page, contact_url, pitch)
-                    
-                    if success:
-                        print(f"  => SUCCESS! Contacted {domain}")
-                        success_count += 1
-                        push_log("Outreach", f"Submission Success: {domain} contacted successfully.")
-                        
-                        # Update status in Supabase
-                        try:
-                            patch_endpoint = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead_id}"
-                            patch_response = requests.patch(patch_endpoint, headers=headers, json={"status": "Contacted"})
-                            patch_response.raise_for_status()
-                        except Exception as patch_err:
-                            print(f"  => Error updating status in Supabase for {domain}: {patch_err}")
-                    else:
-                        print(f"  => FAILED to auto-submit form for {domain}")
-                        
-                except Exception as e:
-                    print(f"  => Error processing {domain}: {e}")
-                    
-                # Increased delay to 10-20 seconds to avoid 429s
-                await page.wait_for_timeout(random.randint(10000, 20000))
-        finally:
-            await browser.close()
+        tasks = [process_lead(semaphore, context, lead, headers) for lead in leads[:50]] # Limit batch size
+        results = await asyncio.gather(*tasks)
         
-    print(f"Finished! Successfully contacted {success_count} businesses.")
-    push_log("Outreach", f"Mission Complete: {success_count} submissions successful.")
+        success_count = sum(1 for r in results if r)
+        print(f"Finished! Successfully contacted {success_count} businesses.")
+        push_log("Outreach", f"Mission Complete: {success_count} submissions successful.")
+        await browser.close()
 
 if __name__ == "__main__":
     asyncio.run(main())

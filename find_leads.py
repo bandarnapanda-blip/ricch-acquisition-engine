@@ -103,49 +103,59 @@ def scrape_query_playwright(query):
         )
         page = context.new_page()
         try:
-            page.goto(f"https://duckduckgo.com/?q={query.replace(' ', '+')}", timeout=30000)
-            # Wait for results to load
-            page.wait_for_selector('a[data-testid="result-title-a"]', timeout=10000)
+            page.goto(f"https://duckduckgo.com/?q={query.replace(' ', '+')}&ia=web", timeout=30000)
             
+            # Initial scroll to trigger more results
+            for _ in range(3):
+                page.evaluate("window.scrollBy(0, 1000)")
+                time.sleep(1)
+
             # Extract links
-            results = page.query_selector_all('a[data-testid="result-title-a"]')
-            for r in results:
+            results = page.locator('a[data-testid="result-title-a"]').all()
+            for r in await results if hasattr(results, '__await__') else results:
                 href = r.get_attribute('href')
                 if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS):
                     leads_urls.append(href)
-                if len(leads_urls) >= MAX_RESULTS_PER_QUERY:
+                if len(leads_urls) >= MAX_RESULTS_PER_QUERY * 3: # X3 multiplier for deep search
                     break
         except Exception as e:
             print(f"  [ERROR] Playwright search failed: {e}")
         finally:
             browser.close()
-    return leads_urls
+    return list(set(leads_urls))
 
 def scrape_query_bing(query):
-    """Scrape Bing as a reliable fallback."""
+    """Scrape Bing multi-page for high volume discovery."""
     leads_urls = []
     print(f"  [FALLBACK] Launching Bing search for \"{query}\"...")
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
     }
-    try:
-        url = f"https://www.bing.com/search?q={query.replace(' ', '+')}"
-        response = requests.get(url, headers=headers, timeout=15)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # Bing result pattern
-        results = soup.select('li.b_algo h2 a')
-        for r in results:
-            href = r.get('href')
-            if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS):
-                leads_urls.append(href)
-            if len(leads_urls) >= MAX_RESULTS_PER_QUERY:
+    
+    # Industrial Scaling: Check first 3 pages
+    for page_num in range(3):
+        try:
+            offset = page_num * 10 + 1
+            url = f"https://www.bing.com/search?q={query.replace(' ', '+')}&first={offset}"
+            response = requests.get(url, headers=headers, timeout=15)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, 'html.parser')
+            
+            results = soup.select('li.b_algo h2 a')
+            for r in results:
+                href = r.get('href')
+                if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS):
+                    leads_urls.append(href)
+            
+            if len(leads_urls) >= MAX_RESULTS_PER_QUERY * 3:
                 break
-    except Exception as e:
-        print(f"  [ERROR] Bing search failed: {e}")
-    return leads_urls
+            time.sleep(random.uniform(2, 4))
+        except Exception as e:
+            print(f"  [ERROR] Bing search (Page {page_num}) failed: {e}")
+            break
+            
+    return list(set(leads_urls))
 
 def scrape_query(query, niche, city):
     """Scrape a single search query and return leads list."""
@@ -376,11 +386,18 @@ def main():
     
     for niche in active_niches:
         for city in active_cities:
-            query = f"{niche} in {city}"
-            print(f"\n[HUNTING] \"{query}\"")
+            # Query Expansion Logic (Industrial Harvester)
+            expanded_queries = [
+                f"{niche} in {city}",
+                f"best {niche} in {city}",
+                f"{niche} companies {city}",
+                f"{niche} services {city}"
+            ]
             
-            new_leads = scrape_query(query, niche, city)
-            print(f"  Found {len(new_leads)} potential businesses.")
+            for query in expanded_queries:
+                print(f"\n[HUNTING] \"{query}\"")
+                new_leads = scrape_query(query, niche, city)
+                print(f"  Found {len(new_leads)} potential businesses.")
             
             for lead in new_leads:
                 print(f"  Probing {lead['website']}...")
