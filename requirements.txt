@@ -8,5 +8,5 @@ streamlit-supabase-auth
 openai
 beautifulsoup4
 playwright
-google-genai
+google-generativeai
 python-whois
