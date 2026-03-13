@@ -513,6 +513,11 @@ with st.status("📡 Synchronizing Intelligence OS...", expanded=False) as statu
         total_sent = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent', 'Closed'])])
         total_replies = len(df[df['status'].isin(['Replied', 'Demo Sent', 'Closed'])])
         reply_rate = (total_replies / total_sent * 100) if total_sent > 0 else 0
+        if 'is_approved' not in df.columns:
+            df['is_approved'] = False
+        else:
+            df['is_approved'] = df['is_approved'].fillna(False)
+        
         hot_leads = len(df[df['reply_status'] == 'positive'])
     else:
         total_rev, total_leads, leads_contacted, expected_mrr, avg_opp = 0, 0, 0, 0, 0
@@ -966,14 +971,34 @@ with tab_show:
         for i, (_, lead) in enumerate(top_leads.iterrows()):
             with cols[i % 3]:
                 meta = generate_preview_metadata(lead)
+                is_approved = lead.get('is_approved', False)
+                
                 st.markdown(f"""
-                <div class="lx-card" style="margin-bottom:20px; border-top:3px solid var(--accent-pink);">
+                <div class="lx-card" style="margin-bottom:10px; border-top:3px solid var(--accent-pink);">
                     <div style="font-size:0.6rem; color:var(--accent-pink); font-weight:800;">{meta['niche'].upper()}</div>
                     <div style="font-size:1.1rem; font-weight:900; margin:5px 0;">{meta['business_name']}</div>
                     <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:15px;">{meta['city']}</div>
-                    <a href="{meta['preview_url']}" target="_blank" style="display:block; width:100%; text-align:center; padding:10px; background:#fff; color:#000; border-radius:12px; text-decoration:none; font-weight:900; font-size:0.8rem;">View Redesign</a>
+                    <a href="{meta['preview_url']}" target="_blank" style="display:block; width:100%; text-align:center; padding:10px; background:#fff; color:#000; border-radius:12px; text-decoration:none; font-weight:900; font-size:0.8rem; margin-bottom:10px;">View Redesign</a>
                 </div>
                 """, unsafe_allow_html=True)
+                
+                # Modern Approval Toggle
+                approval_state = st.toggle("Human Approval", value=is_approved, key=f"app_{lead['id']}")
+                if approval_state != is_approved:
+                    # Immediate Sync to Supabase
+                    endpoint = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead['id']}"
+                    headers = {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": f"Bearer {SUPABASE_KEY}",
+                        "Content-Type": "application/json",
+                        "Prefer": "return=minimal"
+                    }
+                    try:
+                        requests.patch(endpoint, headers=headers, json={"is_approved": approval_state})
+                        st.success("Approved!" if approval_state else "Unapproved", icon="✅")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Sync error: {e}")
         
         st.divider()
         sc1, sc2 = st.columns([2, 1])

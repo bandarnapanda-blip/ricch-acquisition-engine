@@ -58,7 +58,7 @@ def push_log(service, message):
 
 def fetch_known_domains():
     """Fetch all known lead domains from Supabase."""
-    endpoint = f"{SUPABASE_URL}/rest/v1/leads?select=id,website,status,niche"
+    endpoint = f"{SUPABASE_URL}/rest/v1/leads?select=id,website,status,niche,is_approved"
     try:
         response = request_with_retry("GET", endpoint, headers=get_headers())
         if response:
@@ -204,6 +204,18 @@ def process_lead_reply(msg, sender_email, lead, sender_domain):
         
         # Update lead status based on intent
         if sentiment == "positive":
+            is_approved = lead.get('is_approved', False)
+            
+            if not is_approved:
+                print(f"  🛑 Approval Guard: Redesign for {lead.get('website')} NOT yet approved by human.")
+                patch_data.update({
+                    "status": "Pending Lead Approval",
+                    "last_stage": "replied_not_approved"
+                })
+                update_lead_replied(lead["id"], patch_data)
+                push_log("Inbox", f"Approval Guard: Blocked send to {sender_email}. Pending human check.")
+                return True
+
             print(f"  🚀 Launching Industrial Closer for {lead.get('website')}")
             from generate_landing import generate_page, upload_to_supabase_storage
             
