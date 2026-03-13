@@ -495,6 +495,7 @@ with st.status("📡 Synchronizing Intelligence OS...", expanded=False) as statu
         df['speed_score'] = df.get('speed_score', pd.Series([0]*len(df))).fillna(0).astype(int)
         df['seo_score'] = df.get('seo_score', pd.Series([0]*len(df))).fillna(0).astype(int)
         df['missing_quote_form'] = df.get('missing_quote_form', pd.Series([True]*len(df))).fillna(True).astype(bool)
+        df['reply_status'] = df.get('reply_status', pd.Series(['']*len(df))).fillna('')
         
         total_rev = df.get('revenue', pd.Series([0]*len(df))).sum()
         total_leads = len(df)
