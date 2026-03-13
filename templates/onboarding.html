@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding | Ri2ch Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@300;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05070a;
+            --card-bg: #0f1116;
+            --accent-primary: #00d2ff;
+            --accent-secondary: #925cff;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --success: #00ff88;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .success-banner {
+            display: none;
+            text-align: center;
+        }
+
+        .success-banner h2 {
+            color: var(--success);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">ri2Ch.AI</div>
+            <div class="subtitle">Welcome to the Agency Scale-Up Phase</div>
+        </div>
+
+        <div class="card" id="form-card">
+            <form id="onboarding-form">
+                <input type="hidden" name="email" value="{{ email }}">
+                <div class="form-group">
+                    <label>Business Name</label>
+                    <input type="text" name="business_name" required placeholder="e.g. Apex Concrete Pros">
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Domain Name</label>
+                    <input type="text" name="domain" required placeholder="e.g. apexconcrete.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Logo Upload Link (Google Drive/Dropbox)</label>
+                    <input type="url" name="logo_url" required placeholder="https://drive.google.com/...">
+                </div>
+
+                <div class="form-group">
+                    <label>Specific Business Details / Bio</label>
+                    <textarea name="bio" rows="4"
+                        placeholder="Tell us about your experience, services, and core values..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Top 3 Service Areas (Cities/Suburbs)</label>
+                    <input type="text" name="service_areas" required placeholder="e.g. Frisco, McKinney, Plano">
+                </div>
+
+                <button type="submit" class="btn-submit">🚀 Launch My Site</button>
+            </form>
+        </div>
+
+        <div class="success-banner" id="success-message">
+            <h2>SUCCESS!</h2>
+            <p>Your details have been securely transmitted to the Ri2ch Digital team.</p>
+            <p style="color: var(--text-dim);">We are beginning the custom build now. You will receive access within 48
+                hours.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('onboarding-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('/submit-onboarding', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(this.data).toString()
+            })
+                .then(response => response.json())
+                .then(result => {
+                    document.getElementById('form-card').style.display = 'none';
+                    document.getElementById('success-message').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Please try again.');
+                });
+        });
+    </script>
+</body>
+
+</html>
