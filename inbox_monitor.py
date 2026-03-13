@@ -1,4 +1,5 @@
 import os
+import re
 import imaplib
 import email
 from email.header import decode_header
@@ -10,6 +11,8 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 import random
 from openai import OpenAI
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
 
 load_dotenv()
 
@@ -99,6 +102,7 @@ def send_auto_reply(to_email, subject, body, msg_id):
     msg.attach(MIMEText(body, 'plain'))
     
     try:
+        if not GMAIL_APP_PASSWORD: return False
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
@@ -148,181 +152,159 @@ def classify_intent(subject, body_text):
         print(f"Error classifying intent: {e}")
         return "other"
 
+def process_lead_reply(msg, sender_email, lead, sender_domain):
+    """Worker function to process a single hot lead reply."""
+    try:
+        subject = ""
+        raw_subject = msg.get("Subject", "")
+        decoded = decode_header(raw_subject)
+        for part, enc in decoded:
+            if isinstance(part, bytes):
+                subject += part.decode(enc or "utf-8", errors="replace")
+            else:
+                subject += part
+        
+        print(f"\n🔥 HOT LEAD REPLY DETECTED!")
+        print(f"  From:    {sender_email}")
+        print(f"  Subject: {subject}")
+        print(f"  Matches: {lead.get('website')}")
+        push_log("Inbox", f"HOT LEAD DETECTED: Reply from {sender_email} ({lead.get('website')})")
+        
+        # Extract plain text body
+        body_text = ""
+        if msg.is_multipart():
+            for part in msg.walk():
+                if part.get_content_type() == "text/plain":
+                    try:
+                        body_text = part.get_payload(decode=True).decode()
+                    except: pass
+                    break
+        else:
+            try:
+                body_text = msg.get_payload(decode=True).decode()
+            except: pass
+        
+        body_text = body_text[:1200]
+        
+        # Classify intent via AI
+        sentiment = classify_intent(subject, body_text)
+        print(f"  🤖 AI Intent Classification: {sentiment}")
+        
+        from datetime import datetime, timezone
+        now_ts = datetime.now(timezone.utc).isoformat()
+        
+        patch_data = {
+            "reply_at": now_ts,
+            "reply_text": body_text,
+            "reply_source": "gmail-monitor",
+            "reply_status": sentiment,
+            "last_stage": "replied",
+            "status": "Replied"
+        }
+        
+        # Update lead status based on intent
+        if sentiment == "positive":
+            print(f"  🚀 Launching Industrial Closer for {lead.get('website')}")
+            from generate_landing import generate_page, upload_to_supabase_storage
+            
+            # Clean name for filename
+            business_name = lead.get('website', '').replace('https://','').replace('http://','').replace('www.', '').split('.')[0].capitalize()
+            city = lead.get('city', 'Your City')
+            niche = lead.get('niche', 'Contracting')
+            
+            import re
+            safe_name = re.sub(r'[^a-zA-Z0-9]', '-', business_name.lower()).strip('-')
+            filename = f"{safe_name}-{city.lower()}-redesign.html"
+            
+            html = generate_page(business_name, niche, city)
+            demo_link = upload_to_supabase_storage(html, filename) if html else None
+            
+            if demo_link:
+                patch_data.update({
+                    "demo_link": demo_link,
+                    "status": "Demo Sent & Invoice Placed",
+                    "last_stage": "demo_sent",
+                    "monthly_value": 499 if niche not in ["Solar Energy", "Personal Injury Law"] else (800 if "Law" in niche else 500)
+                })
+                update_lead_replied(lead["id"], patch_data)
+                
+                # Send email
+                msg_id = msg.get("Message-ID", "")
+                reply_body = f"Awesome, here is the live prototype I built for you:\n{demo_link}\n\nAs you can see, it loads in under 1 second and is heavily optimized to convert mobile traffic into actual phone calls for your {niche.lower()} business. I build these exclusively for contractors.\n\nNormally agencies charge $3,000+ for this and take weeks. Since I already built the foundation for you, I can transfer this entire site to your domain, fully customized with your photos and reviews, for a flat {SERVICE_CURRENCY} {SERVICE_PRICE} (approx. $499 USD).\n\nIf you want it, just claim it here securely via Paystack: {PAYSTACK_LINK}\n\nOnce paid, I'll have it live on your domain within 48 hours. Let me know what you think!"
+                send_auto_reply(sender_email, raw_subject, reply_body, msg_id)
+                push_log("Inbox", f"Auto-Closer Success: Demo and Invoice sent to {sender_email}")
+            else:
+                update_lead_replied(lead["id"], patch_data)
+        elif sentiment == "negative":
+            patch_data["status"] = "Dead"
+            update_lead_replied(lead["id"], patch_data)
+        else:
+            patch_data["status"] = "Question/Manual"
+            update_lead_replied(lead["id"], patch_data)
+        
+        return True
+    except Exception as e:
+        print(f"  [ERROR] Processing lead {sender_email}: {e}")
+        return False
+
 def check_inbox():
     """Connect to Gmail via IMAP and check for new replies from known lead domains."""
     if not GMAIL_APP_PASSWORD:
-        print("Error: GMAIL_APP_PASSWORD not set in .env file.")
-        print("To set it up:")
-        print("  1. Go to https://myaccount.google.com/apppasswords")
-        print("  2. Generate an app password for 'Mail'")
-        print("  3. Add to .env: GMAIL_APP_PASSWORD=your-app-password-here")
+        print("Error: GMAIL_APP_PASSWORD not set.")
         return
     
     print("=" * 60)
-    print("  INBOX MONITOR - Scanning for lead replies")
+    print("  INBOX MONITOR - Industrial Mode (Parallel Processing)")
     print("=" * 60)
     
-    push_log("Inbox", "Scanning for lead replies...")
-    
-    # Get known domains from Supabase
     domain_map = fetch_known_domains()
-    print(f"\nTracking {len(domain_map)} known lead domains.")
-    
     if not domain_map:
         print("No leads in database to track.")
         return
     
     try:
-        # Connect to Gmail IMAP
-        print("Connecting to Gmail...")
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
         mail.login(GMAIL_USER, GMAIL_APP_PASSWORD)
         mail.select("INBOX")
         
-        # Search for unseen emails
         status, messages = mail.search(None, "UNSEEN")
-        if status != "OK":
+        if status != "OK" or not messages[0]:
             print("No new messages.")
             mail.logout()
             return
         
         email_ids = messages[0].split()
-        print(f"Found {len(email_ids)} unread emails.")
+        print(f"Found {len(email_ids)} unread emails. Analyzing...")
         
-        matches = 0
+        tasks_to_process = []
+        
         for eid in email_ids:
             status, msg_data = mail.fetch(eid, "(RFC822)")
-            if status != "OK":
-                continue
-                
+            if status != "OK": continue
+            
             msg = email.message_from_bytes(msg_data[0][1])
-            
-            # Decode sender
             from_header = msg.get("From", "")
-            sender_email = ""
-            if "<" in from_header:
-                sender_email = from_header.split("<")[1].split(">")[0].lower()
-            else:
-                sender_email = from_header.lower()
-            
-            # Extract domain from sender
+            match = re.search(r'[\w\.-]+@[\w\.-]+', from_header)
+            sender_email = match.group(0).lower() if match else ""
             sender_domain = sender_email.split("@")[-1] if "@" in sender_email else ""
             
-            # Check if this domain matches any known leads
-            sender_domain_str = str(sender_domain)
+            # Match domain
             for known_domain, lead in domain_map.items():
-                known_domain_str = str(known_domain)
-                if known_domain_str in sender_domain_str or sender_domain_str in known_domain_str:
-                    subject = ""
-                    raw_subject = msg.get("Subject", "")
-                    decoded = decode_header(raw_subject)
-                    for part, enc in decoded:
-                        if isinstance(part, bytes):
-                            subject += part.decode(enc or "utf-8", errors="replace")
-                        else:
-                            subject += part
-                    
-                    print(f"\n🔥 HOT LEAD REPLY DETECTED!")
-                    print(f"  From:    {sender_email}")
-                    print(f"  Subject: {subject}")
-                    print(f"  Matches: {lead.get('website')}")
-                    push_log("Inbox", f"HOT LEAD DETECTED: Reply from {sender_email} ({lead.get('website')})")
-                    
-                    # Extract plain text body for AI analysis
-                    body_text = ""
-                    if msg.is_multipart():
-                        for part in msg.walk():
-                            if part.get_content_type() == "text/plain":
-                                try:
-                                    body_text = part.get_payload(decode=True).decode()
-                                except:
-                                    pass
-                                break
-                    else:
-                        try:
-                            body_text = msg.get_payload(decode=True).decode()
-                        except:
-                            pass
-                    
-                    # Truncate to save tokens and avoid huge quotes
-                    body_text = body_text[:1000]
-                    
-                    # Classify intent via AI
-                    sentiment = classify_intent(subject, body_text)
-                    print(f"  🤖 AI Intent Classification: {sentiment}")
-                    
-                    from datetime import datetime, timezone
-                    now_ts = datetime.now(timezone.utc).isoformat()
-                    
-                    patch_data = {
-                        "reply_at": now_ts,
-                        "reply_text": body_text,
-                        "reply_source": "gmail-monitor",
-                        "reply_status": sentiment,
-                        "last_stage": "replied",
-                        "status": "Replied"
-                    }
-                    
-                    # Update lead status based on intent
-                    if sentiment == "positive":
-                        print(f"  🚀 Launching Auto-Closer Phase 7 for {lead.get('website')}")
-                        import re
-                        from generate_landing import generate_page, upload_to_supabase_storage, update_lead_demo_link
-                        
-                        business_name = lead.get('website', '').replace('www.', '').split('.')[0].capitalize()
-                        city = lead.get('city', 'Your City')
-                        niche = lead.get('niche', 'Contracting')
-                        
-                        safe_name = re.sub(r'[^a-zA-Z0-9]', '-', business_name.lower()).strip('-')
-                        filename = f"{safe_name}-{city.lower()}.html"
-                        
-                        html = generate_page(business_name, niche, city)
-                        demo_link = None
-                        if html:
-                            demo_link = upload_to_supabase_storage(html, filename)
-                            
-                        if demo_link:
-                            # Update DB with demo link and new funnel status
-                            patch_data["demo_link"] = demo_link
-                            patch_data["status"] = "Demo Sent & Invoice Placed"
-                            patch_data["last_stage"] = "demo_sent"
-                            
-                            # Estimate monthly value (high-ticket niche default)
-                            if niche == "Solar Energy": patch_data["monthly_value"] = 500
-                            elif niche == "Personal Injury Law": patch_data["monthly_value"] = 800
-                            else: patch_data["monthly_value"] = 499
-                            
-                            update_lead_replied(lead["id"], patch_data)
-                            
-                            # Send email
-                            msg_id = msg.get("Message-ID", "")
-                            reply_body = f"Awesome, here is the live prototype I built for you:\n{demo_link}\n\nAs you can see, it loads in under 1 second and is heavily optimized to convert mobile traffic into actual phone calls for your {niche.lower()} business. I build these exclusively for contractors.\n\nNormally agencies charge $3,000+ for this and take weeks. Since I already built the foundation for you, I can transfer this entire site to your domain, fully customized with your photos and reviews, for a flat {SERVICE_CURRENCY} {SERVICE_PRICE} (approx. $499 USD).\n\nIf you want it, just claim it here securely via Paystack: {PAYSTACK_LINK}\n\nOnce paid, I'll have it live on your domain within 48 hours. Let me know what you think!"
-                            success = send_auto_reply(sender_email, raw_subject, reply_body, msg_id)
-                            
-                            if success:
-                                print(f"  ✅ Auto-reply with Paystack link sent to {sender_email}")
-                                push_log("Inbox", f"Auto-Closer Success: Demo and Invoice sent to {sender_email}")
-                            else:
-                                print(f"  ❌ Failed to send auto-reply to {sender_email}")
-                        else:
-                            print("  Failed to generate demo link.")
-                            update_lead_replied(lead["id"], patch_data)
-                    elif sentiment == "negative":
-                        patch_data["status"] = "Dead"
-                        update_lead_replied(lead["id"], patch_data)
-                        print(f"  🚫 Lead marked as Dead")
-                    else:
-                        patch_data["status"] = "Question/Manual"
-                        update_lead_replied(lead["id"], patch_data)
-                        print(f"  ❓ Lead asked a question. Manual reply needed.")
-                    
-                    matches += 1
+                if str(known_domain) in str(sender_domain) or str(sender_domain) in str(known_domain):
+                    tasks_to_process.append((msg, sender_email, lead, sender_domain))
                     break
         
+        # Parallel Execution
+        if tasks_to_process:
+            print(f"Dispatched {len(tasks_to_process)} hot leads to Parallel Workers...")
+            with ThreadPoolExecutor(max_workers=5) as executor:
+                futures = [executor.submit(process_lead_reply, *task) for task in tasks_to_process]
+                for future in as_completed(futures):
+                    future.result() # Log errors inside worker
+            
         mail.logout()
-        
         print(f"\n{'=' * 60}")
-        print(f"  SCAN COMPLETE: {matches} lead replies detected out of {len(email_ids)} unread emails")
+        print(f"  SCAN COMPLETE: Processed {len(tasks_to_process)} lead interactions")
         print(f"{'=' * 60}")
         
     except imaplib.IMAP4.error as e:
