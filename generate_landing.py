@@ -18,22 +18,105 @@ def get_headers():
         "Content-Type": "application/json"
     }
 
-def generate_page(business_name, niche, city, template_name="epoxy_template.html"):
-    """Generate a landing page from a template and return the HTML string."""
+def select_archetype(niche):
+    """Select the best design archetype based on the niche."""
+    niche_lower = niche.lower()
+    
+    # Midnight Noir: Tech, Solar, Modern Trades, Engineering
+    if any(word in niche_lower for word in ["solar", "tech", "electric", "security", "engineering", "ai", "digital"]):
+        return "midnight_noir.html"
+    
+    # Gold Standard: Elite Professional, Legal, Health, High-End
+    if any(word in niche_lower for word in ["law", "dentist", "medical", "luxury", "real estate", "attorney", "wealth", "beauty"]):
+        return "gold_standard.html"
+    
+    # Alpine Vitality: Home Service, Outdoor, Fresh, Cleaning
+    if any(word in niche_lower for word in ["landscap", "clean", "roof", "paint", "pool", "tree", "home", "pest"]):
+        return "alpine_vitality.html"
+    
+    # Default to a robust middle-ground or use lead ID hash for variety
+    return "midnight_noir.html"
+
+def get_conversion_copy(niche):
+    """Provide niche-specific creative hooks and benefits."""
+    niche_lower = niche.lower()
+    
+    # Defaults
+    copy = {
+        "badge": "Elite Performance",
+        "hook": "Industry-leading results, guaranteed.",
+        "benefit_1": "Rapid Deployment",
+        "desc_1": "We value your time. Our efficiency-first approach means we get the job done faster without sacrificing quality.",
+        "benefit_2": "Max ROI",
+        "desc_2": "Engineered for profitability. Every decision we make is aimed at increasing your bottom line.",
+        "benefit_3": "White-Glove Service",
+        "desc_3": "A dedicated project manager for every client. Zero stress, total transparency."
+    }
+
+    if "law" in niche_lower or "attorney" in niche_lower or "legal" in niche_lower:
+        copy.update({
+            "badge": "Preeminent Legal Support",
+            "hook": "Uncompromising advocacy. Unparalleled results.",
+            "benefit_1": "Strategic Dominance",
+            "desc_1": "We don't just process cases; we win them. Our tactical approach ensures the best possible outcome.",
+            "benefit_2": "Expert Counsel",
+            "desc_2": "Direct access to lead partners with decades of specialized experience in your field.",
+            "benefit_3": "Confidentiality First",
+            "desc_3": "Private, secure, and discreet handling of your most sensitive legal matters."
+        })
+    elif "solar" in niche_lower or "electric" in niche_lower:
+        copy.update({
+            "badge": "Energy Independence",
+            "hook": "The future of power is here. Clean, efficient, and direct.",
+            "benefit_1": "Zero-Down Options",
+            "desc_1": "Switching to clean energy shouldn't break the bank. We offer flexible ownership paths for every home.",
+            "benefit_2": "Tier-1 Hardware",
+            "desc_2": "We only use high-efficiency panels and inverters backed by 25-year manufacturer warranties.",
+            "benefit_3": "Grid-Ready Tech",
+            "desc_3": "Seamless integration with local utilities and battery backup systems for total security."
+        })
+    elif "landscap" in niche_lower or "tree" in niche_lower:
+        copy.update({
+            "badge": "Master Craftsmanship",
+            "hook": "Your vision, our architecture. Nature perfected.",
+            "benefit_1": "Artistic Vision",
+            "desc_1": "Our designers treat every lot as a canvas, creating unique outdoor living spaces that flow with your lifestyle.",
+            "benefit_2": "Sustainable Growth",
+            "desc_2": "We use native plants and smart irrigation to ensure a beautiful yard that's also climate-resistant.",
+            "benefit_3": "Curb Appeal Boost",
+            "desc_3": "Instantly increase your property value with high-authority landscaping from the pros."
+        })
+    
+    return copy
+
+def generate_page(business_name, niche, city, lead_id=None):
+    """Generate a high-authority landing page from an archetype."""
+    template_name = select_archetype(niche)
     template_path = os.path.join(TEMPLATE_DIR, template_name)
     
     if not os.path.exists(template_path):
-        print(f"Error: Template {template_name} not found.")
-        return None
+        template_path = os.path.join(TEMPLATE_DIR, "epoxy_template.html")
     
     with open(template_path, 'r', encoding='utf-8') as f:
         html = f.read()
     
-    # Replace placeholders
+    copy = get_conversion_copy(niche)
+    
+    # Standard Placeholders
     html = html.replace("{{BUSINESS_NAME}}", business_name)
     html = html.replace("{{NICHE}}", niche)
     html = html.replace("{{CITY}}", city)
     html = html.replace("{{STATE}}", STATE)
+    
+    # Creative Engine Placeholders
+    html = html.replace("{{BADGE}}", copy["badge"])
+    html = html.replace("{{HOOK}}", copy["hook"])
+    html = html.replace("{{BENEFIT_1}}", copy["benefit_1"])
+    html = html.replace("{{DESC_1}}", copy["desc_1"])
+    html = html.replace("{{BENEFIT_2}}", copy["benefit_2"])
+    html = html.replace("{{DESC_2}}", copy["desc_2"])
+    html = html.replace("{{BENEFIT_3}}", copy["benefit_3"])
+    html = html.replace("{{DESC_3}}", copy["desc_3"])
     
     return html
 
@@ -106,7 +189,7 @@ def main():
     print(f"  City:  {city}, {STATE}")
     
     # Generate the HTML
-    html = generate_page(business_name, niche, city)
+    html = generate_page(business_name, niche, city, lead_id)
     if not html:
         return
     
@@ -116,14 +199,14 @@ def main():
         print("Uploading to Supabase Storage...")
         demo_link = upload_to_supabase_storage(html, filename)
         if demo_link:
-            print(f"✅ Live at: {demo_link}")
+            print(f"DONE Live at: {demo_link}")
             
             # Update the lead record if lead_id provided
             if lead_id:
                 update_lead_demo_link(lead_id, demo_link)
-                print(f"✅ Updated lead record with demo link.")
+                print(f"DONE Updated lead record with demo link.")
         else:
-            print("⚠️ Upload failed. Saving locally instead.")
+            print("WARNING Upload failed. Saving locally instead.")
             save_locally(html, filename)
     else:
         print("No Supabase credentials. Saving locally.")

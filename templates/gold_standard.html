@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{BUSINESS_NAME}} | The Gold Standard in {{NICHE}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #fdfcf9;
+            --gold: #c5a059;
+            --gold-dark: #b38e4a;
+            --charcoal: #1a1a1a;
+            --text: #333;
+            --text-light: #777;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero-inner { max-width: 900px; padding: 60px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: block;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* ─── BUTTONS ─── */
+        .btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--gold);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .btn:hover { background: var(--gold-dark); letter-spacing: 3px; }
+
+        /* ─── SECTIONS ─── */
+        .section { padding: 120px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; }
+        .section-header .line { width: 60px; height: 2px; background: var(--gold); margin: 0 auto; }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        .service-item { text-align: center; padding: 40px; border: 1px solid #eee; background: #fff; }
+        .service-item i { font-size: 3rem; color: var(--gold); display: block; margin-bottom: 25px; }
+        .service-item h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; }
+        .service-item p { color: var(--text-light); font-size: 0.95rem; }
+
+        .image-strip {
+            height: 400px;
+            display: flex;
+            margin: 80px 0;
+        }
+        .img-box { flex: 1; background-size: cover; background-position: center; border: 5px solid var(--cream); }
+
+        footer { background: var(--charcoal); color: #fff; padding: 80px 20px; text-align: center; }
+        footer .logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin-bottom: 20px; }
+        footer p { font-size: 0.8rem; opacity: 0.5; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-inner">
+            <span class="badge">{{BADGE}}</span>
+            <h1>{{HOOK}}</h1>
+            <p>Bespoke solutions for the most discerning clients. Experience {{NICHE}} as it was meant to be in {{CITY}}.</p>
+            <a href="#" class="btn">Inquire Privately</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Experience Perfection</h2>
+            <div class="line"></div>
+        </div>
+        <div class="service-grid">
+            <div class="service-item">
+                <h3>{{BENEFIT_1}}</h3>
+                <p>{{DESC_1}}</p>
+            </div>
+            <div class="service-item">
+                <h3>{{BENEFIT_2}}</h3>
+                <p>{{DESC_2}}</p>
+            </div>
+            <div class="service-item">
+                <h3>{{BENEFIT_3}}</h3>
+                <p>{{DESC_3}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="image-strip">
+        <div class="img-box" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000')"></div>
+        <div class="img-box" style="background-image: url('https://images.unsplash.com/photo-1600607687940-4e524cb35da5?auto=format&fit=crop&q=80&w=1000')"></div>
+        <div class="img-box" style="background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1000')"></div>
+    </div>
+
+    <footer>
+        <div class="logo">{{BUSINESS_NAME}}</div>
+        <p>REFINEMENT // RELIABILITY // RESULTS</p>
+        <p style="margin-top: 40px;">© 2026 {{BUSINESS_NAME}} · {{CITY}}, {{STATE}}</p>
+    </footer>
+</body>
+</html>
