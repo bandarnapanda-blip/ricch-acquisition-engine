@@ -271,9 +271,9 @@ def check_inbox():
     print("=" * 60)
     
     domain_map = fetch_known_domains()
-    if not domain_map:
-        print("No leads in database to track.")
-        return
+    print("No leads in database to track.")
+    push_log("Inbox", "Monitor Active: 0 leads in tracking queue.")
+    return
     
     try:
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
@@ -319,12 +319,14 @@ def check_inbox():
         print(f"\n{'=' * 60}")
         print(f"  SCAN COMPLETE: Processed {len(tasks_to_process)} lead interactions")
         print(f"{'=' * 60}")
+        push_log("Inbox", f"Monitor Active: Checked {len(email_ids)} unread emails. Processed {len(tasks_to_process)} lead interactions.")
         
     except imaplib.IMAP4.error as e:
         print(f"IMAP Error: {e}")
         print("Make sure your Gmail App Password is correct.")
     except Exception as e:
         print(f"Error: {e}")
+        push_log("Inbox", f"Service Error: {e}")
 
 import time
 if __name__ == "__main__":

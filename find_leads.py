@@ -135,7 +135,13 @@ def scrape_query_playwright(query):
             url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
             
             page.goto(url, timeout=30000, wait_until="networkidle")
-            time.sleep(random.uniform(3, 6)) # Mimic human "think time"
+            # [STEALTH] Human Jitter: Random scroll and mouse move
+            for _ in range(random.randint(2, 4)):
+                page.mouse.move(random.randint(0, 1000), random.randint(0, 800))
+                page.mouse.wheel(0, random.randint(200, 600))
+                time.sleep(random.uniform(1, 4))
+            
+            time.sleep(random.uniform(3, 8)) # Mimic human "think time"
             
             # Extract links with specialized resilience
             leads_urls = []
@@ -168,14 +174,36 @@ def scrape_query_playwright(query):
         except Exception as e:
             # Check for CAPTCHA / Blocks
             page_content = page.content().lower() if 'page' in locals() else ""
-            if "captcha" in page_content or "robot" in page_content or "too many requests" in page_content:
-                print(f"  [BLOCK] CAPTCHA or Rate Limit detected on DuckDuckGo. Initiating Cooldown...")
-                push_log("Scraper", "CAPTCHA detected. Initiating 10-minute stealth cooldown.")
-                time.sleep(600) # 10 minute backoff
+            if "captcha" in page_content or "robot" in page_content or "too many requests" in page_content or "anomaly-modal" in page_content:
+                print(f"  [BLOCK] CAPTCHA or Rate Limit detected on DuckDuckGo. Initiating Emergency Backoff...")
+                push_log("Scraper", "CAPTCHA detected. Initiating 15-minute stealth backoff.")
+                time.sleep(900) # 15 minute backoff
             else:
                 print(f"  [ERROR] Playwright search failed: {e}")
         finally:
             browser.close()
+    return list(set(leads_urls))
+
+def scrape_query_brave(query):
+    """Fallback: Scrape Brave Search for high authority results."""
+    leads_urls = []
+    print(f"  [BRAVE] Launching Brave search for \"{query}\"...")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    try:
+        url = f"https://search.brave.com/search?q={query.replace(' ', '+')}"
+        response = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Scrape Brave results
+        results = soup.select('.result-header a, a.result-header')
+        for r in results:
+            href = r.get('href')
+            if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS) and 'brave.com' not in href:
+                leads_urls.append(href)
+    except Exception as e:
+        print(f"  [ERROR] Brave search failed: {e}")
     return list(set(leads_urls))
 
 def scrape_query_bing(query):
@@ -233,9 +261,19 @@ def scrape_query(query, niche, city):
     except Exception:
         pass
 
-    # Try Bing next (most reliable fallback after DDG block)
+    # Try Bing next
     try:
         urls = scrape_query_bing(query)
+        if urls:
+            for url in urls:
+                leads.append({"website": url, "contact_url": "", "city": city, "niche": niche})
+            return leads
+    except Exception:
+        pass
+
+    # Try Brave Search as last high-authority fallback
+    try:
+        urls = scrape_query_brave(query)
         if urls:
             for url in urls:
                 leads.append({"website": url, "contact_url": "", "city": city, "niche": niche})
@@ -278,8 +316,9 @@ def scrape_query(query, niche, city):
         response = requests.get(url, headers=headers, timeout=15)
         if "anomaly-modal" in response.text:
             print(f"  [WARNING] Captured by CAPTCHA. Retrying with different fingerprint...")
-            push_log("Scraper", "CAPTCHA detected. Fingerprint rotation active.")
-            time.sleep(random.uniform(5, 10))
+            push_log("Scraper", "CAPTCHA detected on DDG HTML fallback. Fingerprint rotation active.")
+            # Drastic Backoff for HTML fallback
+            time.sleep(random.uniform(30, 60))
             headers["User-Agent"] = random.choice(user_agents)
             response = requests.get(url, headers=headers, timeout=15)
         

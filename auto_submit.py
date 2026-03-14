@@ -97,7 +97,8 @@ async def generate_ai_pitch(website_text, domain, niche="Default", loss=5000, pr
 
 async def auto_submit_form(page, contact_url, pitch):
     try:
-        await page.goto(contact_url, timeout=20000, wait_until='domcontentloaded')
+        # Increased timeout and more resilient wait
+        await page.goto(contact_url, timeout=45000, wait_until='load')
         
         # Simple form filler heuristic
         inputs_filled = False

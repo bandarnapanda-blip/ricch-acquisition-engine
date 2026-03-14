@@ -4,7 +4,7 @@ import os
 import json
 import pandas as pd
 import pydeck as pdk
-import altair as alt
+import plotly.express as px
 import textwrap
 from datetime import datetime
 from dotenv import load_dotenv
@@ -42,7 +42,7 @@ def load_coords():
             return json.load(f)
     return {}
 
-@st.cache_data(ttl=60)
+@st.cache_data(ttl=300)
 def fetch_leads():
     """Fetch leads from Supabase."""
     endpoint = f"{SUPABASE_URL}/rest/v1/leads?select=*&order=created_at.desc"
@@ -65,8 +65,8 @@ def update_lead_status(lead_id, new_status):
         st.error(f"Error updating lead: {e}")
         return False
 
-@st.cache_data(ttl=1) # High frequency for live logs
-def fetch_activity_logs(limit=20):
+@st.cache_data(ttl=5) # Slightly longer for stability
+def fetch_activity_logs(limit=30):
     """Fetch recent activity logs from Supabase."""
     endpoint = f"{SUPABASE_URL}/rest/v1/activity_logs?select=*&order=created_at.desc&limit={limit}"
     try:
@@ -629,19 +629,13 @@ with tab_ana:
                 {"Stage": "Demo Sent", "Count": len(df[df['status'].isin(['Demo Sent', 'Closed'])])},
                 {"Stage": "Closed", "Count": len(df[df['status'] == 'Closed'])}
             ])
-            import altair as alt
-            funnel_chart = alt.Chart(funnel_data).mark_bar(
-                cornerRadiusTopLeft=10, cornerRadiusTopRight=10
-            ).encode(
-                x=alt.X('Stage:N', sort=None, title=None),
-                y=alt.Y('Count:Q', title=None),
-                color=alt.condition(
-                    alt.datum.Stage == 'Closed',
-                    alt.value('#ff4d94'), alt.value('#1a1d28')
-                ),
-                tooltip=['Stage', 'Count']
-            ).properties(height=300).configure_view(strokeOpacity=0)
-            st.altair_chart(funnel_chart, use_container_width=True)
+            import plotly.express as px
+            fig_funnel = px.bar(funnel_data, x='Stage', y='Count', color='Stage',
+                               color_discrete_map={'Closed': '#ff4d94'},
+                               color_discrete_sequence=['#1a1d28'])
+            fig_funnel.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
+                                    font_color="white", margin=dict(l=0, r=0, t=10, b=0), height=300, showlegend=False)
+            st.plotly_chart(fig_funnel, use_container_width=True)
         
         # System Controls Section
         st.markdown("### ⚙️ OS Command Center")
@@ -719,7 +713,14 @@ with tab_ana:
                 "Required MRR": m_values,
                 "Current Projection": [expected_mrr] * 3
             })
-            st.bar_chart(chart_df.set_index("Milestone"), color=["#ff4d94", "#11131a"])
+
+            if not chart_df.empty:
+                import plotly.express as px
+                fig = px.bar(chart_df, x="Milestone", y=["Required MRR", "Current Projection"], 
+                             barmode="group", color_discrete_sequence=["#11131a", "#ff4d94"])
+                fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
+                                font_color="white", margin=dict(l=0, r=0, t=20, b=0), height=250)
+                st.plotly_chart(fig, use_container_width=True)
             st.markdown(f'<div style="text-align:right; font-size:0.75rem; color:var(--text-dim);">Current Trajectory: <b>${int(expected_mrr):,}/mo</b></div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
         
@@ -730,11 +731,12 @@ with tab_ana:
             st.markdown('<div class="lx-card" style="height:400px;">', unsafe_allow_html=True)
             st.markdown("### Outreach Performance")
             if not df.empty:
-                # Mocked area chart
-                # Group by day and count
                 df['date'] = pd.to_datetime(df['created_at']).dt.date
                 daily = df.groupby('date').size().reset_index(name='leads')
-                st.area_chart(daily.set_index('date'), color="#ff4d94") 
+                fig_outreach = px.area(daily, x='date', y='leads', color_discrete_sequence=['#ff4d94'])
+                fig_outreach.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
+                                         font_color="white", margin=dict(l=0, r=0, t=10, b=0), height=300)
+                st.plotly_chart(fig_outreach, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
             
             st.markdown("<br>", unsafe_allow_html=True)
@@ -743,7 +745,10 @@ with tab_ana:
             if not df.empty:
                 niche_counts = df['niche'].value_counts().reset_index()
                 niche_counts.columns = ['niche', 'count']
-                st.bar_chart(niche_counts.set_index('niche'), color="#9d7cff")
+                fig_niche = px.bar(niche_counts, x='niche', y='count', color_discrete_sequence=['#9d7cff'])
+                fig_niche.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
+                                      font_color="white", margin=dict(l=0, r=0, t=10, b=0), height=180)
+                st.plotly_chart(fig_niche, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
             
             st.markdown('<div class="lx-card" style="height:350px; overflow-y:auto;">', unsafe_allow_html=True)
@@ -779,9 +784,12 @@ with tab_ana:
         # Bottom Activity Feed Terminal
         st.markdown('<div class="lx-card" style="background:#000; border:1px solid #1a1a1a; padding:15px; font-family:\'Courier New\', monospace; height:200px; overflow-y:auto; border-radius:12px;">', unsafe_allow_html=True)
         st.markdown('<div style="color:#33ff33; font-size:0.8rem; border-bottom:1px solid #1a1a1a; margin-bottom:10px; padding-bottom:5px;">> GLOBAL ACTIVITY TERM [SYNCED]</div>', unsafe_allow_html=True)
-        for log in activity_logs:
+        recent_logs = activity_logs[:50]
+        log_content = ""
+        for log in recent_logs:
             ts = datetime.fromisoformat(log['created_at'].replace('Z', '+00:00')).strftime("%H:%M:%S")
-            st.markdown(f'<div style="color:#33ff33; font-size:0.75rem; opacity:0.8;">[{ts}] [{log["service_name"]}] {log["message"]}</div>', unsafe_allow_html=True)
+            log_content += f"[{ts}] [{log['service_name']}] {log['message']}\n"
+        st.code(log_content, language="bash")
         st.markdown('</div>', unsafe_allow_html=True)
 
 with tab_pipe:
@@ -898,7 +906,7 @@ def render_orbital_map(df_map):
     )
     
     st.pydeck_chart(pdk.Deck(
-        map_style='mapbox://styles/mapbox/navigation-night-v1',
+        map_style='mapbox://styles/mapbox/dark-v10',
         initial_view_state=view_state,
         layers=[
             pdk.Layer(
@@ -976,19 +984,24 @@ with tab_show:
                 card_class = "elite-card" if is_a_tier else ""
                 tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px; letter-spacing:1px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
+                import streamlit.components.v1 as components
                 st.markdown(textwrap.dedent(f"""\
                 <div class="lx-card {card_class}">
                     {tier_label}
                     <div style="font-size:0.55rem; color:var(--text-dim); font-weight:800; letter-spacing:1px;">{meta['niche'].upper()}</div>
                     <div style="font-size:1.2rem; font-weight:900; margin:10px 0; color:#fff;">{meta['business_name']}</div>
-                    <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:20px; display:flex; align-items:center;">
+                    <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:10px; display:flex; align-items:center;">
                         <span style="margin-right:5px;">📍</span> {meta['city']}
                     </div>
-                    <a href="{meta['preview_url']}" target="_blank" style="display:block; width:100%; text-align:center; padding:12px; background:#fff; color:#000; border-radius:14px; text-decoration:none; font-weight:900; font-size:0.85rem; transition:0.3s; box-shadow: 0 4px 15px rgba(255,255,255,0.2);">
-                        View Elite Prototype →
-                    </a>
                 </div>
                 """), unsafe_allow_html=True)
+                
+                # Render prototype in isolated component
+                from generate_landing import generate_page
+                prototype_html = generate_page(meta['business_name'], meta['niche'], meta['city'], lead_id=lead['id'], score=opp_score)
+                components.html(prototype_html, height=250, scrolling=True)
+                
+                st.markdown(f'<a href="{meta["preview_url"]}" target="_blank" style="display:block; width:100%; text-align:center; padding:12px; background:#fff; color:#000; border-radius:14px; text-decoration:none; font-weight:900; font-size:0.85rem; transition:0.3s; margin-top:10px;">View Full Case Study →</a>', unsafe_allow_html=True)
                 
                 # Modern Approval Toggle
                 approval_state = st.toggle("Human Approval", value=is_approved, key=f"app_{lead['id']}")
