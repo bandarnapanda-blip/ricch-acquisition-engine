@@ -6,6 +6,7 @@ import os
 import argparse
 import asyncio
 from playwright.sync_api import sync_playwright
+from playwright_stealth import stealth
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -107,10 +108,27 @@ def scrape_query_playwright(query):
     print(f"  [STEALTH] Launching Playwright browser for \"{query}\"...")
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
+        
+        # [STEALTH] Randomize Fingerprint
+        user_agents = [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        ]
+        resolutions = [
+            {"width": 1920, "height": 1080},
+            {"width": 1366, "height": 768},
+            {"width": 1440, "height": 900}
+        ]
+        
         context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+            user_agent=random.choice(user_agents),
+            viewport=random.choice(resolutions)
         )
         page = context.new_page()
+        
+        # [STEALTH] Inject Stealth Scripts
+        stealth(page)
         try:
             # High-Resilience Strategy: Use html.duckduckgo.com with Human-like delays
             encoded_query = query.replace(' ', '+')
@@ -148,7 +166,14 @@ def scrape_query_playwright(query):
                 if len(leads_urls) >= MAX_RESULTS_PER_QUERY: break
                 
         except Exception as e:
-            print(f"  [ERROR] Playwright search failed: {e}")
+            # Check for CAPTCHA / Blocks
+            page_content = page.content().lower() if 'page' in locals() else ""
+            if "captcha" in page_content or "robot" in page_content or "too many requests" in page_content:
+                print(f"  [BLOCK] CAPTCHA or Rate Limit detected on DuckDuckGo. Initiating Cooldown...")
+                push_log("Scraper", "CAPTCHA detected. Initiating 10-minute stealth cooldown.")
+                time.sleep(600) # 10 minute backoff
+            else:
+                print(f"  [ERROR] Playwright search failed: {e}")
         finally:
             browser.close()
     return list(set(leads_urls))

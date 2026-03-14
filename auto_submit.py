@@ -267,12 +267,15 @@ async def main():
         print("No new leads.")
         return
     
+    # [PRIORITY] Process Elite leads first
+    print(f"Prioritizing {len([l for l in leads if l.get('status') == 'High Intel Ready'])} Elite leads...")
+    
     # Industrial Scaling: Parallel Processing
-    CONCURRENCY_LIMIT = 10
+    CONCURRENCY_LIMIT = 15
     semaphore = asyncio.Semaphore(CONCURRENCY_LIMIT)
     
     print(f"Processing {len(leads)} leads with {CONCURRENCY_LIMIT} parallel workers...")
-    push_log("Outreach", f"Initiating 10x Parallel Outreach for {len(leads)} leads.")
+    push_log("Outreach", f"Initiating {CONCURRENCY_LIMIT}x Parallel Outreach for {len(leads)} leads.")
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -280,7 +283,7 @@ async def main():
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
         
-        tasks = [process_lead(semaphore, context, lead, headers) for lead in leads[:50]] # Limit batch size
+        tasks = [process_lead(semaphore, context, lead, headers) for lead in leads] 
         results = await asyncio.gather(*tasks)
         
         success_count = sum(1 for r in results if r)
