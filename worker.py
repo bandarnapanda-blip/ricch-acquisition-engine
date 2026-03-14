@@ -1,5 +1,7 @@
 import time
 import asyncio
+import os
+import socket
 from database import db
 import tasks
 import socket
