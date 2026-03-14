@@ -725,7 +725,7 @@ elif selected_tab == "Pipeline":
                 </div>
                 """)
 
-            st.markdown(textwrap.dedent(f"""\
+            st.markdown(f"""
             <div class="lx-card" style="padding:15px; margin-bottom:15px; border-left:4px solid {'var(--accent-pink)' if display_score >= 70 else 'rgba(255,255,255,0.1)'};">
                 <div style="display:flex; align-items:center; justify-content:space-between;">
                     <div style="display:flex; align-items:center; gap:15px;">
@@ -746,7 +746,7 @@ elif selected_tab == "Pipeline":
                     </div>
                 </div>
             </div>
-            """), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
             
             with st.expander("Deep Intelligence Audit"):
                 icol1, icol2 = st.columns([2, 1])
@@ -822,7 +822,7 @@ elif selected_tab == "Showcase":
                 tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px; letter-spacing:1px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
                 import streamlit.components.v1 as st_comp
-                st.markdown(textwrap.dedent(f"""\
+                st.markdown(f"""
                 <div class="lx-card {card_class}">
                     {tier_label}
                     <div style="font-size:0.55rem; color:var(--text-dim); font-weight:800; letter-spacing:1px;">{meta['niche'].upper()}</div>
@@ -831,7 +831,7 @@ elif selected_tab == "Showcase":
                         <span style="margin-right:5px;">📍</span> {meta['city']}
                     </div>
                 </div>
-                """), unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
                 
                 # Render prototype in isolated component
                 from generate_landing import generate_page

@@ -94,8 +94,101 @@ def get_conversion_copy(niche):
     
     return copy
 
+def get_elite_template(business_name, niche, city):
+    # Map niches to high-end architectural/business imagery
+    image_map = {
+        "Roofing": "https://images.unsplash.com/photo-1632758113409-e8550742d131?q=80&w=2000&auto=format&fit=crop",
+        "Epoxy Garage": "https://images.unsplash.com/photo-1595846519845-68e298c2edd8?q=80&w=2000&auto=format&fit=crop",
+        "Pool Builders": "https://images.unsplash.com/photo-1576013551627-11971f64baf1?q=80&w=2000&auto=format&fit=crop"
+    }
+    
+    # Fallback premium image if niche isn't mapped
+    bg_image = image_map.get(niche, "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop")
+
+    elite_html = f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{business_name} | Elite {niche}</title>
+        <!-- Tailwind CSS for modern styling -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Premium Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        <style>
+            body {{ font-family: 'Inter', sans-serif; }}
+            h1, h2, h3 {{ font-family: 'Playfair Display', serif; }}
+            /* SECURE THE PREVIEW: Prevent clicks from routing to dashboard */
+            a, button {{ 
+                pointer-events: none !important;
+                cursor: default !important;
+            }}
+            /* Add a custom cursor so it still feels like a real site */
+            body {{
+                cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
+            }}
+        </style>
+    </head>
+    <body class="bg-zinc-50 text-zinc-900 antialiased selection:bg-black selection:text-white">
+        
+        <!-- Navigation -->
+        <nav class="absolute w-full z-10 top-0 py-6 px-10 flex justify-between items-center text-white mix-blend-difference">
+            <div class="text-2xl font-bold tracking-tighter uppercase">{business_name}.</div>
+            <div class="space-x-8 text-sm tracking-widest uppercase hidden md:block">
+                <span>Services</span>
+                <span>Portfolio</span>
+                <span>Contact</span>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="{bg_image}" alt="{niche} in {city}" class="w-full h-full object-cover brightness-50">
+            </div>
+            <div class="relative z-10 text-center text-white px-4 max-w-5xl mx-auto mt-20">
+                <p class="uppercase tracking-[0.3em] text-sm mb-6 text-zinc-300">The standard for {city}</p>
+                <h1 class="text-6xl md:text-8xl font-extrabold leading-tight mb-8 drop-shadow-lg">
+                    Redefining <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500">{niche}</span>
+                </h1>
+                <p class="text-lg md:text-xl font-light max-w-2xl mx-auto mb-10 text-zinc-300">
+                    Precision engineering meets flawless execution. Upgrade your property's value with {city}'s premier architectural and design firm.
+                </p>
+                <button class="bg-white text-black px-10 py-4 uppercase tracking-widest text-sm hover:bg-zinc-200 transition-all duration-300">
+                    Request Private Consultation
+                </button>
+            </div>
+        </section>
+
+        <!-- Stats Section (Glassmorphism) -->
+        <section class="relative -mt-20 z-20 max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white/90 backdrop-blur-md p-10 shadow-2xl border border-zinc-100">
+                    <div class="text-4xl font-bold mb-2">10+</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500">Years Experience</div>
+                </div>
+                <div class="bg-white/90 backdrop-blur-md p-10 shadow-2xl border border-zinc-100">
+                    <div class="text-4xl font-bold mb-2">100%</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500">Client Satisfaction</div>
+                </div>
+                <div class="bg-white/90 backdrop-blur-md p-10 shadow-2xl border border-zinc-100 bg-zinc-900 text-white">
+                    <div class="text-4xl font-bold mb-2">24h</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-400">Deploy Time</div>
+                </div>
+            </div>
+        </section>
+
+    </body>
+    </html>
+    """
+    return elite_html
+
 def generate_page(business_name, niche, city, lead_id=None, score=0):
     """Generate a high-authority landing page from an archetype."""
+    if score >= 75:
+        return get_elite_template(str(business_name or "Your Business"), niche or "Your Industry", city or "Your Area")
+
     template_name = select_archetype(niche, score)
     template_path = os.path.join(TEMPLATE_DIR, template_name)
     
@@ -126,6 +219,22 @@ def generate_page(business_name, niche, city, lead_id=None, score=0):
     # Tier Indicator (Elite Branding)
     tier_badge = '<div style="background:gold; color:black; padding:5px 15px; border-radius:50px; font-weight:bold; font-size:12px; display:inline-block; margin-bottom:10px;">ELITE A-TIER PARTNER</div>' if score >= 75 else ''
     html = html.replace("{{TIER_BADGE}}", tier_badge)
+
+    # SECURE THE PREVIEW: Prevent clicks from routing to dashboard
+    security_style = """
+    <style>
+        /* This disables all links from redirecting, keeping them trapped safely in the preview */
+        a {
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        /* Add a custom cursor so it still feels like a real site */
+        body {
+            cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
+        }
+    </style>
+    """
+    html = html.replace("</head>", f"{security_style}\n</head>")
     
     return html
 
