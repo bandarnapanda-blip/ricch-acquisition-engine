@@ -2,14 +2,17 @@ import time
 import asyncio
 from database import db
 import tasks
+import socket
+
+# Unique identifier for this worker instance
+WORKER_ID = f"worker-{socket.gethostname()}-{os.getpid()}" if hasattr(os, 'getpid') else f"worker-{socket.gethostname()}"
 
 def process_task(task):
     task_id = task['id']
     task_type = task['task_type']
     payload = task.get('payload', {})
     
-    db.update_task_status(task_id, "processing")
-    db.push_log("Worker", f"Processing task {task_id}: {task_type}")
+    db.push_log("Worker", f"Starting processing for task {task_id}: {task_type}")
     
     try:
         result = None
@@ -44,34 +47,37 @@ def process_task(task):
             result = {"status": "error", "message": f"Unknown task type: {task_type}"}
 
         if result and result.get('status') == "success":
-            db.update_task_status(task_id, "completed")
-            db.push_log("Worker", f"Task {task_id} completed successfully.")
+            db.mark_task_done(task_id)
+            db.push_log("Worker", f"Task {task_id} marked as DONE.")
         else:
-            db.update_task_status(task_id, "failed", error=result.get('message') or result.get('error'))
-            db.push_log("Worker", f"Task {task_id} failed: {result.get('message') or result.get('error')}")
+            err = result.get('message') or result.get('error') or "Unknown failure"
+            db.mark_task_failed(task_id, err)
+            db.push_log("Worker", f"Task {task_id} FAILED: {err}")
 
     except Exception as e:
-        db.update_task_status(task_id, "failed", error=str(e))
+        db.mark_task_failed(task_id, str(e))
         db.push_log("Worker", f"CRITICAL ERROR processing task {task_id}: {e}")
 
 def main():
-    db.push_log("Worker", "Antigravity Worker Engine Online. Listening for tasks...")
-    print("Antigravity Worker Engine Online. Listening for tasks...")
+    db.push_log("Worker", f"Antigravity Worker Engine Online [{WORKER_ID}]. Listening for tasks...")
+    print(f"Antigravity Worker Engine Online [{WORKER_ID}]. Listening for tasks...")
     
     while True:
         try:
-            pending_tasks = db.fetch_pending_tasks(limit=5)
-            if not pending_tasks:
+            # Atomic claim: Only this worker gets this specific task
+            task = db.claim_task(WORKER_ID)
+            
+            if not task:
                 time.sleep(10) # Wait for new tasks
                 continue
                 
-            for task in pending_tasks:
-                process_task(task)
-                time.sleep(2) # Small break between tasks to avoid rate limits
+            process_task(task)
+            time.sleep(2) # Small break between tasks to avoid rate limits
                 
         except Exception as e:
             print(f"Worker Loop Error: {e}")
             time.sleep(30) # Backoff on major DB error
 
 if __name__ == "__main__":
+    import os # Needed for getpid fallback
     main()
