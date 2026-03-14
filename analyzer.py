@@ -4,7 +4,7 @@ import os
 import json
 import time
 from urllib.parse import urlparse
-import google.generativeai as genai
+from google import genai
 import whois
 from datetime import datetime
 from dotenv import load_dotenv
@@ -32,9 +32,10 @@ NICHE_LTV = {
     "Default": 7500
 }
 
-def get_gemini_model(key_index=0):
-    genai.configure(api_key=GEMINI_KEYS[key_index % len(GEMINI_KEYS)])
-    return genai.GenerativeModel('gemini-1.5-flash')
+def get_genai_client(key_index=0):
+    key = GEMINI_KEYS[key_index % len(GEMINI_KEYS)] if GEMINI_KEYS else None
+    if not key: return None
+    return genai.Client(api_key=key)
 
 def calculate_revenue_loss(niche, audit):
     """Estimate monthly revenue leakage based on technical failures."""
@@ -185,10 +186,11 @@ def generate_ai_audit(url, audit, niche="Default"):
     
     for attempt, key in enumerate(GEMINI_KEYS):
         try:
-            model = get_gemini_model(attempt)
-            response = model.generate_content(prompt)
+            client = get_genai_client(attempt)
+            if not client: continue
+            response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
             return response.text
-        except:
+        except Exception as e:
             if attempt == len(GEMINI_KEYS) - 1:
                 return f"Revenue Audit on Standby. Est Leakage: ${loss:,}/mo. Opportunity: {tier}."
     return f"Revenue Audit on Standby. Est Leakage: ${loss:,}/mo."

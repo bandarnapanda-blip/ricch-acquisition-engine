@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from streamlit_option_menu import option_menu
 from streamlit_supabase_auth import login_form
 from config import CITIES, NICHES, AGENCY_NAME, AGENCY_DOMAIN
+from database import db
 
 # Load Environment
 load_dotenv()
@@ -22,18 +23,14 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 COORDS_FILE = "city_coords.json"
 BENCHMARK_FILE = "competitor_benchmarks.json"
 
-import subprocess
-try:
-    CREATE_NEW_CONSOLE = subprocess.CREATE_NEW_CONSOLE
-except AttributeError:
-    CREATE_NEW_CONSOLE = 0x00000010
-
-def get_headers():
-    return {
-        "apikey": SUPABASE_KEY,
-        "Authorization": f"Bearer {SUPABASE_KEY}",
-        "Content-Type": "application/json"
-    }
+# ──────────────────────────────  TASK QUEUE HELPERS  ──────────────────────────────
+def queue_task(task_type, payload):
+    """Queue a task for the background worker and show a toast."""
+    if db.queue_task(task_type, payload):
+        st.toast(f"✅ {task_type.capitalize()} task queued.")
+        db.push_log("Dashboard", f"Queued {task_type} task: {payload}")
+    else:
+        st.error("Failed to queue task. Check DB connection.")
 
 @st.cache_data(ttl=3600)
 def load_coords():
@@ -42,48 +39,6 @@ def load_coords():
         with open(COORDS_FILE, 'r') as f:
             return json.load(f)
     return {}
-
-@st.cache_data(ttl=300)
-def fetch_leads():
-    """Fetch leads from Supabase."""
-    endpoint = f"{SUPABASE_URL}/rest/v1/leads?select=*&order=created_at.desc"
-    try:
-        response = requests.get(endpoint, headers=get_headers())
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        st.error(f"Error fetching leads: {e}")
-        return []
-
-def update_lead_status(lead_id, new_status):
-    """Update a lead's status in Supabase."""
-    endpoint = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead_id}"
-    try:
-        response = requests.patch(endpoint, headers=get_headers(), json={"status": new_status})
-        response.raise_for_status()
-        return True
-    except Exception as e:
-        st.error(f"Error updating lead: {e}")
-        return False
-
-@st.cache_data(ttl=5) # Slightly longer for stability
-def fetch_activity_logs(limit=30):
-    """Fetch recent activity logs from Supabase."""
-    endpoint = f"{SUPABASE_URL}/rest/v1/activity_logs?select=*&order=created_at.desc&limit={limit}"
-    try:
-        response = requests.get(endpoint, headers=get_headers())
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        return []
-
-def push_log(service, message):
-    """Push a log entry to Supabase (mostly for internal use in other scripts, but kept here for completeness)."""
-    endpoint = f"{SUPABASE_URL}/rest/v1/activity_logs"
-    try:
-        requests.post(endpoint, headers=get_headers(), json={"service_name": service, "message": message})
-    except:
-        pass
 
 # ──────────────────────────────  PAGE CONFIG  ──────────────────────────────
 st.set_page_config(
@@ -379,7 +334,7 @@ def render_orbital_map(df_map):
 # ──────────────────────────────  SHADOW PREVIEW ROUTER  ──────────────────────
 if "preview_id" in st.query_params:
     pid = st.query_params["preview_id"]
-    leads = fetch_leads()
+    leads = db.fetch_leads()
     found_lead = next((l for l in leads if str(l.get('id')) == str(pid)), None)
     
     if found_lead:
@@ -444,9 +399,9 @@ if st.session_state.get("auth_bypassed", False):
     st.sidebar.success("🛡️ LOGGED IN VIA DEV BYPASS")
 
 # ──────────────────────────────  DATA PREP  ──────────────────────────────
-leads = fetch_leads()
+leads = db.fetch_leads()
 df = pd.DataFrame(leads)
-activity_logs = fetch_activity_logs()
+activity_logs = db.fetch_logs(limit=30)
 
 if not df.empty:
     # Fix potential NaN errors
@@ -602,29 +557,22 @@ if selected_tab == "Dashboard":
         ctrl1, ctrl2, ctrl3, ctrl4 = st.columns(4)
         with ctrl1:
             if st.button("🚀 Force Lead Scrape", width="stretch"):
-                st.session_state.is_scraping = True
-                add_log("Spinning up Lead Discovery Engine...")
-                subprocess.Popen(["python", "find_leads.py"], creationflags=CREATE_NEW_CONSOLE)
+                queue_task("scrape", {"niche": NICHES[0], "city": CITIES[0]})
         with ctrl2:
-            if st.button("🧠 Backfill Intel", width="stretch"):
-                add_log("Analyzing historical leads...")
-                subprocess.Popen(["python", "find_leads.py", "--backfill"], creationflags=CREATE_NEW_CONSOLE)
+            if st.button("🧠 Audit Pending Leads", width="stretch"):
+                pending_leads = df[df['status'] == 'New']
+                for _, lead in pending_leads.iterrows():
+                    queue_task("audit", {"lead_id": lead['id']})
         with ctrl3:
             if st.button("📥 Inbox & Nurture", width="stretch"):
-                add_log("Checking for replies and follow-up opportunities...")
-                subprocess.Popen(["python", "inbox_monitor.py"], creationflags=CREATE_NEW_CONSOLE)
-                subprocess.Popen(["python", "nurture_engine.py"], creationflags=CREATE_NEW_CONSOLE)
+                queue_task("inbox_check", {})
+                queue_task("nurture_followup", {})
         with ctrl4:
-            if st.session_state.is_scraping:
-                if st.button("🛑 STOP ENGINE", width="stretch", type="primary"):
-                    st.session_state.is_scraping = False
-                    add_log("Emergency Engine Shutdown triggered.")
-                    st.rerun()
-            else:
-                a_tier_ready = len(df[df['status'] == 'High Intel Ready']) if not df.empty else 0
-                if st.button(f"🤖 War Room: Submit {a_tier_ready} Leads", width="stretch", disabled=a_tier_ready == 0):
-                    add_log(f"Initiating mass outreach sequence for {a_tier_ready} high-intel leads...")
-                    subprocess.Popen(["python", "auto_submit.py"], creationflags=CREATE_NEW_CONSOLE)
+            a_tier_ready = len(df[df['status'] == 'High Intel Ready']) if not df.empty else 0
+            if st.button(f"🤖 War Room: Submit {a_tier_ready} Leads", width="stretch", disabled=a_tier_ready == 0):
+                ready_leads = df[df['status'] == 'High Intel Ready']
+                for _, lead in ready_leads.iterrows():
+                    queue_task("outreach", {"lead_id": lead['id']})
 
         st.markdown("<br>", unsafe_allow_html=True)
         col_scale1, col_scale2 = st.columns([1, 2])
@@ -640,9 +588,9 @@ if selected_tab == "Dashboard":
             </div>
             """), unsafe_allow_html=True)
             if st.button(f"🚀 Deploy {active_niche} Ops", width="stretch"):
-                st.session_state.is_scraping = True
-                add_log(f"Redirecting Scraper to {active_niche} (High-Ticket Mode)...")
-                subprocess.Popen(["python", "find_leads.py", "--niche", active_niche], creationflags=CREATE_NEW_CONSOLE)
+                # Deploy scaled scraping task
+                for city in CITIES[:5]: # Wide sweep for the chosen niche
+                    queue_task("scrape", {"niche": active_niche, "city": city})
             st.markdown('</div>', unsafe_allow_html=True)
         with col_scale2:
             st.markdown('<div class="lx-card" style="height:380px;">', unsafe_allow_html=True)
@@ -768,7 +716,7 @@ elif selected_tab == "Pipeline":
                     st.markdown("#### ⚙️ Operations")
                     n_status = st.selectbox("Update Stage", ["New", "High Intel Ready", "Contacted", "Replied", "Closed"], index=["New", "High Intel Ready", "Contacted", "Replied", "Closed"].index(lead['status']) if lead['status'] in ["New", "High Intel Ready", "Contacted", "Replied", "Closed"] else 0, key=f"s_{lead['id']}")
                     if st.button("Commit Change", key=f"b_{lead['id']}"):
-                        if update_lead_status(lead['id'], n_status):
+                        if db.update_lead(lead['id'], {"status": n_status}):
                             st.toast("Intelligence Updated.")
                             st.rerun()
                     
@@ -842,14 +790,11 @@ elif selected_tab == "Showcase":
                 
                 approval_state = st.toggle("Human Approval", value=is_approved, key=f"app_s_{lead['id']}")
                 if approval_state != is_approved:
-                    endpoint = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead['id']}"
-                    headers = get_headers()
-                    try:
-                        requests.patch(endpoint, headers=headers, json={"is_approved": approval_state})
+                    if db.update_lead(lead['id'], {"is_approved": approval_state}):
                         st.success("Approved!" if approval_state else "Unapproved", icon="✅")
                         st.rerun()
-                    except Exception as e:
-                        st.error(f"Sync error: {e}")
+                    else:
+                        st.error("Sync error: Database update failed.")
         
         st.divider()
         if st.button("🔨 Build Public Case Studies", width="stretch"):

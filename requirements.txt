@@ -8,5 +8,6 @@ python-dotenv
 playwright
 playwright-stealth
 openai
+google-genai
 streamlit-supabase-auth
 streamlit-option-menu
