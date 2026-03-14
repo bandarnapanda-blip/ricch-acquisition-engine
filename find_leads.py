@@ -112,32 +112,41 @@ def scrape_query_playwright(query):
         )
         page = context.new_page()
         try:
-            page.goto(f"https://duckduckgo.com/?q={query.replace(' ', '+')}&ia=web", timeout=30000)
+            # High-Resilience Strategy: Use html.duckduckgo.com with Human-like delays
+            encoded_query = query.replace(' ', '+')
+            url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
             
-            # Industrial Scaling: Deep Scroll for more results
-            for _ in range(8):
-                page.evaluate("window.scrollBy(0, 1000)")
-                time.sleep(1)
+            page.goto(url, timeout=30000, wait_until="networkidle")
+            time.sleep(random.uniform(3, 6)) # Mimic human "think time"
             
-            # Try to click "More Results" if it appears (DuckDuckGo style)
-            try:
-                more_btn = page.locator('button:has-text("More Results")')
-                if await more_btn.is_visible():
-                    await more_btn.click()
-                    await asyncio.sleep(2)
-                    for _ in range(4):
-                        page.evaluate("window.scrollBy(0, 1000)")
-                        time.sleep(1)
-            except: pass
-
-            # Extract links
-            results = page.locator('a[data-testid="result-title-a"]').all()
-            for r in results:
-                href = r.get_attribute('href')
-                if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS):
-                    leads_urls.append(href)
-                if len(leads_urls) >= MAX_RESULTS_PER_QUERY * 3: # X3 multiplier for deep search
-                    break
+            # Extract links with specialized resilience
+            leads_urls = []
+            
+            # Selector list based on subagent findings
+            selectors = ['.result__a', 'h2 a', 'a.result__a']
+            
+            for selector in selectors:
+                try:
+                    results = page.locator(selector).all()
+                    for r in results:
+                        href = r.get_attribute('href')
+                        if not href: continue
+                        
+                        # Handle DDG Redirects (uddg)
+                        clean_url = href
+                        if 'uddg=' in href:
+                            import urllib.parse
+                            parsed = urllib.parse.urlparse(href)
+                            params = urllib.parse.parse_qs(parsed.query)
+                            uddg_param = params.get('uddg', [''])[0]
+                            if uddg_param:
+                                clean_url = urllib.parse.unquote(uddg_param)
+                        
+                        if clean_url and 'http' in clean_url and not any(d in clean_url for d in DIRECTORY_DOMAINS) and 'duckduckgo' not in clean_url:
+                            leads_urls.append(clean_url)
+                except: continue
+                if len(leads_urls) >= MAX_RESULTS_PER_QUERY: break
+                
         except Exception as e:
             print(f"  [ERROR] Playwright search failed: {e}")
         finally:
@@ -162,12 +171,20 @@ def scrape_query_bing(query):
             response.raise_for_status()
             soup = BeautifulSoup(response.text, 'html.parser')
             
-            results = soup.select('li.b_algo h2 a')
+            # Extract links with broad BeautifulSoup selectors
+            results = soup.select('li.b_algo h2 a, .b_algo a, h2 a, .result__a, article a')
             for r in results:
                 href = r.get('href')
-                if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS):
+                if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS) and not any(s in href for s in ['bing.com', 'microsoft.com', 'duckduckgo.com']):
                     leads_urls.append(href)
             
+            # Final Fallback: Grab ANY external link that isn't a directory
+            if not leads_urls:
+                for a in soup.find_all('a', href=True):
+                    href = a['href']
+                    if 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS) and not any(s in href for s in ['bing.com', 'microsoft.com', 'duckduckgo.com', 'facebook.com', 'twitter.com', 'instagram.com']):
+                        leads_urls.append(href)
+
             if len(leads_urls) >= MAX_RESULTS_PER_QUERY * 3:
                 break
             time.sleep(random.uniform(2, 4))
@@ -340,18 +357,13 @@ def upsert_to_supabase(leads):
             "niche": lead["niche"],
             "city": lead["city"],
             "opportunity_score": lead.get("opportunity_score", 0),
+            "website_score": lead.get("opportunity_score", 0), # Map to existing column
             "mobile_score": lead.get("mobile_score", 0),
             "speed_score": lead.get("speed_score", 0),
             "seo_score": lead.get("seo_score", 0),
             "website_roast": lead.get("website_roast", ""),
             "revenue_loss": lead.get("revenue_loss", 0),
-            "status": lead.get("status", "New"),
-            "last_stage": lead.get("last_stage", "scraped"),
-            "has_ssl": lead.get("has_ssl", False),
-            "domain_age_years": lead.get("domain_age_years", 0),
-            "broken_layout_detected": lead.get("broken_layout_detected", False),
-            "missing_quote_form": lead.get("missing_quote_form", True),
-            "has_social_links": lead.get("has_social_links", False)
+            "status": lead.get("status", "New")
         }
         
         # Check for existence
@@ -418,48 +430,48 @@ def main():
                 
                 print(f"  Found {len(new_leads)} potential businesses.")
                 
-                # Deduplicate before probing (per city/niche set)
+                # Audit each lead immediately after scraping a query to show real-time progress
                 for lead in new_leads:
-                    if lead['website'] not in [l['website'] for l in query_leads]:
-                        query_leads.append(lead)
-
-            # Audit the batch for this niche/city
-            for lead in query_leads:
-                print(f"  Probing {lead['website']}...")
-                contact_url = get_contact_page(lead["website"])
-                if contact_url:
-                    lead["contact_url"] = contact_url
-                
-                # Advanced Analysis
-                audit = analyze_site(lead["website"])
-                if audit:
-                    lead.update(audit)
-                    opp_score = calculate_opportunity_score(audit, niche=niche)
-                    lead["opportunity_score"] = opp_score
-                    lead["mobile_score"] = 100 if audit["mobile_friendly"] else 0
-                    lead["speed_score"] = audit["page_speed_score"]
-                    lead["seo_score"] = audit["seo_score"]
-                    lead["revenue_loss"] = calculate_revenue_loss(niche, audit)
+                    # Deduplicate before auditing
+                    if lead['website'] in [l['website'] for l in query_leads]:
+                        continue
+                        
+                    print(f"  Probing {lead['website']}...")
+                    contact_url = get_contact_page(lead["website"])
+                    if contact_url:
+                        lead["contact_url"] = contact_url
                     
-                    if opp_score >= 40:
-                        from analyzer import get_tier
-                        tier = get_tier(opp_score)
-                        print(f"    -> !! {tier} (score: {opp_score}) -- Generating CEO Audit...")
-                        lead["website_roast"] = generate_ai_audit(lead["website"], audit, niche=niche)
-                        lead["status"] = "High Intel Ready"
+                    # Advanced Analysis
+                    audit = analyze_site(lead["website"])
+                    if audit:
+                        lead.update(audit)
+                        opp_score = calculate_opportunity_score(audit, niche=niche)
+                        lead["opportunity_score"] = opp_score
+                        lead["mobile_score"] = 100 if audit["mobile_friendly"] else 0
+                        lead["speed_score"] = audit["page_speed_score"]
+                        lead["seo_score"] = audit["seo_score"]
+                        lead["revenue_loss"] = calculate_revenue_loss(niche, audit)
+                        
+                        if opp_score >= 40:
+                            from analyzer import get_tier
+                            tier = get_tier(opp_score)
+                            print(f"    -> !! {tier} (score: {opp_score}) -- Generating CEO Audit...")
+                            lead["website_roast"] = generate_ai_audit(lead["website"], audit, niche=niche)
+                            lead["status"] = "High Intel Ready"
+                        else:
+                            print(f"    -> Opportunity Score: {opp_score}")
+                    
+                    # 10x Scaling: Upsert IMMEDIATELY to show results in dashboard
+                    if SUPABASE_URL and SUPABASE_KEY:
+                        upsert_to_supabase([lead])
                     else:
-                        print(f"    -> Opportunity Score: {opp_score}")
-                
-                time.sleep(random.uniform(1.5, 3)) # Optimized delay for scale
-            
+                        save_to_csv([lead])
+                        
+                    query_leads.append(lead)
+                    time.sleep(random.uniform(1.0, 2.5)) 
+
             all_leads.extend(query_leads)
-            
-            # Save progress live to Supabase/CSV
-            if query_leads:
-                if SUPABASE_URL and SUPABASE_KEY:
-                    upsert_to_supabase(query_leads)
-                else:
-                    save_to_csv(query_leads)
+            time.sleep(random.uniform(2, 5))
 
             time.sleep(random.uniform(3, 7))
 
