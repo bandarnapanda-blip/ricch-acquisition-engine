@@ -108,10 +108,10 @@ def generate_page(business_name, niche, city, lead_id=None, score=0):
     copy = get_conversion_copy(niche)
     
     # Standard Placeholders
-    html = html.replace("{{BUSINESS_NAME}}", business_name)
-    html = html.replace("{{NICHE}}", niche)
-    html = html.replace("{{CITY}}", city)
-    html = html.replace("{{STATE}}", STATE)
+    html = html.replace("{{BUSINESS_NAME}}", str(business_name or "Your Business"))
+    html = html.replace("{{NICHE}}", niche or "Your Industry")
+    html = html.replace("{{CITY}}", city or "Your Area")
+    html = html.replace("{{STATE}}", STATE or "")
     
     # Creative Engine Placeholders
     html = html.replace("{{BADGE}}", copy["badge"])

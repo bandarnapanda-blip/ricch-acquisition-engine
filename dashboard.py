@@ -8,6 +8,7 @@ import plotly.express as px
 import textwrap
 from datetime import datetime
 from dotenv import load_dotenv
+from streamlit_option_menu import option_menu
 from streamlit_supabase_auth import login_form
 from config import CITIES, NICHES, AGENCY_NAME, AGENCY_DOMAIN
 
@@ -334,6 +335,47 @@ def add_log(msg):
     if len(st.session_state.system_logs) > 50:
         st.session_state.system_logs.pop(0)
 
+@st.fragment(run_every="5s")
+def render_orbital_map(df_map):
+    st.session_state.map_bearing = (st.session_state.map_bearing + 5) % 360
+    
+    view_state = pdk.ViewState(
+        latitude=df_map['lat'].mean() if not df_map.empty else 37.09,
+        longitude=df_map['lon'].mean() if not df_map.empty else -95.71,
+        zoom=3.5,
+        pitch=60,
+        bearing=st.session_state.map_bearing
+    )
+    
+    st.pydeck_chart(pdk.Deck(
+        map_style='mapbox://styles/mapbox/dark-v10',
+        initial_view_state=view_state,
+        layers=[
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=df_map,
+                get_position='[lon, lat]',
+                get_color='[255, 77, 148, 200]',
+                get_radius='size',
+                pickable=True,
+                auto_highlight=True,
+                radius_min_pixels=5,
+                radius_max_pixels=30
+            ),
+            pdk.Layer(
+                'TextLayer',
+                data=df_map,
+                get_position='[lon, lat]',
+                get_text='name',
+                get_color='[255, 255, 255, 200]',
+                get_size=18,
+                get_alignment_baseline='"bottom"',
+                font_family='"Outfit", sans-serif'
+            )
+        ],
+        tooltip={"text": "{name}"}
+    ))
+
 # ──────────────────────────────  SHADOW PREVIEW ROUTER  ──────────────────────
 if "preview_id" in st.query_params:
     pid = st.query_params["preview_id"]
@@ -404,186 +446,104 @@ if st.session_state.get("auth_bypassed", False):
 # ──────────────────────────────  DATA PREP  ──────────────────────────────
 leads = fetch_leads()
 df = pd.DataFrame(leads)
+activity_logs = fetch_activity_logs()
 
 if not df.empty:
     # Fix potential NaN errors
-    df['revenue'] = df['revenue'].fillna(0).astype(float)
-    df['opportunity_score'] = df['opportunity_score'].fillna(0).astype(int)
-    df['mobile_score'] = df['mobile_score'].fillna(0).astype(int)
-    df['speed_score'] = df['speed_score'].fillna(0).astype(int)
-    df['seo_score'] = df['seo_score'].fillna(0).astype(int)
+    df['revenue'] = df.get('revenue', pd.Series([0]*len(df))).fillna(0).astype(float)
+    df['opportunity_score'] = df.get('opportunity_score', pd.Series([0]*len(df))).fillna(0).astype(int)
+    df['mobile_score'] = df.get('mobile_score', pd.Series([0]*len(df))).fillna(0).astype(int)
+    df['speed_score'] = df.get('speed_score', pd.Series([0]*len(df))).fillna(0).astype(int)
+    df['seo_score'] = df.get('seo_score', pd.Series([0]*len(df))).fillna(0).astype(int)
     df['monthly_value'] = df.get('monthly_value', pd.Series([0]*len(df))).fillna(0).astype(float)
     df['revenue_loss'] = df.get('revenue_loss', pd.Series([0]*len(df))).fillna(0).astype(float)
     df['reply_status'] = df.get('reply_status', pd.Series(['']*len(df))).fillna('')
     
     total_rev = df['revenue'].sum()
     total_leads = len(df)
-    leads_contacted = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent'])])
-    leads_replied = len(df[df['status'].isin(['Replied', 'Demo Sent'])])
+    leads_contacted = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent', 'Closed'])])
     
-    # Calculate Expected MRR: Actual Revenue + (Monthly Value of Positive/Demo Leads)
-    # Plus a 10% projection from contacted leads
+    # New $1B+ Business Metrics
+    total_leakage = df['revenue_loss'].sum()
+    
     actual_mrr = df[df['status'] == 'Closed']['monthly_value'].sum()
     potential_mrr = df[df['status'].isin(['Replied', 'Demo Sent'])]['monthly_value'].sum()
     pipeline_mrr = df[df['status'] == 'Contacted']['monthly_value'].sum() * 0.1
     expected_mrr = actual_mrr + potential_mrr + pipeline_mrr
     
     avg_opp = df['opportunity_score'].mean()
+    
+    # Outreach & Reply Intelligence
+    total_sent = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent', 'Closed'])])
+    total_replies = len(df[df['status'].isin(['Replied', 'Demo Sent', 'Closed'])])
+    reply_rate = (total_replies / total_sent * 100) if total_sent > 0 else 0
+    hot_leads = len(df[df['reply_status'] == 'positive'])
 else:
-    total_rev, total_leads, leads_contacted, leads_replied, expected_mrr, avg_opp = 0, 0, 0, 0, 0, 0
+    total_rev = 0
+    total_leads = 0
+    leads_contacted = 0
+    total_leakage = 0
+    expected_mrr = 0
+    avg_opp = 0
+    total_sent = 0
+    total_replies = 0
+    reply_rate = 0
+    hot_leads = 0
+    potential_mrr = 0
 
-# ──────────────────────────────  UI RENDER  ──────────────────────────────
-
-# Sidebar Navigation (Functional)
-with st.sidebar:
-    st.markdown('<div style="height:50px;"></div>', unsafe_allow_html=True)
-    
-    pages = {
-        "Dashboard": "🏠",
-        "Pipeline": "👥",
-        "Intelligence": "📈",
-        "Settings": "⚙️"
-    }
-    
-    for page, icon in pages.items():
-        is_active = st.session_state.page == page
-        active_style = "background:rgba(255, 77, 148, 0.1); color:var(--accent-pink); border-right:3px solid var(--accent-pink);" if is_active else ""
-        
-        if st.button(f"{icon} {page}", key=f"nav_{page}", use_container_width=True):
-            st.session_state.page = page
-            st.rerun()
-            
-    st.markdown('<div style="flex-grow: 1; height: 300px;"></div>', unsafe_allow_html=True)
-    if st.button("🔓 Logout", use_container_width=True):
-        st.session_state.clear()
-        st.rerun()
-
-# Sidebar Decoration (Visual Only overlay if needed, or just hide standard sidebar)
-st.markdown("""
-<style>
-    [data-testid="stSidebar"] {
-        background-color: var(--bg-side);
-        border-right: 1px solid var(--border);
-    }
-    [data-testid="stSidebarNav"] {display: none;}
-</style>
-""", unsafe_allow_html=True)
-
-# Live Scanning Animation
-if st.session_state.is_scraping:
-    st.markdown('<div class="scanning-overlay"></div><div class="scanning-glow"></div>', unsafe_allow_html=True)
-
-# Main Container with responsive wrapper
-st.markdown('<div class="main-content">', unsafe_allow_html=True)
-
-# Area for Top Bar
-last_refresh = datetime.now().strftime("%H:%M")
-scrape_badge = '<span class="live-badge">SCANNING ACTIVE</span>' if st.session_state.is_scraping else ""
-
-# ──────────────────────────────  DATA PREP (VISIBLE)  ──────────────────────────────
-with st.status("📡 Synchronizing Intelligence OS...", expanded=False) as status:
-    leads = fetch_leads()
-    df = pd.DataFrame(leads)
-    activity_logs = fetch_activity_logs()
-    
-    if not df.empty:
-        df['monthly_value'] = df.get('monthly_value', pd.Series([0]*len(df))).fillna(0).astype(float)
-        df['revenue_loss'] = df.get('revenue_loss', pd.Series([0]*len(df))).fillna(0).astype(float)
-        df['opportunity_score'] = df.get('opportunity_score', pd.Series([0]*len(df))).fillna(0).astype(float)
-        df['speed_score'] = df.get('speed_score', pd.Series([0]*len(df))).fillna(0).astype(int)
-        df['seo_score'] = df.get('seo_score', pd.Series([0]*len(df))).fillna(0).astype(int)
-        df['missing_quote_form'] = df.get('missing_quote_form', pd.Series([True]*len(df))).fillna(True).astype(bool)
-        df['reply_status'] = df.get('reply_status', pd.Series(['']*len(df))).fillna('')
-        
-        total_rev = df.get('revenue', pd.Series([0]*len(df))).sum()
-        total_leads = len(df)
-        leads_contacted = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent'])])
-        
-        # New $1B+ Business Metrics
-        a_tier_targets = len(df[df['opportunity_score'] >= 75])
-        total_leakage = df['revenue_loss'].sum()
-        
-        actual_mrr = df[df['status'] == 'Closed']['monthly_value'].sum()
-        potential_mrr = df[df['status'].isin(['Replied', 'Demo Sent'])]['monthly_value'].sum()
-        avg_opp = df['opportunity_score'].mean()
-        
-        # Outreach & Reply Intelligence
-        total_sent = len(df[df['status'].isin(['Contacted', 'Replied', 'Demo Sent', 'Closed'])])
-        total_replies = len(df[df['status'].isin(['Replied', 'Demo Sent', 'Closed'])])
-        reply_rate = (total_replies / total_sent * 100) if total_sent > 0 else 0
-        if 'is_approved' not in df.columns:
-            df['is_approved'] = False
-        else:
-            df['is_approved'] = df['is_approved'].fillna(False)
-        
-        hot_leads = len(df[df['reply_status'] == 'positive'])
-    else:
-        total_rev, total_leads, leads_contacted, expected_mrr, avg_opp = 0, 0, 0, 0, 0
-        a_tier_targets, total_leakage = 0, 0
-        total_sent, total_replies, reply_rate, hot_leads = 0, 0, 0, 0
-    
-    status.update(label="✅ Revenue Intelligence Ready", state="complete")
-
-# Calc Heartbeats (Active if log in last 10 mins)
+# Calc Heartbeats
 def get_service_status(service_name, logs):
-    from datetime import datetime, timezone
+    from datetime import timezone
     now = datetime.now(timezone.utc)
     service_logs = [l for l in logs if l['service_name'] == service_name]
-    if not service_logs: return "#ff4444" # Red
+    if not service_logs: return "#ff4444"
     last_log_time = datetime.fromisoformat(service_logs[0]['created_at'].replace('Z', '+00:00'))
     diff = (now - last_log_time).total_seconds()
-    if diff < 120: return "#00ff88" # Green (Active)
-    if diff < 600: return "#ffcc00" # Yellow (Idle)
-    return "#ff4444" # Red (Dead)
+    if diff < 120: return "#00ff88"
+    if diff < 600: return "#ffcc00"
+    return "#ff4444"
 
 scraper_status = get_service_status("Scraper", activity_logs)
 inbox_status = get_service_status("Inbox", activity_logs)
 outreach_status = get_service_status("Outreach", activity_logs)
 
-# Update Last Sync based on logs
-last_sync_str = last_refresh
-if activity_logs:
-    last_sync_dt = datetime.fromisoformat(activity_logs[0]['created_at'].replace('Z', '+00:00'))
-    last_sync_str = last_sync_dt.strftime("%H:%M:%S")
+# ──────────────────────────────  UI RENDER  ──────────────────────────────
 
-st.markdown(textwrap.dedent(f"""\
-    <div class="top-bar">
-        <h1 style="font-family:'Outfit'; font-weight:900; margin:0;">{st.session_state.page} {scrape_badge}</h1>
-        <div style="display:flex; align-items:center; gap:20px;">
-            <div style="color:var(--text-dim); font-size:0.75rem;">Last Sync: {last_sync_str}</div>
-            <div class="search-container">🔍 search...</div>
-            <div class="profile-circle">👤</div>
-        </div>
-    </div>
-    """), unsafe_allow_html=True)
+# ──────────────────────────────  UI RENDER  ──────────────────────────────
 
-# Initialize Tab Containers
-tab_ana, tab_pipe, tab_map, tab_strat = st.empty(), st.empty(), st.empty(), st.empty()
+with st.sidebar:
+    st.markdown('<div style="height:20px;"></div>', unsafe_allow_html=True)
+    st.markdown(f"<div style='text-align: center; color: #ff4d94; font-family: Outfit; font-weight: 900; font-size: 1.2rem;'>{AGENCY_NAME} OS</div>", unsafe_allow_html=True)
+    st.write("---")
+    
+    # Modern Sidebar Menu
+    selected_tab = option_menu(
+        menu_title=None,
+        options=["Dashboard", "Pipeline", "Intelligence", "Showcase", "Settings"],
+        icons=["house", "funnel", "graph-up-arrow", "stars", "gear"],
+        menu_icon="cast",
+        default_index=0,
+        styles={
+            "container": {"padding": "0!important", "background-color": "transparent"},
+            "icon": {"color": "white", "font-size": "18px"}, 
+            "nav-link": {"font-size": "16px", "text-align": "left", "margin":"5px", "--hover-color": "#262730"},
+            "nav-link-selected": {"background-color": "#ff4d94"}, # Antigravity Pink
+        }
+    )
+    
+    st.write("---")
+    if st.button("🔓 Logout", width="stretch"):
+        st.session_state.auth_bypassed = False
+        st.session_state.authenticated = False
+        st.rerun()
 
-# Routing Logic
-if st.session_state.page == "Dashboard":
-    tab_ana, tab_pipe, tab_map, tab_show = st.tabs(["📊 Overview", "🦾 Pipeline", "🗺️ Intelligence", "✨ Showcase"])
-elif st.session_state.page == "Pipeline":
-    tab_pipe = st.container()
-elif st.session_state.page == "Intelligence":
-    tab_ana = st.container() 
-elif st.session_state.page == "Settings":
-    st.markdown("### ⚙️ OS Configuration")
-    with st.expander("API Keys", expanded=True):
-        st.text_input("Supabase URL", SUPABASE_URL, disabled=True)
-        st.text_input("Supabase Key", "•" * 20, disabled=True)
-    with st.expander("Agency Settings"):
-        st.text_input("Agency Name", AGENCY_NAME)
-        st.text_input("Target Domain", AGENCY_DOMAIN)
-    st.stop()
-
-with tab_ana:
+# ──────────────────────────────  PAGE ROUTING  ──────────────────────────────
+if selected_tab == "Dashboard":
+    container = st.container()
+    with container:
         # Top Row: Circular Metrics
-        col1, col2, col3 = st.columns(3)
-        
         def render_circle_metric(label, val, target, color, prefix="$", suffix=""):
             percent = min(100, int((val / target) * 100)) if target > 0 else 0
-            # Circumference = 2 * pi * r = 2 * 3.14 * 16 approx 100
             dash = percent 
             st.markdown(textwrap.dedent(f"""\
             <div class="lx-card" style="display:flex; align-items:center; justify-content:space-between; height: 120px;">
@@ -640,47 +600,38 @@ with tab_ana:
         # System Controls Section
         st.markdown("### ⚙️ OS Command Center")
         ctrl1, ctrl2, ctrl3, ctrl4 = st.columns(4)
-        
         with ctrl1:
-            if st.button("🚀 Force Lead Scrape", use_container_width=True):
+            if st.button("🚀 Force Lead Scrape", width="stretch"):
                 st.session_state.is_scraping = True
                 add_log("Spinning up Lead Discovery Engine...")
                 subprocess.Popen(["python", "find_leads.py"], creationflags=CREATE_NEW_CONSOLE)
-                
         with ctrl2:
-            if st.button("🧠 Backfill Intel", use_container_width=True):
+            if st.button("🧠 Backfill Intel", width="stretch"):
                 add_log("Analyzing historical leads...")
                 subprocess.Popen(["python", "find_leads.py", "--backfill"], creationflags=CREATE_NEW_CONSOLE)
-                
         with ctrl3:
-            if st.button("📥 Inbox & Nurture", use_container_width=True):
+            if st.button("📥 Inbox & Nurture", width="stretch"):
                 add_log("Checking for replies and follow-up opportunities...")
                 subprocess.Popen(["python", "inbox_monitor.py"], creationflags=CREATE_NEW_CONSOLE)
                 subprocess.Popen(["python", "nurture_engine.py"], creationflags=CREATE_NEW_CONSOLE)
-                
         with ctrl4:
             if st.session_state.is_scraping:
-                if st.button("🛑 STOP ENGINE", use_container_width=True, type="primary"):
+                if st.button("🛑 STOP ENGINE", width="stretch", type="primary"):
                     st.session_state.is_scraping = False
                     add_log("Emergency Engine Shutdown triggered.")
                     st.rerun()
             else:
                 a_tier_ready = len(df[df['status'] == 'High Intel Ready']) if not df.empty else 0
-                if st.button(f"🤖 War Room: Submit {a_tier_ready} Leads", use_container_width=True, disabled=a_tier_ready == 0):
+                if st.button(f"🤖 War Room: Submit {a_tier_ready} Leads", width="stretch", disabled=a_tier_ready == 0):
                     add_log(f"Initiating mass outreach sequence for {a_tier_ready} high-intel leads...")
                     subprocess.Popen(["python", "auto_submit.py"], creationflags=CREATE_NEW_CONSOLE)
 
         st.markdown("<br>", unsafe_allow_html=True)
-        
-        # High-Ticket Scaling Panel
-        st.markdown("### 📈 High-Ticket Scaling Control")
-        s_col1, s_col2 = st.columns([1, 2])
-        
-        with s_col1:
+        col_scale1, col_scale2 = st.columns([1, 2])
+        with col_scale1:
             st.markdown('<div class="lx-card" style="height:380px;">', unsafe_allow_html=True)
             st.markdown("##### Target Sector Velocity")
             active_niche = st.selectbox("Select Scaling Niche", NICHES, index=0)
-            
             st.markdown(textwrap.dedent(f"""\
             <div style="margin-top:20px; padding:15px; background:rgba(255, 77, 148, 0.05); border-radius:12px; border:1px solid rgba(255, 77, 148, 0.1);">
                 <div style="font-size:0.7rem; color:var(--accent-pink); font-weight:800;">CURRENT PARADIGM</div>
@@ -688,45 +639,27 @@ with tab_ana:
                 <div style="font-size:0.7rem; color:var(--text-dim);">Estimated LTV: $5,500 - $12,000</div>
             </div>
             """), unsafe_allow_html=True)
-            
-            if st.button(f"🚀 Deploy {active_niche} Ops", use_container_width=True):
+            if st.button(f"🚀 Deploy {active_niche} Ops", width="stretch"):
                 st.session_state.is_scraping = True
                 add_log(f"Redirecting Scraper to {active_niche} (High-Ticket Mode)...")
-                # Here we could pass --niche to find_leads.py
                 subprocess.Popen(["python", "find_leads.py", "--niche", active_niche], creationflags=CREATE_NEW_CONSOLE)
             st.markdown('</div>', unsafe_allow_html=True)
-            
-        with s_col2:
+        with col_scale2:
             st.markdown('<div class="lx-card" style="height:380px;">', unsafe_allow_html=True)
             st.markdown("##### Executive $10k Pipeline Vision")
-            # Visualization of revenue milestones
-            milestones = {
-                "Foundation": 1000,
-                "Momentum": 3500,
-                "Executive ($10k)": 10000
-            }
-            m_labels = list(milestones.keys())
-            m_values = list(milestones.values())
-            
             chart_df = pd.DataFrame({
-                "Milestone": m_labels,
-                "Required MRR": m_values,
-                "Current Projection": [expected_mrr] * 3
+                "Milestone": ["Foundation", "Momentum", "Executive ($10k)"],
+                "Required MRR": [1000, 3500, 10000],
+                "Current Projection": [potential_mrr] * 3
             })
-
-            if not chart_df.empty:
-                import plotly.express as px
-                fig = px.bar(chart_df, x="Milestone", y=["Required MRR", "Current Projection"], 
-                             barmode="group", color_discrete_sequence=["#11131a", "#ff4d94"])
-                fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
-                                font_color="white", margin=dict(l=0, r=0, t=20, b=0), height=250)
-                st.plotly_chart(fig, use_container_width=True)
-            st.markdown(f'<div style="text-align:right; font-size:0.75rem; color:var(--text-dim);">Current Trajectory: <b>${int(expected_mrr):,}/mo</b></div>', unsafe_allow_html=True)
+            fig = px.bar(chart_df, x="Milestone", y=["Required MRR", "Current Projection"], barmode="group", color_discrete_sequence=["#11131a", "#ff4d94"])
+            fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="white", margin=dict(l=0, r=0, t=20, b=0), height=250)
+            st.plotly_chart(fig, use_container_width=True)
+            st.markdown(f'<div style="text-align:right; font-size:0.75rem; color:var(--text-dim);">Current Trajectory: <b>${int(potential_mrr):,}/mo</b></div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
-        
-        # Trends & Recent Feed
+
+        st.markdown("<br>", unsafe_allow_html=True)
         c_left, c_right = st.columns([2, 1])
-        
         with c_left:
             st.markdown('<div class="lx-card" style="height:400px;">', unsafe_allow_html=True)
             st.markdown("### Outreach Performance")
@@ -734,66 +667,32 @@ with tab_ana:
                 df['date'] = pd.to_datetime(df['created_at']).dt.date
                 daily = df.groupby('date').size().reset_index(name='leads')
                 fig_outreach = px.area(daily, x='date', y='leads', color_discrete_sequence=['#ff4d94'])
-                fig_outreach.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
-                                         font_color="white", margin=dict(l=0, r=0, t=10, b=0), height=300)
+                fig_outreach.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="white", margin=dict(l=0, r=0, t=10, b=0), height=300)
                 st.plotly_chart(fig_outreach, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
+        with c_right:
+            st.markdown('<div class="lx-card" style="height:400px; overflow-y:auto;">', unsafe_allow_html=True)
+            st.markdown("### Recent Activity Feed")
+            recent_logs = activity_logs[:20]
+            for log in recent_logs:
+                ts = datetime.fromisoformat(log['created_at'].replace('Z', '+00:00')).strftime("%H:%M")
+                st.markdown(f'<div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:5px;">[{ts}] {log["message"]}</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
             
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown('<div class="lx-card" style="height:250px;">', unsafe_allow_html=True)
-            st.markdown("### Niche Distribution")
-            if not df.empty:
-                niche_counts = df['niche'].value_counts().reset_index()
-                niche_counts.columns = ['niche', 'count']
-                fig_niche = px.bar(niche_counts, x='niche', y='count', color_discrete_sequence=['#9d7cff'])
-                fig_niche.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
-                                      font_color="white", margin=dict(l=0, r=0, t=10, b=0), height=180)
-                st.plotly_chart(fig_niche, use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-            
-            st.markdown('<div class="lx-card" style="height:350px; overflow-y:auto;">', unsafe_allow_html=True)
-            st.markdown("### Recent Leads")
-            if not df.empty:
-                for _, lead in df.head(5).iterrows():
-                    st.markdown(textwrap.dedent(f"""\
-                    <div class="lead-item">
-                        <div style="display:flex; align-items:center;">
-                            <div class="lead-icon">🌐</div>
-                            <div>
-                                <div style="font-size:0.9rem; font-weight:600;">{lead['website'].replace('https://','').split('/')[0]}</div>
-                                <div style="font-size:0.7rem; color:var(--text-dim);">{lead['city']}</div>
-                            </div>
-                        </div>
-                        <div style="color:var(--accent-blue); font-weight:700;">{lead['opportunity_score']}</div>
-                    </div>
-                    """), unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-            
-            # Service Heartbeat
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown('<div class="lx-card" style="height:150px;">', unsafe_allow_html=True)
-            st.markdown('<div style="color:var(--text-dim); font-size:0.7rem; font-weight:800; letter-spacing:1px;">SERVICE HEARTBEAT</div>', unsafe_allow_html=True)
-            h1, h2, h3 = st.columns(3)
-            h1.markdown(f'<div style="text-align:center;"><span style="color:{scraper_status}; font-size:1.5rem;">●</span><br><span style="font-size:0.7rem;">SCRAPER</span></div>', unsafe_allow_html=True)
-            h2.markdown(f'<div style="text-align:center;"><span style="color:{inbox_status}; font-size:1.5rem;">●</span><br><span style="font-size:0.7rem;">INBOX</span></div>', unsafe_allow_html=True)
-            h3.markdown(f'<div style="text-align:center;"><span style="color:{outreach_status}; font-size:1.5rem;">●</span><br><span style="font-size:0.7rem;">AUTO-AI</span></div>', unsafe_allow_html=True)
+            # Bottom Activity Feed Terminal
+            st.markdown('<div class="lx-card" style="background:#000; border:1px solid #1a1a1a; padding:15px; font-family:\'Courier New\', monospace; height:200px; overflow-y:auto; border-radius:12px;">', unsafe_allow_html=True)
+            st.markdown('<div style="color:#33ff33; font-size:0.8rem; border-bottom:1px solid #1a1a1a; margin-bottom:10px; padding-bottom:5px;">> GLOBAL ACTIVITY TERM [SYNCED]</div>', unsafe_allow_html=True)
+            recent_logs_long = activity_logs[:50]
+            log_content = ""
+            for log in recent_logs_long:
+                ts_long = datetime.fromisoformat(log['created_at'].replace('Z', '+00:00')).strftime("%H:%M:%S")
+                log_content += f"[{ts_long}] [{log['service_name']}] {log['message']}\n"
+            st.code(log_content, language="bash")
             st.markdown('</div>', unsafe_allow_html=True)
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        # Bottom Activity Feed Terminal
-        st.markdown('<div class="lx-card" style="background:#000; border:1px solid #1a1a1a; padding:15px; font-family:\'Courier New\', monospace; height:200px; overflow-y:auto; border-radius:12px;">', unsafe_allow_html=True)
-        st.markdown('<div style="color:#33ff33; font-size:0.8rem; border-bottom:1px solid #1a1a1a; margin-bottom:10px; padding-bottom:5px;">> GLOBAL ACTIVITY TERM [SYNCED]</div>', unsafe_allow_html=True)
-        recent_logs = activity_logs[:50]
-        log_content = ""
-        for log in recent_logs:
-            ts = datetime.fromisoformat(log['created_at'].replace('Z', '+00:00')).strftime("%H:%M:%S")
-            log_content += f"[{ts}] [{log['service_name']}] {log['message']}\n"
-        st.code(log_content, language="bash")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-with tab_pipe:
-    st.markdown("### Intelligence Engine Dashboard")
+elif selected_tab == "Pipeline":
+    st.markdown("### 🦾 Industry Pipeline Management")
     
     # Filters in top bar style
     fc1, fc2, fc3 = st.columns([2, 1, 1])
@@ -808,27 +707,11 @@ with tab_pipe:
     
     for _, lead in filtered_df.iterrows():
         with st.container():
-            # Lead Summary Card
-            leakage_html = ""
-            if lead.get("revenue_loss"):
-                leakage_html = f'<span style="background:rgba(255, 77, 148, 0.15); color:var(--accent-pink); padding:4px 12px; border-radius:30px; font-size:0.75rem; font-weight:800; border:1px solid rgba(255, 77, 148, 0.3);">-${lead["revenue_loss"]:,}/mo LEAKAGE</span>'
-            
-            # High Chance Signals
-            high_chance_badges = ""
-            if not lead.get('has_ssl', True):
-                high_chance_badges += '<span style="background:rgba(255, 100, 100, 0.2); color:#ff6464; padding:2px 8px; border-radius:12px; font-size:0.6rem; font-weight:800; margin-right:5px;">NO SSL</span>'
-            if lead.get('domain_age_years', 0) >= 5:
-                high_chance_badges += '<span style="background:rgba(100, 255, 100, 0.2); color:#64ff64; padding:2px 8px; border-radius:12px; font-size:0.6rem; font-weight:800; margin-right:5px;">OLD DOMAIN</span>'
-            if lead.get('broken_layout_detected', False):
-                high_chance_badges += '<span style="background:rgba(255, 200, 0, 0.2); color:#ffc800; padding:2px 8px; border-radius:12px; font-size:0.6rem; font-weight:800; margin-right:5px;">BROKEN LAYOUT</span>'
-
             # Fallback score calculation if DB has 0 but audit fields exist
-            # Tiered Intelligence Logic
             display_score = lead['opportunity_score']
             from analyzer import get_tier
             tier_label = get_tier(display_score)
             
-            # Shadow Site Link
             from preview_engine import generate_preview_metadata
             preview_meta = generate_preview_metadata(lead)
             preview_url = preview_meta.get("preview_url", "#")
@@ -893,66 +776,21 @@ with tab_pipe:
                     if lead.get('contact_url'):
                         st.link_button("✉️ Contact Form", lead['contact_url'])
 
-@st.fragment(run_every="5s")
-def render_orbital_map(df_map):
-    st.session_state.map_bearing = (st.session_state.map_bearing + 5) % 360
-    
-    view_state = pdk.ViewState(
-        latitude=df_map['lat'].mean() if not df_map.empty else 37.09,
-        longitude=df_map['lon'].mean() if not df_map.empty else -95.71,
-        zoom=3.5,
-        pitch=60,
-        bearing=st.session_state.map_bearing
-    )
-    
-    st.pydeck_chart(pdk.Deck(
-        map_style='mapbox://styles/mapbox/dark-v10',
-        initial_view_state=view_state,
-        layers=[
-            pdk.Layer(
-                'ScatterplotLayer',
-                data=df_map,
-                get_position='[lon, lat]',
-                get_color='[255, 77, 148, 200]',
-                get_radius='size',
-                pickable=True,
-                auto_highlight=True,
-                radius_min_pixels=5,
-                radius_max_pixels=30
-            ),
-            pdk.Layer(
-                'TextLayer',
-                data=df_map,
-                get_position='[lon, lat]',
-                get_text='name',
-                get_color='[255, 255, 255, 200]',
-                get_size=18,
-                get_alignment_baseline='"bottom"',
-                font_family='"Outfit", sans-serif'
-            )
-        ],
-        tooltip={"text": "{name}"}
-    ))
-
-with tab_map:
-    st.markdown("### Geographical Command")
+elif selected_tab == "Intelligence":
+    st.markdown("### 🌎 Geographical Command")
     coords_data = load_coords()
     if coords_data:
         map_data = []
         if not df.empty and 'city' in df.columns:
-            # Aggregate by city
             city_counts = df['city'].value_counts()
-            
-            # Limit to top 100 cities to ensure 60FPS performance
             top_cities = city_counts.head(100).to_dict()
-            
             for c, count in top_cities.items():
                 if c in coords_data:
                     map_data.append({
                         "lat": coords_data[c]["lat"], 
                         "lon": coords_data[c]["lon"], 
                         "name": f"{c}: {count}", 
-                        "size": min(5000, count * 500) # Cap marker size
+                        "size": min(5000, count * 500)
                     })
         
         if map_data:
@@ -963,12 +801,11 @@ with tab_map:
     else:
         st.error(f"Coordinates file missing or empty: {COORDS_FILE}. Please run lead generation first.")
 
-with tab_show:
+elif selected_tab == "Showcase":
     st.markdown("### ✨ Authority Showcase: Premium Redesigns")
-    st.markdown("These are the elite-tier redesign prototypes generated for your A-Tier targets. High-visual authority is the key to enterprise budgets.")
+    st.markdown("These are the elite-tier redesign prototypes generated for your A-Tier targets.")
     
     if not df.empty:
-        # Streamlit Grid for Showcase
         from preview_engine import generate_preview_metadata
         from portfolio_engine import generate_portfolio_html, save_portfolio
         
@@ -984,7 +821,7 @@ with tab_show:
                 card_class = "elite-card" if is_a_tier else ""
                 tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px; letter-spacing:1px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
-                import streamlit.components.v1 as components
+                import streamlit.components.v1 as st_comp
                 st.markdown(textwrap.dedent(f"""\
                 <div class="lx-card {card_class}">
                     {tier_label}
@@ -999,21 +836,14 @@ with tab_show:
                 # Render prototype in isolated component
                 from generate_landing import generate_page
                 prototype_html = generate_page(meta['business_name'], meta['niche'], meta['city'], lead_id=lead['id'], score=opp_score)
-                components.html(prototype_html, height=250, scrolling=True)
+                st_comp.html(prototype_html, height=250, scrolling=True)
                 
                 st.markdown(f'<a href="{meta["preview_url"]}" target="_blank" style="display:block; width:100%; text-align:center; padding:12px; background:#fff; color:#000; border-radius:14px; text-decoration:none; font-weight:900; font-size:0.85rem; transition:0.3s; margin-top:10px;">View Full Case Study →</a>', unsafe_allow_html=True)
                 
-                # Modern Approval Toggle
-                approval_state = st.toggle("Human Approval", value=is_approved, key=f"app_{lead['id']}")
+                approval_state = st.toggle("Human Approval", value=is_approved, key=f"app_s_{lead['id']}")
                 if approval_state != is_approved:
-                    # Immediate Sync to Supabase
                     endpoint = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead['id']}"
-                    headers = {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization": f"Bearer {SUPABASE_KEY}",
-                        "Content-Type": "application/json",
-                        "Prefer": "return=minimal"
-                    }
+                    headers = get_headers()
                     try:
                         requests.patch(endpoint, headers=headers, json={"is_approved": approval_state})
                         st.success("Approved!" if approval_state else "Unapproved", icon="✅")
@@ -1022,51 +852,22 @@ with tab_show:
                         st.error(f"Sync error: {e}")
         
         st.divider()
-        sc1, sc2 = st.columns([2, 1])
-        with sc2:
-            if st.button("🔨 Build Public Case Studies", use_container_width=True):
-                html = generate_portfolio_html(df)
-                path = save_portfolio(html)
-                st.success(f"Showcase generated at {path}")
-                st.balloons()
+        if st.button("🔨 Build Public Case Studies", width="stretch"):
+            html = generate_portfolio_html(df)
+            path = save_portfolio(html)
+            st.success(f"Showcase generated at {path}")
+            st.balloons()
     else:
-        st.info("No leads available to showcase yet. Start a scan to generate previews.")
-    
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # Regional Intelligence Hub
-    st.markdown("### 🌎 Regional Alpha Hub")
-    r_col1, r_col2 = st.columns(2)
-    with r_col1:
-        st.markdown('<div class="lx-card" style="height:350px;">', unsafe_allow_html=True)
-        st.markdown("##### High-Affluence Target Density")
-        # Showing the top wealth cities from config
-        wealth_cities = ["Beverly Hills", "Palo Alto", "Greenwich", "Palm Beach", "Atherton"]
-        city_data = []
-        for city in wealth_cities:
-            count = len(df[df['city'].str.contains(city, case=False)]) if not df.empty else 0
-            city_data.append({"City": city, "Intel Scanned": count})
-        
-        st.bar_chart(pd.DataFrame(city_data).set_index("City"), color="#00e5ff")
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-    with r_col2:
-        st.markdown('<div class="lx-card" style="height:350px; border-left:4px solid var(--accent-pink);">', unsafe_allow_html=True)
-        st.markdown("##### Regional Revenue Recovery IQ")
-        st.markdown("""
-        The system has identified higher **Propensity to Pay** in these hubs:
-        - **Greenwich, CT:** Target High-End Remodeling.
-        - **Beverly Hills, CA:** Target Luxury Dental/Legal.
-        - **Palo Alto, CA:** Target Solar/Tech Infrastructure.
-        
-        *Next Action: Deploy 'Revenue Recovery' audits specifically to these high-LTV sectors.*
-        """)
-        if st.button("🛰️ Deploy Global Regional Scan", use_container_width=True):
-            add_log("Initiating Global Regional Intelligence Scan...")
-            # Trigger full city scan
-            subprocess.Popen(["python", "find_leads.py", "--all-cities"], creationflags=CREATE_NEW_CONSOLE)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.info("No leads available to showcase yet.")
 
-# Footer
+elif selected_tab == "Settings":
+    st.markdown("### ⚙️ OS Configuration")
+    with st.expander("API Keys", expanded=True):
+        st.text_input("Supabase URL", SUPABASE_URL, disabled=True)
+        st.text_input("Supabase Key", "•" * 20, disabled=True)
+    with st.expander("Agency Settings"):
+        st.text_input("Agency Name", AGENCY_NAME)
+        st.text_input("Target Domain", AGENCY_DOMAIN)
+
 st.markdown("---")
 st.markdown('</div>', unsafe_allow_html=True) # End main-content

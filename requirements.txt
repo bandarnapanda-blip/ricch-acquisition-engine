@@ -9,3 +9,4 @@ playwright
 playwright-stealth
 openai
 streamlit-supabase-auth
+streamlit-option-menu
