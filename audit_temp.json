@@ -1,0 +1,72 @@
+{
+  "total_leads": 477,
+  "status_counts": {
+    "New": 310,
+    "Contacted": 157,
+    "High Priority": 7,
+    "High Opportunity": 3
+  },
+  "a_tier_count": 0,
+  "recent_logs": [
+    {
+      "id": "0efbacfe-b359-48f3-a8a1-5f6ebc557788",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:38:04.413274+00:00"
+    },
+    {
+      "id": "598d0d3c-05e2-4346-a966-167f2825625e",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:35:39.548339+00:00"
+    },
+    {
+      "id": "034f6494-3fb7-4684-8956-8fb0810b7ea3",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:33:31.635466+00:00"
+    },
+    {
+      "id": "171b2624-f017-434a-a91f-54ed4d3bc80a",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:31:23.797533+00:00"
+    },
+    {
+      "id": "0504f43e-02dc-407c-a4d6-ae8a0a0d5edc",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:29:14.999669+00:00"
+    },
+    {
+      "id": "829d695d-b184-4eeb-b706-2919ee13412a",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:24:26.979776+00:00"
+    },
+    {
+      "id": "27424025-f30d-4393-97b0-c542adf7f794",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:22:16.864368+00:00"
+    },
+    {
+      "id": "da332a8c-0c6d-42cf-9936-4d10fef2ca25",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:17:59.57387+00:00"
+    },
+    {
+      "id": "92e5ad89-ad8c-4873-9093-87273d5017db",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:15:08.369379+00:00"
+    },
+    {
+      "id": "2f4960c8-393c-4dc3-8e04-3bcfa48cb14c",
+      "service_name": "Inbox",
+      "message": "Scanning for lead replies...",
+      "created_at": "2026-03-14T00:12:51.746011+00:00"
+    }
+  ]
+}

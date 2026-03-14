@@ -31,6 +31,15 @@ DIRECTORY_DOMAINS = [
     'linkedin.com', 'pinterest.com', 'reddit.com', 'wikipedia.org'
 ]
 
+# 10x Scaling: Query Expansion Templates
+QUERY_TEMPLATES = [
+    "{niche} in {city}",
+    "best {niche} {city}",
+    "{niche} contractors {city}",
+    "{niche} companies {city}",
+    "top rated {niche} in {city}"
+]
+
 def request_with_retry(method, url, **kwargs):
     """Wrapper for requests with exponential backoff to handle connection drops."""
     max_retries = 3
@@ -105,10 +114,21 @@ def scrape_query_playwright(query):
         try:
             page.goto(f"https://duckduckgo.com/?q={query.replace(' ', '+')}&ia=web", timeout=30000)
             
-            # Initial scroll to trigger more results
-            for _ in range(3):
+            # Industrial Scaling: Deep Scroll for more results
+            for _ in range(8):
                 page.evaluate("window.scrollBy(0, 1000)")
                 time.sleep(1)
+            
+            # Try to click "More Results" if it appears (DuckDuckGo style)
+            try:
+                more_btn = page.locator('button:has-text("More Results")')
+                if await more_btn.is_visible():
+                    await more_btn.click()
+                    await asyncio.sleep(2)
+                    for _ in range(4):
+                        page.evaluate("window.scrollBy(0, 1000)")
+                        time.sleep(1)
+            except: pass
 
             # Extract links
             results = page.locator('a[data-testid="result-title-a"]').all()

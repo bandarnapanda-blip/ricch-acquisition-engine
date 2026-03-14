@@ -268,7 +268,7 @@ async def main():
         return
     
     # Industrial Scaling: Parallel Processing
-    CONCURRENCY_LIMIT = 3
+    CONCURRENCY_LIMIT = 10
     semaphore = asyncio.Semaphore(CONCURRENCY_LIMIT)
     
     print(f"Processing {len(leads)} leads with {CONCURRENCY_LIMIT} parallel workers...")
