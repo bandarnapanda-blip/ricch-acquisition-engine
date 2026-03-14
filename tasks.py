@@ -72,11 +72,22 @@ def task_audit_lead(lead_id):
         opp_score = analyzer.calculate_opportunity_score(audit_results)
         revenue_loss = analyzer.calculate_revenue_loss(lead.get('niche', 'Default'), audit_results)
         
-        # AI Roast/Audit Generation
+        # AI Roast/Audit Generation: Focus on high-value pain points (AEO/Trust)
         client = get_ai_client()
         audit_roast = "Audit failed"
         if client:
-            prompt = f"Role: Senior Revenue Engineer. Analyze this website audit for {website} ({lead.get('niche')}). Audit data: {audit_results}. Write a 3-sentence blunt summary of why they are losing money and how a redesign fixes it."
+            prompt = f"""
+            Role: Senior Revenue Engineer (Ex-FAANG). 
+            Target Business: {website} ({lead.get('niche')})
+            Audit Findings: {audit_results}
+            
+            Task: Write a blunt, high-impact 3-sentence revenue audit.
+            Constraint 1: DO NOT USE generic AI buzzwords (unleash, streamline, synergy).
+            Constraint 2: Mention 'Answer Engine Optimization' (AEO) or 'Trust Infrastructure'.
+            Constraint 3: Explain exactly how their current site is bleeding money in the 2026 market.
+            
+            Tone: Institutional, direct, value-first.
+            """
             response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
             audit_roast = str(response.text or "Audit analysis incomplete.").strip()
 
