@@ -406,20 +406,25 @@ def main():
     
     for niche in active_niches:
         for city in active_cities:
-            # Query Expansion Logic (Industrial Harvester)
-            expanded_queries = [
-                f"{niche} in {city}",
-                f"best {niche} in {city}",
-                f"{niche} companies {city}",
-                f"{niche} services {city}"
-            ]
-            
-            for query in expanded_queries:
-                print(f"\n[HUNTING] \"{query}\"")
+            query_leads = []
+            # 10x Scaling: Rotate through expanded queries
+            for template in QUERY_TEMPLATES:
+                query = template.format(niche=niche, city=city)
+                print(f"\n[INDUSTRIAL HUNT] \"{query}\"")
+                
                 new_leads = scrape_query(query, niche, city)
+                if not new_leads:
+                    continue
+                
                 print(f"  Found {len(new_leads)} potential businesses.")
-            
-            for lead in new_leads:
+                
+                # Deduplicate before probing (per city/niche set)
+                for lead in new_leads:
+                    if lead['website'] not in [l['website'] for l in query_leads]:
+                        query_leads.append(lead)
+
+            # Audit the batch for this niche/city
+            for lead in query_leads:
                 print(f"  Probing {lead['website']}...")
                 contact_url = get_contact_page(lead["website"])
                 if contact_url:
@@ -445,17 +450,18 @@ def main():
                     else:
                         print(f"    -> Opportunity Score: {opp_score}")
                 
-                delay = random.uniform(2, 5) # Faster probing for scale
-                time.sleep(delay)
-                
-            all_leads.extend(new_leads)
+                time.sleep(random.uniform(1.5, 3)) # Optimized delay for scale
             
-            # Save progress live
-            if len(new_leads) > 0:
+            all_leads.extend(query_leads)
+            
+            # Save progress live to Supabase/CSV
+            if query_leads:
                 if SUPABASE_URL and SUPABASE_KEY:
-                    upsert_to_supabase(new_leads)
+                    upsert_to_supabase(query_leads)
                 else:
-                    save_to_csv(new_leads)
+                    save_to_csv(query_leads)
+
+            time.sleep(random.uniform(3, 7))
 
             query_delay = random.uniform(3, 7)
             time.sleep(query_delay)
