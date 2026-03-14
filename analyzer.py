@@ -132,6 +132,16 @@ def analyze_site(url):
         if 'squarespace' in content: tech_list.append("Squarespace")
         results["tech_stack"] = tech_list
         
+        # --- PHASE 15: Intelligence & Wealth Signals ---
+        try:
+            from intelligence import analyze_lead_intelligence
+            intel = analyze_lead_intelligence(url, response.text)
+            results["intelligence"] = intel
+            results["deal_score"] = intel.deal_score
+        except Exception as e:
+            print(f"Intelligence parse failed: {e}")
+            results["deal_score"] = calculate_opportunity_score(results)
+            
         return results
     except Exception as e:
         # Return partial data if possible

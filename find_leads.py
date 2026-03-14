@@ -6,7 +6,7 @@ import os
 import argparse
 import asyncio
 from playwright.sync_api import sync_playwright
-from playwright_stealth import stealth
+from playwright_stealth import Stealth
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -106,82 +106,97 @@ def scrape_query_playwright(query):
     """Scrape DuckDuckGo using Playwright for high resilience."""
     leads_urls = []
     print(f"  [STEALTH] Launching Playwright browser for \"{query}\"...")
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        
-        # [STEALTH] Randomize Fingerprint
-        user_agents = [
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-        ]
-        resolutions = [
-            {"width": 1920, "height": 1080},
-            {"width": 1366, "height": 768},
-            {"width": 1440, "height": 900}
-        ]
-        
-        context = browser.new_context(
-            user_agent=random.choice(user_agents),
-            viewport=random.choice(resolutions)
-        )
-        page = context.new_page()
-        
-        # [STEALTH] Inject Stealth Scripts
-        stealth(page)
-        try:
-            # High-Resilience Strategy: Use html.duckduckgo.com with Human-like delays
-            encoded_query = query.replace(' ', '+')
-            url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
+    try:
+        from playwright.sync_api import sync_playwright
+        with Stealth().use_sync(sync_playwright()) as p:
+            browser = p.chromium.launch(headless=True)
             
-            page.goto(url, timeout=30000, wait_until="networkidle")
-            # [STEALTH] Human Jitter: Random scroll and mouse move
-            for _ in range(random.randint(2, 4)):
-                page.mouse.move(random.randint(0, 1000), random.randint(0, 800))
-                page.mouse.wheel(0, random.randint(200, 600))
-                time.sleep(random.uniform(1, 4))
+            # [STEALTH] Randomize Fingerprint
+            user_agents = [
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+            ]
+            resolutions = [
+                {"width": 1920, "height": 1080},
+                {"width": 1366, "height": 768},
+                {"width": 1440, "height": 900}
+            ]
             
-            time.sleep(random.uniform(3, 8)) # Mimic human "think time"
+            context = browser.new_context(
+                user_agent=random.choice(user_agents),
+                viewport=random.choice(resolutions)
+            )
+            page = context.new_page()
             
-            # Extract links with specialized resilience
-            leads_urls = []
-            
-            # Selector list based on subagent findings
-            selectors = ['.result__a', 'h2 a', 'a.result__a']
-            
-            for selector in selectors:
-                try:
-                    results = page.locator(selector).all()
-                    for r in results:
-                        href = r.get_attribute('href')
-                        if not href: continue
-                        
-                        # Handle DDG Redirects (uddg)
-                        clean_url = href
-                        if 'uddg=' in href:
-                            import urllib.parse
-                            parsed = urllib.parse.urlparse(href)
-                            params = urllib.parse.parse_qs(parsed.query)
-                            uddg_param = params.get('uddg', [''])[0]
-                            if uddg_param:
-                                clean_url = urllib.parse.unquote(uddg_param)
-                        
-                        if clean_url and 'http' in clean_url and not any(d in clean_url for d in DIRECTORY_DOMAINS) and 'duckduckgo' not in clean_url:
-                            leads_urls.append(clean_url)
-                except: continue
-                if len(leads_urls) >= MAX_RESULTS_PER_QUERY: break
+            # [STEALTH] Stealth is automatically applied by Stealth().use_sync()
+            try:
+                # High-Resilience Strategy: Use html.duckduckgo.com with Human-like delays
+                encoded_query = query.replace(' ', '+')
+                url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
                 
-        except Exception as e:
-            # Check for CAPTCHA / Blocks
-            page_content = page.content().lower() if 'page' in locals() else ""
-            if "captcha" in page_content or "robot" in page_content or "too many requests" in page_content or "anomaly-modal" in page_content:
-                print(f"  [BLOCK] CAPTCHA or Rate Limit detected on DuckDuckGo. Initiating Emergency Backoff...")
-                push_log("Scraper", "CAPTCHA detected. Initiating 15-minute stealth backoff.")
-                time.sleep(900) # 15 minute backoff
-            else:
-                print(f"  [ERROR] Playwright search failed: {e}")
-        finally:
-            browser.close()
+                page.goto(url, timeout=30000, wait_until="networkidle")
+                # [STEALTH] Human Jitter: Random scroll and mouse move
+                for _ in range(random.randint(2, 4)):
+                    page.mouse.move(random.randint(0, 1000), random.randint(0, 800))
+                    page.mouse.wheel(0, random.randint(200, 600))
+                    time.sleep(random.uniform(1, 4))
+                
+                time.sleep(random.uniform(3, 8)) # Mimic human "think time"
+                
+                # Extract links with specialized resilience
+                leads_urls = []
+                
+                # Selector list based on subagent findings + Universal Fallback
+                selectors = ['.result__a', 'h2 a', 'a.result__a', '.b_algo a', 'a[href^="http"]:not([href*="duckduckgo"]):not([href*="microsoft"])']
+                
+                for selector in selectors:
+                    try:
+                        results = page.locator(selector).all()
+                        for r in results:
+                            href = r.get_attribute('href')
+                            if not href: continue
+                            
+                            # Handle DDG Redirects (uddg)
+                            clean_url = href
+                            if 'uddg=' in href:
+                                import urllib.parse
+                                parsed = urllib.parse.urlparse(href)
+                                params = urllib.parse.parse_qs(parsed.query)
+                                uddg_param = params.get('uddg', [''])[0]
+                                if uddg_param:
+                                    clean_url = urllib.parse.unquote(uddg_param)
+                            
+                            if clean_url and 'http' in clean_url and not any(d in clean_url for d in DIRECTORY_DOMAINS) and 'duckduckgo' not in clean_url:
+                                leads_urls.append(clean_url)
+                    except: continue
+                    if len(leads_urls) >= MAX_RESULTS_PER_QUERY: break
+                
+                # If still nothing, try a super-aggressive universal grab
+                if not leads_urls:
+                    links = page.locator('a').all()
+                    for link in links:
+                        try:
+                            href = link.get_attribute('href')
+                            if href and 'http' in href and not any(d in href for d in DIRECTORY_DOMAINS) and 'duckduckgo' not in href:
+                                leads_urls.append(href)
+                        except: continue
+                        if len(leads_urls) >= MAX_RESULTS_PER_QUERY: break
+                    
+            except Exception as e:
+                # Check for CAPTCHA / Blocks
+                page_content = page.content().lower() if 'page' in locals() else ""
+                if "captcha" in page_content or "robot" in page_content or "too many requests" in page_content or "anomaly-modal" in page_content:
+                    print(f"  [BLOCK] CAPTCHA or Rate Limit detected on DuckDuckGo. Initiating Emergency Backoff...")
+                    push_log("Scraper", "CAPTCHA detected. Initiating 15-minute stealth backoff.")
+                    time.sleep(900) # 15 minute backoff
+                else:
+                    print(f"  [ERROR] Playwright search failed: {e}")
+            finally:
+                browser.close()
+    except Exception as outer_e:
+        print(f"  [CRITICAL] Playwright standard initialization failed: {outer_e}")
+        
     return list(set(leads_urls))
 
 def scrape_query_brave(query):
@@ -547,9 +562,6 @@ def main():
     print(f"{'=' * 60}")
     
     print("\nDone! The Billion-Dollar Engine has finished its cycle.")
-
-if __name__ == "__main__":
-    main()
 
 if __name__ == "__main__":
     main()

@@ -5,8 +5,8 @@ import requests
 import asyncio
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
-from playwright.sync_api import sync_playwright
-from playwright_stealth import stealth
+from playwright.sync_api import sync_playwright as spw
+from playwright_stealth import Stealth
 from google import genai
 from database import db
 from config import STATE, AGENCY_NAME, AGENCY_EMAIL
@@ -98,8 +98,17 @@ def task_audit_lead(lead_id):
             "website_roast": audit_roast,
             "speed_score": audit_results.get('page_speed_score', 0),
             "seo_score": audit_results.get('seo_score', 0),
+            "mobile_score": 100 if audit_results.get('mobile_friendly') else 20,
             "status": "High Intel Ready" if opp_score >= 50 else "New"
         }
+        
+        # --- PHASE 15: Store Intelligence Signals ---
+        if 'deal_score' in audit_results:
+            update_data["opportunity_score"] = int(audit_results['deal_score']) # Leverage deal_score for priority
+            
+        # Optional: Store raw signals in a spare field or JSONB if available
+        # For now, we enhance the roast or use custom fields if schema was updated
+        
         db.update_lead(lead_id, update_data)
         
         return {"status": "success", "score": opp_score}

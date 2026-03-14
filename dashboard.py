@@ -645,40 +645,36 @@ if selected_tab == "Dashboard":
             st.markdown('</div>', unsafe_allow_html=True)
         with c_right:
             # --- LIVE INDUSTRIAL PULSE CARD ---
-            st.markdown(textwrap.dedent(f"""\
-            <div class="lx-card" style="height:400px; position:relative; overflow:hidden; border:1px solid rgba(0, 229, 255, 0.2); background: linear-gradient(145deg, #111a1f, #0a0b10);">
+            st.markdown(textwrap.dedent(f"""
+                <div class="lx-card" style="height:400px; position:relative; overflow:hidden; border:1px solid rgba(0, 229, 255, 0.2); background: linear-gradient(145deg, #111a1f, #0a0b10);">
                 <div style="position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(to right, #00e5ff, transparent);"></div>
                 <div style="display:flex; align-items:center; margin-bottom:20px;">
-                    <div class="pulse-dot"></div>
-                    <div style="font-size:0.75rem; font-weight:800; color:#00e5ff; letter-spacing:2px; text-transform:uppercase;">Live Industrial Pulse</div>
+                <div class="pulse-dot"></div>
+                <div style="font-size:0.75rem; font-weight:800; color:#00e5ff; letter-spacing:2px; text-transform:uppercase;">Live Industrial Pulse</div>
                 </div>
-                
                 <div style="margin-bottom:30px;">
-                    <div style="color:var(--text-dim); font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Total Leads Excavated</div>
-                    <div class="stat-piling">{total_leads:,}</div>
+                <div style="color:var(--text-dim); font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Total Leads Excavated</div>
+                <div class="stat-piling">{total_leads:,}</div>
                 </div>
-
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                    <div>
-                        <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px;">Active Harvesters</div>
-                        <div style="font-size:1.5rem; font-weight:900; color:#fff;">{len([l for l in activity_logs if 'Processing' in l['message']])}</div>
-                    </div>
-                    <div>
-                        <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px;">Mission Completion</div>
-                        <div style="font-size:1.5rem; font-weight:900; color:#00ff88;">{len([l for l in activity_logs if 'completed' in l['message'].lower()])}</div>
-                    </div>
+                <div>
+                <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px;">Active Harvesters</div>
+                <div style="font-size:1.5rem; font-weight:900; color:#fff;">{len([l for l in activity_logs if 'Processing' in l['message']])}</div>
                 </div>
-                
+                <div>
+                <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px;">Mission Completion</div>
+                <div style="font-size:1.5rem; font-weight:900; color:#00ff88;">{len([l for l in activity_logs if 'completed' in l['message'].lower()])}</div>
+                </div>
+                </div>
                 <div style="margin-top:40px; border-top:1px solid rgba(255,255,255,0.05); padding-top:20px;">
-                    <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Recent Signals</div>
-                    <div style="height:100px; overflow-y:hidden; font-size:0.75rem; color:rgba(255,255,255,0.4); line-height:1.6;">
-                        • {activity_logs[0]['message'] if len(activity_logs)>0 else 'Listening for heartbeat...'}<br>
-                        • {activity_logs[1]['message'] if len(activity_logs)>1 else '...'}<br>
-                        • {activity_logs[2]['message'] if len(activity_logs)>2 else '...'}
-                    </div>
+                <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Recent Signals</div>
+                <div style="height:100px; overflow-y:hidden; font-size:0.75rem; color:rgba(255,255,255,0.4); line-height:1.6;">
+                • {activity_logs[0]['message'] if len(activity_logs)>0 else 'Listening for heartbeat...'}<br>
+                • {activity_logs[1]['message'] if len(activity_logs)>1 else '...'}<br>
+                • {activity_logs[2]['message'] if len(activity_logs)>2 else '...'}
                 </div>
-            </div>
-            """), unsafe_allow_html=True)
+                </div>
+                </div>""").strip(), unsafe_allow_html=True)
             
             st.markdown("<br>", unsafe_allow_html=True)
             
@@ -727,13 +723,24 @@ elif selected_tab == "Pipeline":
                 </div>
                 """)
 
+            # --- PHASE 15: Enhanced Intelligence UI ---
+            deal_score = lead.get('deal_score', display_score)
+            is_high_wealth = lead.get('wealth_score', 0) >= 50 or deal_score >= 85
+            
+            wealth_indicator = ""
+            if is_high_wealth:
+                wealth_indicator = '<span style="background:rgba(0, 255, 136, 0.1); color:#00ff88; padding:2px 8px; border-radius:4px; font-size:0.6rem; font-weight:900; margin-left:10px;">💰 HIGH WEALTH</span>'
+
             st.markdown(f"""
-            <div class="lx-card" style="padding:15px; margin-bottom:15px; border-left:4px solid {'var(--accent-pink)' if display_score >= 70 else 'rgba(255,255,255,0.1)'};">
+            <div class="lx-card" style="padding:15px; margin-bottom:15px; border-left:4px solid {'#00ff88' if deal_score >= 85 else ('var(--accent-pink)' if deal_score >= 70 else 'rgba(255,255,255,0.1)')};">
                 <div style="display:flex; align-items:center; justify-content:space-between;">
                     <div style="display:flex; align-items:center; gap:15px;">
                         <span style="background:rgba(255, 77, 148, 0.1); color:var(--accent-pink); padding:4px 10px; border-radius:30px; font-size:0.7rem; font-weight:800;">{tier_label}</span>
                         <div>
-                            <div style="font-size:1.1rem; font-weight:900; color:#fff; font-family:\'Outfit\';">{lead['website'].replace('https://','').replace('http://','').replace('www.','').strip('/')}</div>
+                            <div style="font-size:1.1rem; font-weight:900; color:#fff; font-family:\'Outfit\';">
+                                {lead['website'].replace('https://','').replace('http://','').replace('www.','').strip('/')}
+                                {wealth_indicator}
+                            </div>
                             <div style="display:flex; align-items:center; gap:5px; margin-top:4px;">
                                 <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px;">{lead.get('niche', 'High-Ticket Lead')} • {lead.get('city', 'United States')}</div>
                             </div>
@@ -742,8 +749,8 @@ elif selected_tab == "Pipeline":
                     <div style="text-align:right;">
                         {leakage_html}
                         <div style="margin-top:8px;">
-                            <span style="color:var(--text-dim); font-size:0.7rem; margin-right:5px;">INTEL SCORE</span>
-                            <span style="font-size:1.6rem; font-weight:900; color:{'var(--accent-pink)' if display_score >= 70 else 'white'}; font-family:\'Outfit\';">{display_score}</span>
+                            <span style="color:var(--text-dim); font-size:0.7rem; margin-right:5px;">DEAL PROBABILITY</span>
+                            <span style="font-size:1.6rem; font-weight:900; color:{'#00ff88' if deal_score >= 85 else ('var(--accent-pink)' if deal_score >= 70 else 'white')}; font-family:\'Outfit\';">{deal_score}%</span>
                         </div>
                     </div>
                 </div>

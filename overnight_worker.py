@@ -25,11 +25,15 @@ def main():
         print("Scraping New Leads...")
         subprocess.run(["py", "find_leads.py", "--limit", "15"])
         
-        # 2. Submit (Outreach)
-        print("Processing Outreach Pipeline...")
+        # 2. Submit (Outreach - Contact Form)
+        print("Processing Contact Form Outreach...")
         subprocess.run(["py", "auto_submit.py"])
         
-        # 3. Sync (Inbox & Logs)
+        # 3. Blast (Outreach - Direct Email)
+        print("Processing Direct Email Blast...")
+        subprocess.run(["py", "email_blast.py", "--limit", "25"])
+        
+        # 4. Sync (Inbox & Logs)
         print("Syncing Inbox Activity...")
         subprocess.run(["py", "inbox_monitor.py"])
         

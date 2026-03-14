@@ -13,7 +13,8 @@ class SupabaseDB:
     def __init__(self, use_session: bool = True):
         if not SUPABASE_URL or not SUPABASE_KEY:
             raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set in environment")
-        self.url = SUPABASE_URL.rstrip('/')
+        raw_url = SUPABASE_URL or ""
+        self.url = raw_url.rstrip('/')
         self.key = SUPABASE_KEY
         self._session = requests.Session() if use_session else requests
         self.headers = {

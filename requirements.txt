@@ -11,3 +11,9 @@ openai
 google-genai
 streamlit-supabase-auth
 streamlit-option-menu
+supabase
+google-search-results
+tldextract
+jinja2
+reportlab
+scikit-learn
