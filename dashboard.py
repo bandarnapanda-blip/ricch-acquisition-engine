@@ -546,7 +546,7 @@ if activity_logs:
     last_sync_dt = datetime.fromisoformat(activity_logs[0]['created_at'].replace('Z', '+00:00'))
     last_sync_str = last_sync_dt.strftime("%H:%M:%S")
 
-st.markdown(f"""
+st.markdown(textwrap.dedent(f"""
 <div class="top-bar">
     <h1 style="font-family:'Outfit'; font-weight:900; margin:0;">{st.session_state.page} {scrape_badge}</h1>
     <div style="display:flex; align-items:center; gap:20px;">
@@ -555,7 +555,7 @@ st.markdown(f"""
         <div class="profile-circle">👤</div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+"""), unsafe_allow_html=True)
 
 # Initialize Tab Containers
 tab_ana, tab_pipe, tab_map, tab_strat = st.empty(), st.empty(), st.empty(), st.empty()
@@ -585,7 +585,7 @@ with tab_ana:
             percent = min(100, int((val / target) * 100)) if target > 0 else 0
             # Circumference = 2 * pi * r = 2 * 3.14 * 16 approx 100
             dash = percent 
-            st.markdown(f"""
+            st.markdown(textwrap.dedent(f"""
             <div class="lx-card" style="display:flex; align-items:center; justify-content:space-between; height: 120px;">
                 <div>
                     <div style="color:var(--text-dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:600;">{label}</div>
@@ -601,7 +601,7 @@ with tab_ana:
                     <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:0.85rem; font-weight:800; color:#fff;">{percent}%</div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
 
         col1, col2, col3, col4 = st.columns(4)
         with col1: render_circle_metric("Global Revenue", int(total_rev), 100000, "#ff4d94") 
@@ -687,13 +687,13 @@ with tab_ana:
             st.markdown("##### Target Sector Velocity")
             active_niche = st.selectbox("Select Scaling Niche", NICHES, index=0)
             
-            st.markdown(f"""
+            st.markdown(textwrap.dedent(f"""
             <div style="margin-top:20px; padding:15px; background:rgba(255, 77, 148, 0.05); border-radius:12px; border:1px solid rgba(255, 77, 148, 0.1);">
                 <div style="font-size:0.7rem; color:var(--accent-pink); font-weight:800;">CURRENT PARADIGM</div>
                 <div style="font-size:1.1rem; font-weight:900; color:#fff; margin:5px 0;">{active_niche}</div>
                 <div style="font-size:0.7rem; color:var(--text-dim);">Estimated LTV: $5,500 - $12,000</div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
             
             if st.button(f"🚀 Deploy {active_niche} Ops", use_container_width=True):
                 st.session_state.is_scraping = True
@@ -750,7 +750,7 @@ with tab_ana:
             st.markdown("### Recent Leads")
             if not df.empty:
                 for _, lead in df.head(5).iterrows():
-                    st.markdown(f"""
+                    st.markdown(textwrap.dedent(f"""
                     <div class="lead-item">
                         <div style="display:flex; align-items:center;">
                             <div class="lead-icon">🌐</div>
@@ -761,7 +761,7 @@ with tab_ana:
                         </div>
                         <div style="color:var(--accent-blue); font-weight:700;">{lead['opportunity_score']}</div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Service Heartbeat
@@ -976,7 +976,7 @@ with tab_show:
                 card_class = "elite-card" if is_a_tier else ""
                 tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px; letter-spacing:1px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
-                st.markdown(f"""
+                st.markdown(textwrap.dedent(f"""
                 <div class="lx-card {card_class}">
                     {tier_label}
                     <div style="font-size:0.55rem; color:var(--text-dim); font-weight:800; letter-spacing:1px;">{meta['niche'].upper()}</div>
@@ -988,7 +988,7 @@ with tab_show:
                         View Elite Prototype →
                     </a>
                 </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
                 
                 # Modern Approval Toggle
                 approval_state = st.toggle("Human Approval", value=is_approved, key=f"app_{lead['id']}")
