@@ -546,16 +546,16 @@ if activity_logs:
     last_sync_dt = datetime.fromisoformat(activity_logs[0]['created_at'].replace('Z', '+00:00'))
     last_sync_str = last_sync_dt.strftime("%H:%M:%S")
 
-st.markdown(textwrap.dedent(f"""
-<div class="top-bar">
-    <h1 style="font-family:'Outfit'; font-weight:900; margin:0;">{st.session_state.page} {scrape_badge}</h1>
-    <div style="display:flex; align-items:center; gap:20px;">
-        <div style="color:var(--text-dim); font-size:0.75rem;">Last Sync: {last_sync_str}</div>
-        <div class="search-container">🔍 search...</div>
-        <div class="profile-circle">👤</div>
+st.markdown(textwrap.dedent(f"""\
+    <div class="top-bar">
+        <h1 style="font-family:'Outfit'; font-weight:900; margin:0;">{st.session_state.page} {scrape_badge}</h1>
+        <div style="display:flex; align-items:center; gap:20px;">
+            <div style="color:var(--text-dim); font-size:0.75rem;">Last Sync: {last_sync_str}</div>
+            <div class="search-container">🔍 search...</div>
+            <div class="profile-circle">👤</div>
+        </div>
     </div>
-</div>
-"""), unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
 # Initialize Tab Containers
 tab_ana, tab_pipe, tab_map, tab_strat = st.empty(), st.empty(), st.empty(), st.empty()
@@ -585,7 +585,7 @@ with tab_ana:
             percent = min(100, int((val / target) * 100)) if target > 0 else 0
             # Circumference = 2 * pi * r = 2 * 3.14 * 16 approx 100
             dash = percent 
-            st.markdown(textwrap.dedent(f"""
+            st.markdown(textwrap.dedent(f"""\
             <div class="lx-card" style="display:flex; align-items:center; justify-content:space-between; height: 120px;">
                 <div>
                     <div style="color:var(--text-dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:600;">{label}</div>
@@ -687,7 +687,7 @@ with tab_ana:
             st.markdown("##### Target Sector Velocity")
             active_niche = st.selectbox("Select Scaling Niche", NICHES, index=0)
             
-            st.markdown(textwrap.dedent(f"""
+            st.markdown(textwrap.dedent(f"""\
             <div style="margin-top:20px; padding:15px; background:rgba(255, 77, 148, 0.05); border-radius:12px; border:1px solid rgba(255, 77, 148, 0.1);">
                 <div style="font-size:0.7rem; color:var(--accent-pink); font-weight:800;">CURRENT PARADIGM</div>
                 <div style="font-size:1.1rem; font-weight:900; color:#fff; margin:5px 0;">{active_niche}</div>
@@ -750,7 +750,7 @@ with tab_ana:
             st.markdown("### Recent Leads")
             if not df.empty:
                 for _, lead in df.head(5).iterrows():
-                    st.markdown(textwrap.dedent(f"""
+                    st.markdown(textwrap.dedent(f"""\
                     <div class="lead-item">
                         <div style="display:flex; align-items:center;">
                             <div class="lead-icon">🌐</div>
@@ -827,14 +827,14 @@ with tab_pipe:
 
             leakage_html = ""
             if lead.get('revenue_loss', 0) > 0:
-                leakage_html = textwrap.dedent(f"""
+                leakage_html = textwrap.dedent(f"""\
                 <div style="background:rgba(255,100,100,0.1); border-radius:5px; padding:4px 8px; margin-bottom:5px;">
                     <span style="color:#ff6464; font-size:0.65rem; font-weight:800; display:block; text-transform:uppercase;">Monthly Leakage</span>
                     <span style="color:#ff6464; font-size:1.1rem; font-weight:900;">${lead['revenue_loss']:,}</span>
                 </div>
                 """)
 
-            st.markdown(textwrap.dedent(f"""
+            st.markdown(textwrap.dedent(f"""\
             <div class="lx-card" style="padding:15px; margin-bottom:15px; border-left:4px solid {'var(--accent-pink)' if display_score >= 70 else 'rgba(255,255,255,0.1)'};">
                 <div style="display:flex; align-items:center; justify-content:space-between;">
                     <div style="display:flex; align-items:center; gap:15px;">
@@ -976,7 +976,7 @@ with tab_show:
                 card_class = "elite-card" if is_a_tier else ""
                 tier_label = f'<div style="font-size:0.6rem; color:#ffd700; font-weight:900; margin-bottom:5px; letter-spacing:1px;">⭐ ELITE HIGH-VALUE TARGET</div>' if is_a_tier else ""
                 
-                st.markdown(textwrap.dedent(f"""
+                st.markdown(textwrap.dedent(f"""\
                 <div class="lx-card {card_class}">
                     {tier_label}
                     <div style="font-size:0.55rem; color:var(--text-dim); font-weight:800; letter-spacing:1px;">{meta['niche'].upper()}</div>
