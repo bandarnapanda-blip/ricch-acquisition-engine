@@ -140,6 +140,31 @@ st.markdown("""
         transition: stroke-dasharray 0.5s ease;
     }
 
+    /* Industrial Pulse Animation */
+    @keyframes pulse-glow {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 229, 255, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+    }
+    .pulse-dot {
+        width: 12px;
+        height: 12px;
+        background: #00e5ff;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+        animation: pulse-glow 2s infinite;
+    }
+    .stat-piling {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 900;
+        font-size: 2.5rem;
+        background: linear-gradient(to bottom, #fff, #666);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1;
+    }
+
     /* Sidebar simulation - Responsive fix */
     @media (min-width: 1200px) {
         .side-nav {
@@ -619,23 +644,52 @@ if selected_tab == "Dashboard":
                 st.plotly_chart(fig_outreach, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
         with c_right:
-            st.markdown('<div class="lx-card" style="height:400px; overflow-y:auto;">', unsafe_allow_html=True)
-            st.markdown("### Recent Activity Feed")
-            recent_logs = activity_logs[:20]
-            for log in recent_logs:
-                ts = datetime.fromisoformat(log['created_at'].replace('Z', '+00:00')).strftime("%H:%M")
-                st.markdown(f'<div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:5px;">[{ts}] {log["message"]}</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            # --- LIVE INDUSTRIAL PULSE CARD ---
+            st.markdown(textwrap.dedent(f"""\
+            <div class="lx-card" style="height:400px; position:relative; overflow:hidden; border:1px solid rgba(0, 229, 255, 0.2); background: linear-gradient(145deg, #111a1f, #0a0b10);">
+                <div style="position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(to right, #00e5ff, transparent);"></div>
+                <div style="display:flex; align-items:center; margin-bottom:20px;">
+                    <div class="pulse-dot"></div>
+                    <div style="font-size:0.75rem; font-weight:800; color:#00e5ff; letter-spacing:2px; text-transform:uppercase;">Live Industrial Pulse</div>
+                </div>
+                
+                <div style="margin-bottom:30px;">
+                    <div style="color:var(--text-dim); font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Total Leads Excavated</div>
+                    <div class="stat-piling">{total_leads:,}</div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                    <div>
+                        <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px;">Active Harvesters</div>
+                        <div style="font-size:1.5rem; font-weight:900; color:#fff;">{len([l for l in activity_logs if 'Processing' in l['message']])}</div>
+                    </div>
+                    <div>
+                        <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px;">Mission Completion</div>
+                        <div style="font-size:1.5rem; font-weight:900; color:#00ff88;">{len([l for l in activity_logs if 'completed' in l['message'].lower()])}</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top:40px; border-top:1px solid rgba(255,255,255,0.05); padding-top:20px;">
+                    <div style="color:var(--text-dim); font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Recent Signals</div>
+                    <div style="height:100px; overflow-y:hidden; font-size:0.75rem; color:rgba(255,255,255,0.4); line-height:1.6;">
+                        • {activity_logs[0]['message'] if len(activity_logs)>0 else 'Listening for heartbeat...'}<br>
+                        • {activity_logs[1]['message'] if len(activity_logs)>1 else '...'}<br>
+                        • {activity_logs[2]['message'] if len(activity_logs)>2 else '...'}
+                    </div>
+                </div>
+            </div>
+            """), unsafe_allow_html=True)
             
             st.markdown("<br>", unsafe_allow_html=True)
-            # Bottom Activity Feed Terminal
+            
+            # Bottom Activity Feed Terminal (Compact)
             st.markdown('<div class="lx-card" style="background:#000; border:1px solid #1a1a1a; padding:15px; font-family:\'Courier New\', monospace; height:200px; overflow-y:auto; border-radius:12px;">', unsafe_allow_html=True)
-            st.markdown('<div style="color:#33ff33; font-size:0.8rem; border-bottom:1px solid #1a1a1a; margin-bottom:10px; padding-bottom:5px;">> GLOBAL ACTIVITY TERM [SYNCED]</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#00e5ff; font-size:0.8rem; border-bottom:1px solid #1a1a1a; margin-bottom:10px; padding-bottom:5px;">> LIVE MISSION LOG [SYNCED]</div>', unsafe_allow_html=True)
             recent_logs_long = activity_logs[:50]
             log_content = ""
             for log in recent_logs_long:
                 ts_long = datetime.fromisoformat(log['created_at'].replace('Z', '+00:00')).strftime("%H:%M:%S")
-                log_content += f"[{ts_long}] [{log['service_name']}] {log['message']}\n"
+                log_content += f"[{ts_long}] {log['message']}\n"
             st.code(log_content, language="bash")
             st.markdown('</div>', unsafe_allow_html=True)
 
