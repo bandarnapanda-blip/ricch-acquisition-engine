@@ -33,31 +33,47 @@ def get_headers():
         "Content-Type": "application/json"
     }
 
+def request_with_retry(method, url, **kwargs):
+    """Wrapper for requests with exponential backoff."""
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            res = requests.request(method, url, **kwargs)
+            res.raise_for_status()
+            return res
+        except Exception as e:
+            if attempt == max_retries - 1:
+                logger.error(f"Request failed after {max_retries} attempts: {e}")
+                raise
+            wait = 2 ** attempt + random.uniform(0, 1)
+            logger.warning(f"Connection issue ({e}). Retrying in {wait:.1f}s...")
+            time.sleep(wait)
+    return None
+
 def fetch_targets():
     """Fetch high-value leads ready for direct email outreach."""
-    # We prioritize 'High Intel Ready' then 'High Priority' then 'New'
-    statuses = ["High Intel Ready", "High Priority", "New"]
+    # Prioritizing leads with verified shadow sites
+    statuses = ["Shadow Site Ready", "High Intel Ready", "High Priority"]
     all_leads = []
     
     for status in statuses:
         url = f"{SUPABASE_URL}/rest/v1/leads?status=eq.{status.replace(' ', '%20')}&select=*"
         try:
-            res = requests.get(url, headers=get_headers())
-            if res.status_code == 200:
+            res = request_with_retry("GET", url, headers=get_headers())
+            if res and res.status_code == 200:
                 leads = res.json()
-                # Filter for leads with emails
-                valid_leads = [l for l in leads if l.get("email") and "@" in l.get("email")]
-                all_leads.extend(valid_leads)
+                # If we have a special flag or just return all for checking
+                all_leads.extend(leads)
         except Exception as e:
             logger.error(f"Error fetching leads for status {status}: {e}")
             
-    # Return unique leads by email
-    seen_emails = set()
+    # Return unique leads by ID/Email
+    seen_ids = set()
     unique_leads = []
     for l in all_leads:
-        if l["email"].lower() not in seen_emails:
+        if l["id"] not in seen_ids:
             unique_leads.append(l)
-            seen_emails.add(l["email"].lower())
+            seen_ids.add(l["id"])
             
     return unique_leads
 
@@ -68,33 +84,34 @@ def generate_ai_pitch(lead):
     loss = lead.get("revenue_loss", "5,000")
     city = lead.get("city", "your area")
     
-    # Generate shadow site link
-    from preview_engine import generate_preview_metadata
-    preview_meta = generate_preview_metadata(lead)
-    preview_url = preview_meta.get("public_preview_url", "")
+    # Use the verified demo link from our new Netlify Isolated Site Strategy
+    preview_url = lead.get("demo_link", "")
 
     api_keys = [k.strip() for k in GEMINI_API_KEYS if k.strip()]
     if not api_keys:
         return f"Have a look at this: I've hand-built a high-performance redesign for {domain} because your current site is leaking an estimated ${loss}/mo in revenue in {city}. You can view the prototype here: {preview_url} - Interested in the full technical audit breakdown?"
         
     api_key = random.choice(api_keys)
-    # Using v1 and flash model
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    # Using v1 endpoint for stable content generation
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key}"
     headers = {'Content-Type': 'application/json'}
     
     prompt = f"""
     ROLE: Senior Revenue Consultant at {AGENCY_NAME}.
     TARGET: {lead.get('business_name', domain)} ({niche}).
     PROBLEM: Their site in {city} is leaking ${loss}/mo in high-ticket leads.
-    SOLUTION: I've already hand-built a high-performance prototype for them here: {preview_url}
+    SOLUTION: I've already hand-built a high-performance, niche-specific prototype for them here: {preview_url}
     
     TASK: 
     Write a 3-sentence direct email. 
-    1. Hook on the leakage.
-    2. Direct them to the prototype I already built for them.
+    1. Hook on the leakage and the competitiveness of the {city} market for {niche}.
+    2. Direct them to the custom prototype I already built specifically for them.
     3. Ask if they want the full technical audit breakdown.
     
-    NO FLUFF. NO "DEAR". NO "BEST REGARDS". START WITH "HAVE A LOOK AT THIS:".
+    STRICT STYLE:
+    - NO FLUFF. NO "DEAR". NO "BEST REGARDS".
+    - START WITH "HAVE A LOOK AT THIS:".
+    - Tone: High-authority, professional, slightly aggressive on the revenue loss.
     """
     
     payload = {
@@ -112,7 +129,7 @@ def generate_ai_pitch(lead):
             raise Exception("API failure")
     except Exception as e:
         logger.warning(f"AI Pitch generation failed: {e}. Using fallback.")
-        return f"Have a look at this: I've hand-built a high-performance redesign for {domain} because your current site is leaking an estimated ${loss}/mo in revenue in {city}. You can view the prototype here: {preview_url} - Interested in the full technical audit breakdown?"
+        return f"Have a look at this: I've hand-built a high-performance, niche-specific redesign for {domain} because your current site is leaking an estimated ${loss}/mo in revenue in {city}. You can view the prototype here: {preview_url} - Interested in the full technical audit breakdown?"
 
 def send_email(to_email, subject, body):
     """Send outreach email via Gmail SMTP."""
@@ -141,7 +158,7 @@ def update_lead_status(lead_id):
     """Update lead status to 'Contacted (Email)' in Supabase."""
     url = f"{SUPABASE_URL}/rest/v1/leads?id=eq.{lead_id}"
     try:
-        requests.patch(url, headers=get_headers(), json={"status": "Contacted (Email)"})
+        request_with_retry("PATCH", url, headers=get_headers(), json={"status": "Contacted (Email)"})
     except Exception as e:
         logger.error(f"Failed to update lead {lead_id}: {e}")
 

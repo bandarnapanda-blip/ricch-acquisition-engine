@@ -271,9 +271,10 @@ def check_inbox():
     print("=" * 60)
     
     domain_map = fetch_known_domains()
-    print("No leads in database to track.")
-    push_log("Inbox", "Monitor Active: 0 leads in tracking queue.")
-    return
+    if not domain_map:
+        print("No leads in database to track.")
+        push_log("Inbox", "Monitor Active: 0 leads in tracking queue.")
+        return
     
     try:
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
@@ -329,9 +330,17 @@ def check_inbox():
         push_log("Inbox", f"Service Error: {e}")
 
 import time
+import argparse
 if __name__ == "__main__":
-    print("Starting continuous inbox monitoring (checking every 2 minutes)...")
-    while True:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--once", action="store_true", help="Run scan once and exit.")
+    args = parser.parse_args()
+    
+    if args.once:
         check_inbox()
-        print("Sleeping for 2 minutes...")
-        time.sleep(120)
+    else:
+        print("Starting continuous inbox monitoring (checking every 2 minutes)...")
+        while True:
+            check_inbox()
+            print("Sleeping for 2 minutes...")
+            time.sleep(120)

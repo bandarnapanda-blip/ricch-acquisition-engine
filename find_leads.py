@@ -5,6 +5,8 @@ import random
 import os
 import argparse
 import asyncio
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from playwright.sync_api import sync_playwright
 from playwright_stealth import Stealth
 from urllib.parse import urljoin, urlparse
@@ -12,6 +14,10 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from config import CITIES, NICHES, STATE
 from analyzer import analyze_site, generate_ai_audit, calculate_opportunity_score, calculate_revenue_loss
+from antigravity_deal_score import SerpKeyManager
+
+# Initialize SerpAPI Key Manager
+serp_manager = SerpKeyManager()
 
 load_dotenv()
 
@@ -262,10 +268,58 @@ def scrape_query_bing(query):
             
     return list(set(leads_urls))
 
+def scrape_query_serpapi(query):
+    """Primary high-speed scraper using SerpAPI with key rotation."""
+    leads_urls = []
+    key = serp_manager.get_key()
+    if not key:
+        return []
+        
+    print(f"  [SERPAPI] Hunting for \"{query}\" using key ending in {key[-5:]}...")
+    
+    from serpapi import GoogleSearch
+    try:
+        search = GoogleSearch({
+            "q": query,
+            "api_key": key,
+            "num": MAX_RESULTS_PER_QUERY
+        })
+        results = search.get_dict()
+        
+        if "error" in results:
+            err = results["error"]
+            if "Rate limit" in err or "quota" in err.lower():
+                print(f"  [SERPAPI] Key exhausted. Rotating...")
+                serp_manager.mark_exhausted(key)
+                return scrape_query_serpapi(query) # Retry with new key
+            else:
+                print(f"  [SERPAPI] Error: {err}")
+                return []
+                
+        for result in results.get("organic_results", []):
+            link = result.get("link")
+            if link and not any(d in link for d in DIRECTORY_DOMAINS):
+                leads_urls.append(link)
+                
+    except Exception as e:
+        print(f"  [SERPAPI] Unexpected error: {e}")
+        
+    return list(set(leads_urls))
+
 def scrape_query(query, niche, city):
     """Scrape a single search query and return leads list."""
     leads = []
     
+    # Try SerpAPI first (Premium/Fast)
+    try:
+        urls = scrape_query_serpapi(query)
+        if urls:
+            for url in urls:
+                leads.append({"website": url, "contact_url": "", "city": city, "niche": niche})
+            return leads
+    except Exception as e:
+        print(f"  [SERPAPI] Critical failure, falling back: {e}")
+
     # Try Playwright first
     try:
         urls = scrape_query_playwright(query)

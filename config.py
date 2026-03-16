@@ -4,13 +4,13 @@
 STATE = ""
 
 CITIES = [
+    "Los Angeles, California",
     "Beverly Hills, California",
     "Palo Alto, California",
     "Greenwich, Connecticut",
     "Scarscale, New York",
     "Atherton, California",
     "Palm Beach, Florida",
-    "Los Angeles, California",
     "Miami, Florida",
     "Austin, Texas",
     "New York City, New York",

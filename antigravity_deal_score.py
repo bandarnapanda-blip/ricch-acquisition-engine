@@ -62,13 +62,13 @@ SERPAPI_KEY = os.getenv("SERPAPI_KEY")
 class SerpKeyManager:
     """Manages rotation of multiple SerpAPI keys to maximize free tier usage."""
     def __init__(self):
+        self.keys: List[str] = []
         env_keys = os.getenv("SERPAPI_KEYS", "")
         if env_keys:
             self.keys = [k.strip() for k in env_keys.split(",") if k.strip()]
         elif (sk := os.getenv("SERPAPI_KEY")):
             self.keys = [sk]
-        else:
-            self.keys = []
+        
         self.current_index = 0
         self.exhausted_keys = set()
         if self.keys:
@@ -107,16 +107,11 @@ WEIGHTS = {
 LOCAL_PREVIEW_DIR = pathlib.Path("digital_twins")
 LOCAL_PREVIEW_DIR.mkdir(exist_ok=True)
 
-supabase = None
+# Supabase REST Wrapper (Hardened)
 try:
-    if create_client and SUPABASE_URL and SUPABASE_KEY:
-        supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-    elif not SUPABASE_URL or not SUPABASE_KEY:
-        logger.warning("Supabase credentials not found in environment. DB writes will be skipped.")
-    else:
-        logger.warning("supabase package not installed or configuration missing; DB writes disabled.")
+    from database import db as supabase
 except Exception as e:
-    logger.warning(f"Supabase initialization failed: {e}. DB writes will be skipped.")
+    logger.warning(f"Supabase (REST) initialization failed: {e}. DB writes may skip.")
     supabase = None
 
 # ---------------------------

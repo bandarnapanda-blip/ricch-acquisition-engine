@@ -12,6 +12,7 @@ from streamlit_option_menu import option_menu
 from streamlit_supabase_auth import login_form
 from config import CITIES, NICHES, AGENCY_NAME, AGENCY_DOMAIN
 from database import db
+from paystack_engine import generate_payment_link, send_invoice_email
 
 # Load Environment
 load_dotenv()
@@ -458,6 +459,10 @@ if not df.empty:
     total_replies = len(df[df['status'].isin(['Replied', 'Demo Sent', 'Closed'])])
     reply_rate = (total_replies / total_sent * 100) if total_sent > 0 else 0
     hot_leads = len(df[df['reply_status'] == 'positive'])
+    
+    # Revenue & Follow-ups
+    revenue_collected = df['amount_paid'].sum() if 'amount_paid' in df.columns else 0
+    follow_ups_queued = len(db.fetch_pending_follow_ups())
 else:
     total_rev = 0
     total_leads = 0
@@ -470,6 +475,8 @@ else:
     reply_rate = 0
     hot_leads = 0
     potential_mrr = 0
+    revenue_collected = 0
+    follow_ups_queued = 0
 
 # Calc Heartbeats
 def get_service_status(service_name, logs):
@@ -545,9 +552,9 @@ if selected_tab == "Dashboard":
 
         col1, col2, col3, col4 = st.columns(4)
         with col1: render_circle_metric("Global Revenue", int(total_rev), 100000, "#ff4d94") 
-        with col2: render_circle_metric("Total Leads", total_leads, 5000, "#00e5ff", prefix="")
+        with col2: render_circle_metric("Revenue Collected", int(revenue_collected), 10000, "#00ff88")
         with col3: render_circle_metric("Annual Leakage", int((total_leakage * 12)/1000), 5000, "#ff6464", prefix="$", suffix="k")
-        with col4: render_circle_metric("Expected MRR", int(expected_mrr), 10000, "#00ff88")
+        with col4: render_circle_metric("Follow-ups Queued", int(follow_ups_queued), 100, "#ffcc00", prefix="")
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("#### 🦾 Outreach Command Centers")
@@ -784,6 +791,39 @@ elif selected_tab == "Pipeline":
                     st.link_button("🚀 Open Website", lead['website'])
                     if lead.get('contact_url'):
                         st.link_button("✉️ Contact Form", lead['contact_url'])
+                        
+                    # --- Closing Controls ---
+                    if lead['status'] == "Replied":
+                        st.markdown("---")
+                        st.markdown("#### 💰 Closing Command")
+                        
+                        payment_status = lead.get('payment_status', 'unpaid')
+                        if payment_status == 'paid':
+                            st.success("✅ PAID IN FULL")
+                        elif lead.get('payment_link'):
+                            st.info(f"Invoice Sent: [Payment Link]({lead['payment_link']})")
+                            st.warning("Status: Payment Pending")
+                        else:
+                            if st.button("💰 Send Paystack Invoice ($1,500)", key=f"inv_{lead['id']}", type="primary"):
+                                with st.spinner("Generating Paystack Link..."):
+                                    link = generate_payment_link(
+                                        lead['id'], 
+                                        lead['email'], 
+                                        lead['business_name'], 
+                                        lead['city'], 
+                                        lead['niche']
+                                    )
+                                    if link:
+                                        if db.update_lead(lead['id'], {"payment_link": link, "payment_status": "invoice_sent"}):
+                                            if send_invoice_email(lead, link):
+                                                st.toast("Invoice Sent Successfully!")
+                                                st.rerun()
+                                            else:
+                                                st.error("Failed to send email. Link generated but not sent.")
+                                        else:
+                                            st.error("Failed to update database with link.")
+                                    else:
+                                        st.error("Failed to generate Paystack link.")
 
 elif selected_tab == "Intelligence":
     st.markdown("### 🌎 Geographical Command")

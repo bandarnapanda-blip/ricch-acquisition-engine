@@ -1,11 +1,17 @@
 from pyngrok import ngrok, conf
 import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
 
 # Point to local ngrok binary
 conf.get_default().ngrok_path = "./ngrok.exe"
+
+# Auth
+authtoken = os.getenv("NGROK_AUTHTOKEN")
+if authtoken:
+    ngrok.set_auth_token(authtoken)
 
 print("Starting Public Bridge (ngrok) to Port 5000...")
 try:

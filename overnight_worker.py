@@ -35,7 +35,7 @@ def main():
         
         # 4. Sync (Inbox & Logs)
         print("Syncing Inbox Activity...")
-        subprocess.run(["py", "inbox_monitor.py"])
+        subprocess.run(["py", "inbox_monitor.py", "--once"])
         
         wait_time = 1800 # 30 minutes
         print(f"--- CYCLE COMPLETE. Resting for {wait_time/60} mins... ---")

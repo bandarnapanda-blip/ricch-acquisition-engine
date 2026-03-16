@@ -111,32 +111,36 @@ def _safe_filename(prefix: str, domain: str, ext: str = "html") -> str:
     safe = "".join(ch if ch.isalnum() or ch in ("-", "_") else "-" for ch in domain)
     return f"{prefix}_{safe}_{ts}.{ext}"
 
-def generate_report_html(signals: "LeadSignals") -> str:
+def generate_report_html(signals: Optional["LeadSignals"]) -> str:
     """Render HTML string for a lead."""
+    if signals is None:
+        return "<html><body><h1>No data available for this lead</h1></body></html>"
+        
     issues = []
-    if getattr(signals, "slow_load_estimate", None) and signals.slow_load_estimate > 4:
-        issues.append(f"Slow load ({signals.slow_load_estimate}s)")
+    slow_load = getattr(signals, "slow_load_estimate", None)
+    if slow_load and isinstance(slow_load, (int, float)) and slow_load > 4:
+        issues.append(f"Slow load ({slow_load}s)")
     if getattr(signals, "missing_schema", False):
         issues.append("Missing schema.org markup")
     if getattr(signals, "outdated_theme_hint", False):
         issues.append("Outdated design")
-    if getattr(signals, "serp_rank", None) and signals.serp_rank > 10:
-        issues.append(f"Low search ranking (#{signals.serp_rank})")
+    
+    serp_rank = getattr(signals, "serp_rank", None)
+    if serp_rank and isinstance(serp_rank, (int, float)) and serp_rank > 10:
+        issues.append(f"Low search ranking (#{serp_rank})")
+        
     if not issues:
         issues_summary = "Minor technical & UX improvements"
     else:
         issues_summary = "; ".join(issues)
 
     preview_link = "#"
-    if signals.raw and signals.raw.get("digital_twin_path"):
-        preview_link = signals.raw.get("digital_twin_path")
+    raw = getattr(signals, 'raw', {}) or {}
+    if raw.get("digital_twin_path"):
+        preview_link = raw.get("digital_twin_path")
 
-    raw_data = {}
-    if signals and hasattr(signals, 'raw'):
-        raw_data = signals.raw or {}
-    
     html = HTML_TEMPLATE.render(
-        domain=getattr(signals, 'domain', 'Unknown') if signals else 'Unknown',
+        domain=getattr(signals, 'domain', 'Unknown'),
         timestamp=datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
         deal_score=getattr(signals, 'deal_score', 0) if signals else 0,
         action=recommend_outreach_action(signals) if signals else 'ignore',
@@ -144,7 +148,7 @@ def generate_report_html(signals: "LeadSignals") -> str:
         serp_rank=getattr(signals, "serp_rank", None),
         has_viewport_meta=getattr(signals, "has_viewport_meta", False),
         multiple_locations=getattr(signals, "multiple_locations", 0),
-        signals_json=json.dumps(raw_data or asdict_safe(signals), indent=2),
+        signals_json=json.dumps(raw or asdict_safe(signals), indent=2),
         issues_summary=issues_summary,
         preview_link=preview_link,
     )
@@ -204,7 +208,8 @@ def generate_pdf_report(signals: "LeadSignals", pdf_path: str) -> bool:
         elems.append(Spacer(1, 12))
 
         elems.append(Paragraph("Quick Signals & Notes:", styles["Heading3"]))
-        raw_json = json.dumps(signals.raw or asdict_safe(signals), indent=2)
+        raw = getattr(signals, 'raw', {}) or {}
+        raw_json = json.dumps(raw or asdict_safe(signals), indent=2)
         # For PDF readability, split raw_json into paragraphs of reasonable length
         for chunk in split_text(raw_json, 800):
             elems.append(Paragraph(f" {chunk} ", styleN))
@@ -214,7 +219,8 @@ def generate_pdf_report(signals: "LeadSignals", pdf_path: str) -> bool:
         logger.info(f"Generated PDF report: {pdf_path}")
         return True
     except Exception as e:
-        logger.warning(f"PDF generation failed for {signals.domain}: {e}")
+        domain = getattr(signals, 'domain', 'Unknown') if signals else 'Unknown'
+        logger.warning(f"PDF generation failed for {domain}: {e}")
         return False
 
 def split_text(text: str, size: int = 800):

@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import os
 import json
 import time
@@ -32,10 +34,25 @@ NICHE_LTV = {
     "Default": 7500
 }
 
-def get_genai_client(key_index=0):
-    key = GEMINI_KEYS[key_index % len(GEMINI_KEYS)] if GEMINI_KEYS else None
-    if not key: return None
-    return genai.Client(api_key=key)
+def generate_ai_completion(prompt, attempt=0):
+    """Generate AI response using requests fallback for SDK issues."""
+    key = GEMINI_KEYS[attempt] if attempt < len(GEMINI_KEYS) else GEMINI_KEYS[0]
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
+    headers = {'Content-Type': 'application/json'}
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.5}
+    }
+    try:
+        res = requests.post(url, headers=headers, json=payload, timeout=15)
+        if res.status_code == 200:
+            return res.json()['candidates'][0]['content']['parts'][0]['text'].strip()
+        else:
+            raise Exception(f"API Error {res.status_code}: {res.text}")
+    except Exception as e:
+        if attempt < len(GEMINI_KEYS) - 1:
+            return generate_ai_completion(prompt, attempt + 1)
+        raise e
 
 def calculate_revenue_loss(niche, audit):
     """Estimate monthly revenue leakage based on technical failures."""
@@ -192,18 +209,14 @@ def generate_ai_audit(url, audit, niche="Default"):
     TASK:
     Write 3 blunt executive bullets. Each bullet MUST link a technical failure 
     directly to the ${loss:,}/mo revenue drain. Create extreme professional urgency.
+    NO FLUFF. NO PROMPTING TEXT. JUST THE BULLETS.
     """
     
-    for attempt, key in enumerate(GEMINI_KEYS):
-        try:
-            client = get_genai_client(attempt)
-            if not client: continue
-            response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
-            return response.text
-        except Exception as e:
-            if attempt == len(GEMINI_KEYS) - 1:
-                return f"Revenue Audit on Standby. Est Leakage: ${loss:,}/mo. Opportunity: {tier}."
-    return f"Revenue Audit on Standby. Est Leakage: ${loss:,}/mo."
+    try:
+        return generate_ai_completion(prompt)
+    except Exception as e:
+        print(f"AI Audit generation failed: {e}")
+        return f"Revenue Audit on Standby. Est Leakage: ${loss:,}/mo. Opportunity: {tier}."
 
 if __name__ == "__main__":
     test_url = "https://losangelesepoxy.com/"

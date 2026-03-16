@@ -15,9 +15,9 @@ class SupabaseDB:
             raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set in environment")
         raw_url = SUPABASE_URL or ""
         self.url = raw_url.rstrip('/')
-        self.key = SUPABASE_KEY
+        self.key: str = SUPABASE_KEY if SUPABASE_KEY else ""
         self._session = requests.Session() if use_session else requests
-        self.headers = {
+        self.headers: Dict[str, str] = {
             "apikey": self.key,
             "Authorization": f"Bearer {self.key}",
             "Content-Type": "application/json",
@@ -167,6 +167,68 @@ class SupabaseDB:
         except Exception as e:
             print(f"DB Error (fetch_logs): {e}")
             return []
+
+    # --- Follow-up Queue ---
+    def queue_follow_up(self, lead_id: str, count: int, scheduled_for: str) -> bool:
+        endpoint = f"{self.url}/rest/v1/follow_up_queue"
+        data = {
+            "lead_id": lead_id,
+            "follow_up_number": count,
+            "scheduled_for": scheduled_for,
+            "status": "pending"
+        }
+        try:
+            resp = self._session.post(endpoint, headers=self._get_headers(), json=data, timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            return True
+        except Exception as e:
+            print(f"DB Error (queue_follow_up): {e}")
+            return False
+
+    def fetch_pending_follow_ups(self) -> List[Dict[str, Any]]:
+        import datetime
+        now = datetime.datetime.utcnow().isoformat() + "Z"
+        endpoint = f"{self.url}/rest/v1/follow_up_queue?status=eq.pending&scheduled_for=lte.{now}&select=*,leads(*)"
+        try:
+            resp = self._session.get(endpoint, headers=self.headers, timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as e:
+            print(f"DB Error (fetch_pending_follow_ups): {e}")
+            return []
+
+    def mark_follow_up_sent(self, follow_up_id: str) -> bool:
+        import datetime
+        endpoint = f"{self.url}/rest/v1/follow_up_queue?id=eq.{follow_up_id}"
+        data = {
+            "status": "sent",
+            "sent_at": datetime.datetime.utcnow().isoformat() + "Z"
+        }
+        try:
+            resp = self._session.patch(endpoint, headers=self._get_headers(), json=data, timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            return True
+        except Exception as e:
+            print(f"DB Error (mark_follow_up_sent): {e}")
+            return False
+
+    # --- Revenue Tracking ---
+    def record_payment(self, lead_id: str, amount: float, status: str = "paid") -> bool:
+        import datetime
+        lead_endpoint = f"{self.url}/rest/v1/leads?id=eq.{lead_id}"
+        data = {
+            "payment_status": status,
+            "amount_paid": amount,
+            "paid_at": datetime.datetime.utcnow().isoformat() + "Z",
+            "status": "Closed - Won"
+        }
+        try:
+            resp = self._session.patch(lead_endpoint, headers=self._get_headers(), json=data, timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            return True
+        except Exception as e:
+            print(f"DB Error (record_payment): {e}")
+            return False
 
 # Singleton instance
 db = SupabaseDB()

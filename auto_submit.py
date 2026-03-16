@@ -19,17 +19,32 @@ OUR_NAME = "Ri2ch Growth Lab"
 OUR_EMAIL = AGENCY_EMAIL
 
 def push_log(service, message):
-    """Push a log entry to Supabase."""
+    """Push a log entry to Supabase with retries."""
     headers = {
         "apikey": SUPABASE_KEY,
         "Authorization": f"Bearer {SUPABASE_KEY}",
         "Content-Type": "application/json"
     }
     endpoint = f"{SUPABASE_URL}/rest/v1/activity_logs"
-    try:
-        requests.post(endpoint, headers=headers, json={"service_name": service, "message": message}, timeout=5)
-    except Exception as e:
-        print(f"Log Error: {e}")
+    for attempt in range(3):
+        try:
+            requests.post(endpoint, headers=headers, json={"service_name": service, "message": message}, timeout=10)
+            break
+        except Exception as e:
+            if attempt == 2: print(f"Log Error: {e}")
+            time.sleep(1)
+
+def request_with_retry(method, url, **kwargs):
+    """Simple retry wrapper for requests."""
+    for attempt in range(3):
+        try:
+            res = requests.request(method, url, **kwargs)
+            res.raise_for_status()
+            return res
+        except Exception as e:
+            if attempt == 2: raise
+            time.sleep(2)
+    return None
 
 # High-Stakes Authority Pitches
 def get_fallback_pitch(domain, niche="business", loss="significant", preview_url=""):
@@ -250,16 +265,16 @@ async def main():
     try:
         # Fetch High Intel leads first
         intel_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Intel%20Ready&select=*"
-        res = requests.get(intel_endpoint, headers=headers)
-        leads = res.json() if res.status_code == 200 else []
+        res = request_with_retry("GET", intel_endpoint, headers=headers)
+        leads = res.json() if res and res.status_code == 200 else []
         
         hp_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Priority&select=*"
-        res = requests.get(hp_endpoint, headers=headers)
-        leads += res.json() if res.status_code == 200 else []
+        res = request_with_retry("GET", hp_endpoint, headers=headers)
+        leads += res.json() if res and res.status_code == 200 else []
         
         new_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.New&select=*"
-        res = requests.get(new_endpoint, headers=headers)
-        leads += res.json() if res.status_code == 200 else []
+        res = request_with_retry("GET", new_endpoint, headers=headers)
+        leads += res.json() if res and res.status_code == 200 else []
     except Exception as e:
         print(f"Fetch failed: {e}")
         return
