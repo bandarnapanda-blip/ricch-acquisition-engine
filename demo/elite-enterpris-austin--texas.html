@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Enterprise | Quantum V15 Performance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap');
+        
+        :root {
+            --onyx: #050505;
+            --electric-blue: #00A3FF;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--onyx);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .quantum-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, var(--onyx) 100%);
+            z-index: -1;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: var(--electric-blue);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            background: linear-gradient(rgba(5,5,5,0.7), rgba(5,5,5,0.7)), url('https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1800&q=85');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .badge {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            color: var(--electric-blue);
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            letter-spacing: -3px;
+        }
+
+        .highlight {
+            color: var(--electric-blue);
+            text-shadow: 0 0 30px var(--electric-blue);
+        }
+
+        .subheadline {
+            font-size: 1.25rem;
+            max-width: 600px;
+            opacity: 0.7;
+            margin-bottom: 3rem;
+        }
+
+        .cta-btn {
+            background: var(--electric-blue);
+            color: #000;
+            padding: 1.2rem 3rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(0, 163, 255, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 163, 255, 0.5);
+            background: #fff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 5rem 5%;
+            margin-top: -5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            transition: border 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--electric-blue);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--electric-blue);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+        }
+
+        .services {
+            padding: 10rem 5%;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 3rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            background: var(--glass);
+            border-color: var(--electric-blue);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--electric-blue);
+        }
+
+        .roi-footer {
+            padding: 10rem 5%;
+            text-align: center;
+            background: linear-gradient(to top, var(--onyx), transparent);
+        }
+
+        .founder-tag {
+            margin-top: 5rem;
+            opacity: 0.5;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; margin-top: 0; }
+            h1 { font-size: 4rem; }
+        }
+
+        /* TRAVAL SECURE PREVIEW */
+        a { pointer-events: none !important; cursor: default !important; }
+    </style>
+
+    <style>
+        /* This disables all links from redirecting, keeping them trapped safely in the preview */
+        a {
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        /* Add a custom cursor so it still feels like a real site */
+        body {
+            cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quantum-bg"></div>
+
+    <nav class="navbar">
+        <div class="logo">Elite Enterprise</div>
+        <div style="font-weight: 700; font-size: 0.8rem; opacity: 0.5;">RECOVERY SIMULATION V15.0</div>
+    </nav>
+
+    <section class="hero">
+        <div class="badge">Master Restorations</div>
+        <h1>Precision. <br> <span class="highlight">Redefined.</span></h1>
+        <p class="subheadline">Precision design. Life-changing lead volume.</p>
+        <a href="#" class="cta-btn">Initiate Growth</a>
+    </section>
+
+    <section class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-number">15k+</span>
+            <span class="stat-label">Patient Leads Delivered</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">Advanced</span>
+            <span class="stat-label">Retargeting Tech</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">Elite</span>
+            <span class="stat-label">Experience Design</span>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="section-header">
+            <div class="badge">Our Expertise</div>
+            <h2>Industrial Scale <br> <span class="highlight">Competence.</span></h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Implant Acquisition</h3>
+                <p>Magnetic landing pages specifically tuned to attract and convert high-ticket dental implant patients.</p>
+            </div>
+            <div class="service-card">
+                <h3>Cosmetic Authority</h3>
+                <p>Boutique visual storytelling that showcases your results and builds absolute patient confidence.</p>
+            </div>
+            <div class="service-card">
+                <h3>Full Arch Growth</h3>
+                <p>Strategic funnels designed to fill your chair with complex restorative cases in record time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi-footer">
+        <h2 style="font-size: 4rem; font-weight: 900; margin-bottom: 2rem;">Ready to <span class="highlight">Capture?</span></h2>
+        <p style="max-width: 600px; margin: 0 auto 3rem auto; opacity: 0.7;">This is a high-authority mirror of your business, optimized by Rody, Kael, and Soren for maximum local dominance.</p>
+        <a href="#" class="cta-btn">Scale Now</a>
+        
+        <div class="founder-tag">
+            CRAFTED BY THE QUANTUM TRIO: RODY, KAEL & SOREN.
+        </div>
+    </section>
+</body>
+</html>
