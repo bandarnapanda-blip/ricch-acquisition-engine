@@ -522,7 +522,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = 'a9a9be1f-fab1-4b31-b4e9-968c52cd8acd';
+  const LEAD_ID      = 'c228f571-b349-4458-970a-a56d82e9db39';
   const BIZ_NAME     = 'Los Angeles, California Landscaping Design';
   const NICHE        = 'Landscaping Design';
   const TEMPLATE     = 'grove';
@@ -545,7 +545,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 
   // ── Core ping function ──
   function ping(event, extra = {}) {
-    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
 
     // Dedup scroll events
     if (firedEvents.has(event)) return;
@@ -677,7 +677,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = 'a9a9be1f-fab1-4b31-b4e9-968c52cd8acd';
+  const LEAD_ID    = 'c228f571-b349-4458-970a-a56d82e9db39';
   const BIZ_SLUG   = encodeURIComponent('Los Angeles, California Landscaping Design'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Landscaping Design');
 
@@ -709,7 +709,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=a9a9be1f-fab1-4b31-b4e9-968c52cd8acd&biz=Los-Angeles,-California-Landscaping-Design&niche=Landscaping Design&template=grove&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=c228f571-b349-4458-970a-a56d82e9db39&biz=Los-Angeles,-California-Landscaping-Design&niche=Landscaping Design&template=grove&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
