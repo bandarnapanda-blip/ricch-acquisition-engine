@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  RI2CH AGENCY OS — QUANTUM V15.0
+  TEMPLATE: COURT
+  ARCHETYPE: Law (Personal Injury · Criminal Defense · Family Law · Corporate Law)
+  VERSION: 1.0
+  BRIEFING: See BRIEFING.md for full pipeline documentation.
+================================================================================
+
+  DIVISION 2 — RODY'S DESIGN NOTES:
+  Visual DNA pulled from:
+  - ADVMARC (Image 10, Batch 2): Dark hero + Justice statue, gold headlines,
+    white section below with circular stats.
+  - De Alwis Associates (Image 5, Batch 2): Professional grid, team portraits,
+    service expertise layout.
+  - go.arch (Image 15, Batch 2): Oversized authority number treatment,
+    dark editorial panels, horizontal project strip.
+  Palette: Deep charcoal (#0d0d0b) + judicial gold (#c9a84c) + verdict white (#f0ece0)
+  Typography: Cormorant Garamond (authority serif) + Jost (clean sans)
+  Flow: Full-bleed dark hero → white stats strip → dark practice areas →
+        split track record → light profile → dark testimonial → gallery → CTA
+
+  DIVISION 2 — KAEL'S IMAGE NOTES:
+  NICHE TAGS: law, attorney, legal, courthouse, justice, lawyer, Beverly Hills, California
+  Search priority: "Beverly Hills, California courthouse" > "Beverly Hills, California law firm" > niche fallback pool
+
+  KAEL FALLBACK IMAGE POOL (15 verified law-specific Unsplash URLs):
+  Hero:
+    https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1800&q=85
+    https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=1800&q=85
+    https://images.unsplash.com/photo-1593115057322-e94b77572f20?w=1800&q=85
+    https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1800&q=85
+  Team/Profile:
+    https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=85
+    https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85
+    https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85
+  Feature/Office:
+    https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85
+    https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1200&q=85
+    https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?w=1200&q=85
+    https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&q=85
+  Legal details:
+    https://images.unsplash.com/photo-1542744094-24638eff58bb?w=1200&q=85
+    https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=85
+    https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1200&q=85
+    https://images.unsplash.com/photo-1608270586620-248524c67de9?w=1200&q=85
+
+  VEX WILL VERIFY: 4+ images loading · All law-themed · No 404s
+  On any error, onerror fallback fires automatically from pool above.
+
+  DIVISION 2 — SOREN'S CONVERSION NOTES:
+  FOMO COMPONENTS:
+  1. Sticky urgency bar (top)
+  2. Revenue leakage stat card in hero (Anna's data)
+  3. Glassmorphism verdict card floating right (Stat_1)
+  4. Countdown timer in CTA (Whale tier: score >= 75)
+  5. Full pointer lock — lead can scroll, cannot click away
+  Psychological flow: AUTHORITY → PROOF → TRUST → URGENCY
+
+  DIVISION 3 — LEO'S COPY NOTES:
+  Law copy: always reference city, dollar amounts, case wins, years experience.
+  Trigger words: Maximum Recovery, We Fight, Verdicts, Justice, Results.
+  NEVER use passive voice.
+
+  DIVISION 4 — VEX FINAL CHECKLIST:
+  [ ] All {{PLACEHOLDERS}} replaced
+  [ ] 4+ images loading
+  [ ] Images are law-themed
+  [ ] pointer-events: none on ALL a/button/input
+  [ ] Countdown timer visible (score >= 75)
+  [ ] Beverly Hills, California Personal Injury Attorneys in title AND hero AND footer
+  [ ] Beverly Hills, California appears 3+ times
+  [ ] Mobile viewport meta present
+  [ ] "Claim This Site" CTA visible
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Beverly Hills, California Personal Injury Attorneys — Premier Legal Authority Attorneys in Beverly Hills, California</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* VEX: POINTER ISOLATION */
+a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:none!important;cursor:default!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:#0d0d0b;color:#f0ece0;overflow-x:hidden;}
+
+:root{
+  --bg:#2B1E16;--bg2:#3D2B1F;--bg3:#1a1a16;
+  --bg-light:#f5f2eb;
+  --gold:#D2B48C;--gold-light:#E6D2B5;--gold-dim:rgba(201,168,76,0.15);
+  --gold-border:rgba(201,168,76,0.2);
+  --cream:#FAF9F6;--muted-dark:rgba(240,236,224,0.45);
+  --muted-light:rgba(30,28,22,0.55);--ink:#1e1c16;
+  --border-dark:rgba(201,168,76,0.12);--border-light:rgba(30,28,22,0.1);
+}
+.serif{font-family:'Cormorant Garamond',Georgia,serif;}
+
+/* SOREN: Sticky urgency bar */
+.urgency-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:var(--gold);color:var(--bg);
+  text-align:center;padding:0.5rem 1rem;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:32px;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:70px;
+  background:rgba(13,13,11,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-dark);
+}
+.nav-brand{display:flex;flex-direction:column;gap:1px;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--gold-light);letter-spacing:0.08em;line-height:1;}
+.nav-tagline{font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.65;}
+.nav-links{display:flex;gap:2.5rem;align-items:center;}
+.nav-links span{font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-dark);}
+.nav-cta{font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:0.65rem 1.8rem;border-radius:2px;}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;}
+.hero-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center 30%;
+  filter:brightness(0.32) saturate(0.5) sepia(0.2);
+  transform:scale(1.05);
+  animation:heroZoom 16s ease-out forwards;
+}
+@keyframes heroZoom{to{transform:scale(1);}}
+.hero-ov-b{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,11,1) 0%,rgba(13,13,11,0.65) 45%,rgba(13,13,11,0.15) 100%);}
+.hero-ov-l{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,11,0.85) 0%,rgba(13,13,11,0.3) 55%,transparent 100%);}
+.hero-acc{position:absolute;top:0;right:30%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--gold-border) 30%,var(--gold-border) 70%,transparent);}
+
+.hero-content{position:relative;z-index:2;padding:0 3rem 5rem;max-width:700px;animation:fadeUp 1s ease 0.3s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;font-size:0.65rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold);opacity:0.6;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,6vw,6rem);font-weight:300;line-height:1.02;letter-spacing:-0.02em;color:var(--cream);margin-bottom:2rem;}
+.hero-h1 .verdict{font-style:italic;color:var(--gold-light);display:block;}
+.hero-divider{width:48px;height:1px;background:var(--gold);opacity:0.5;margin-bottom:1.8rem;}
+.hero-sub{font-size:0.95rem;font-weight:300;line-height:1.85;color:var(--muted-dark);max-width:440px;margin-bottom:2rem;}
+
+/* SOREN: Anna's leakage alert */
+.leakage-alert{display:inline-flex;align-items:center;gap:0.8rem;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.3);border-radius:4px;padding:0.8rem 1.2rem;margin-bottom:2rem;}
+.leakage-label{font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#e74c3c;}
+.leakage-val{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:#e74c3c;line-height:1;}
+
+.hero-cta{display:inline-flex;align-items:center;gap:0.7rem;background:var(--gold);color:var(--bg);font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:0.95rem 2.5rem;border-radius:2px;}
+
+/* SOREN: Glassmorphism verdict card */
+.verdict-card{position:absolute;right:3rem;bottom:5rem;z-index:3;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:12px;padding:2rem 2.2rem;min-width:260px;animation:fadeUp 1s ease 0.8s both;}
+.vc-label{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+.vc-stat{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:var(--cream);line-height:1;letter-spacing:-0.02em;}
+.vc-sub{font-size:0.75rem;color:var(--muted-dark);margin-top:0.4rem;font-weight:300;}
+.vc-div{height:1px;background:var(--border-dark);margin:1.2rem 0;}
+.vc-row{display:flex;align-items:center;gap:0.6rem;}
+.vc-dot{width:6px;height:6px;border-radius:50%;background:#27ae60;box-shadow:0 0 8px #27ae60;flex-shrink:0;}
+.vc-live{font-size:0.7rem;color:var(--muted-dark);font-weight:300;}
+
+/* AUTHORITY STRIP */
+.auth-strip{background:var(--bg-light);padding:3.5rem 3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+.auth-strip::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent);}
+.auth-item{text-align:center;padding:0 2rem;position:relative;}
+.auth-item:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);height:50px;width:1px;background:var(--border-light);}
+.auth-num{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:700;color:var(--gold);line-height:1;letter-spacing:-0.03em;}
+.auth-suf{font-size:1.5rem;color:var(--ink);opacity:0.4;}
+.auth-label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-light);margin-top:0.5rem;}
+
+/* PRACTICE AREAS */
+.practice-section{background:var(--bg2);padding:6rem 3rem;}
+.sec-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem;}
+.sec-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;}
+.sec-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold);opacity:0.5;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,3.5vw,3.2rem);font-weight:300;line-height:1.15;color:var(--cream);letter-spacing:-0.01em;}
+.sec-title em{font-style:italic;color:var(--gold-light);}
+.sec-desc{font-size:0.88rem;line-height:1.85;color:var(--muted-dark);font-weight:300;align-self:end;}
+.practice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-dark);border:1px solid var(--border-dark);border-radius:4px;overflow:hidden;}
+.pcard{background:var(--bg2);padding:3rem 2.5rem;position:relative;transition:background 0.3s;}
+.pcard:hover{background:var(--bg3);}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.pcard:hover::before{opacity:1;}
+.pcard-roman{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;color:var(--gold);opacity:0.4;letter-spacing:0.12em;margin-bottom:1.5rem;}
+.pcard-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--cream);letter-spacing:-0.01em;line-height:1.2;margin-bottom:1rem;}
+.pcard-desc{font-size:0.84rem;line-height:1.8;color:var(--muted-dark);font-weight:300;}
+.pcard-link{display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.5rem;font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);opacity:0.7;}
+
+/* TRACK RECORD */
+.record-section{background:var(--bg);display:grid;grid-template-columns:1fr 1fr;align-items:stretch;min-height:480px;}
+.rec-left{position:relative;overflow:hidden;}
+.rec-left img{width:100%;height:100%;object-fit:cover;filter:brightness(0.55) saturate(0.6) sepia(0.1);}
+.rec-left-ov{position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,var(--bg) 100%);}
+.rec-right{background:var(--bg);padding:4rem;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border-dark);border-left:none;}
+.rec-label{font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.rec-num{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,10vw,9rem);font-weight:700;line-height:0.9;letter-spacing:-0.05em;color:var(--cream);margin-bottom:1rem;}
+.rec-num span{font-size:0.25em;color:var(--gold);vertical-align:super;}
+.rec-desc{font-size:0.9rem;line-height:1.8;color:var(--muted-dark);font-weight:300;max-width:340px;}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
+.rec-mini{padding:1.2rem;border:1px solid var(--border-dark);border-radius:4px;}
+.rec-mini-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold-light);line-height:1;}
+.rec-mini-label{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-dark);margin-top:0.3rem;}
+
+/* PROFILE SECTION */
+.profile-section{background:var(--bg-light);padding:6rem 3rem;display:grid;grid-template-columns:420px 1fr;gap:6rem;align-items:center;}
+.prof-img-wrap{position:relative;}
+.prof-img-wrap::before{content:'';position:absolute;top:-14px;left:-14px;right:14px;bottom:14px;border:1px solid rgba(201,168,76,0.3);border-radius:4px;z-index:0;}
+.prof-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;filter:brightness(0.85) saturate(0.7);border-radius:4px;position:relative;z-index:1;}
+.prof-badge{position:absolute;bottom:-1.5rem;left:50%;transform:translateX(-50%);z-index:2;background:var(--bg);border:1px solid rgba(201,168,76,0.3);border-radius:4px;padding:1rem 1.8rem;text-align:center;white-space:nowrap;}
+.prof-badge-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--gold-light);letter-spacing:0.06em;}
+.prof-badge-title{font-size:0.6rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted-light);margin-top:0.2rem;}
+.prof-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.prof-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:300;line-height:1.2;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-0.01em;}
+.prof-title em{font-style:italic;color:var(--gold);}
+.prof-quote{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;font-weight:300;line-height:1.6;color:var(--gold);opacity:0.85;padding-left:1.5rem;border-left:2px solid rgba(201,168,76,0.3);margin-bottom:1.8rem;}
+.prof-text{font-size:0.88rem;line-height:1.9;color:var(--muted-light);font-weight:300;margin-bottom:0.8rem;}
+.creds{margin-top:2rem;display:flex;flex-direction:column;}
+.cred-row{display:flex;align-items:center;gap:1rem;padding:0.85rem 0;border-bottom:1px solid var(--border-light);}
+.cred-row:first-child{border-top:1px solid var(--border-light);}
+.cred-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.cred-text{font-size:0.82rem;color:var(--ink);font-weight:400;}
+
+/* TESTIMONIAL */
+.test-section{background:var(--bg2);border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark);padding:6rem 3rem;text-align:center;}
+.test-ornament{font-family:'Cormorant Garamond',serif;font-size:6rem;font-weight:700;color:var(--gold);opacity:0.15;line-height:0.6;margin-bottom:1.5rem;}
+.test-stars{color:var(--gold);font-size:0.9rem;letter-spacing:0.15em;margin-bottom:1.8rem;opacity:0.75;}
+.test-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:300;font-style:italic;line-height:1.55;color:var(--cream);max-width:800px;margin:0 auto 2rem;}
+.test-author{font-size:0.68rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.8;}
+
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bg);height:320px;}
+.gitem{position:relative;overflow:hidden;background:var(--bg3);}
+.gitem img{width:100%;height:100%;object-fit:cover;filter:brightness(0.65) saturate(0.7) sepia(0.1);transition:transform 0.6s ease,filter 0.4s ease;}
+.gitem:hover img{transform:scale(1.05);filter:brightness(0.8) saturate(0.8);}
+.glabel{position:absolute;bottom:1.2rem;left:1.5rem;font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,236,224,0.7);}
+
+/* CTA */
+.cta-section{background:var(--bg);padding:6rem 3rem;}
+.cta-inner{position:relative;border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:5rem 4rem;background:var(--bg2);text-align:center;overflow:hidden;}
+.cta-inner::before{content:'';position:absolute;top:0;left:0;width:60px;height:60px;border-top:1px solid var(--gold);border-left:1px solid var(--gold);opacity:0.5;}
+.cta-inner::after{content:'';position:absolute;bottom:0;right:0;width:60px;height:60px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold);opacity:0.5;}
+
+/* SOREN: Countdown */
+.cd-wrap{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2.5rem;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--gold-light);line-height:1;letter-spacing:-0.02em;display:block;min-width:60px;}
+.cd-label{font-size:0.58rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted-dark);margin-top:0.3rem;}
+.cd-sep{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);opacity:0.3;line-height:1.2;align-self:flex-start;margin-top:0.2rem;}
+
+.cta-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:100px;padding:0.35rem 1rem;font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:1.2rem;letter-spacing:-0.01em;}
+.cta-title em{font-style:italic;color:var(--gold-light);}
+.cta-sub{font-size:0.92rem;line-height:1.8;color:var(--muted-dark);font-weight:300;max-width:540px;margin:0 auto 2.5rem;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.7rem;background:var(--gold);color:var(--bg);font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:1.1rem 3rem;border-radius:2px;}
+.cta-note{margin-top:1.2rem;font-size:0.68rem;letter-spacing:0.08em;color:var(--muted-dark);opacity:0.6;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border-dark);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--gold);opacity:0.5;letter-spacing:0.08em;}
+.f-tag{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-style:italic;color:var(--muted-dark);opacity:0.5;}
+.f-note{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted-dark);opacity:0.3;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.85s ease,transform 0.85s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:0 1.5rem;}
+  .nav-links{display:none;}
+  .hero-content{padding:0 1.5rem 4rem;}
+  .verdict-card{display:none;}
+  .auth-strip{grid-template-columns:repeat(2,1fr);gap:2rem;}
+  .auth-item::after{display:none;}
+  .practice-section,.test-section,.cta-section{padding:4rem 1.5rem;}
+  .sec-header{grid-template-columns:1fr;gap:1.5rem;}
+  .practice-grid{grid-template-columns:1fr;}
+  .record-section{grid-template-columns:1fr;}
+  .rec-left{height:300px;}
+  .rec-right{padding:3rem 2rem;border-left:1px solid var(--border-dark);}
+  .profile-section{grid-template-columns:1fr;gap:4rem;padding:4rem 1.5rem;}
+  .gallery{height:220px;}
+  .cta-inner{padding:3rem 1.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- SOREN: Urgency bar -->
+<div class="urgency-bar">
+  ⚖️ Exclusive 48-Hour Preview — Built specifically for Beverly Hills, California Personal Injury Attorneys · Beverly Hills, California, 
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">Beverly Hills, California Personal Injury Attorneys</div>
+    <div class="nav-tagline">Legal Authority · Beverly Hills, California, </div>
+  </div>
+  <div class="nav-links">
+    <span>Services</span>
+    <span>Projects</span>
+    <span>The Team</span>
+    <span>Contact</span>
+  </div>
+  <div class="nav-cta">🔒 Claim This Site</div>
+</nav>
+
+<!-- HERO — RODY + KAEL + SOREN -->
+<section class="hero" style="padding-top:102px;">
+  <!-- KAEL: https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1800&q=85 injected by generate_landing.py -->
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1800&q=85')"></div>
+  <div class="hero-ov-b"></div>
+  <div class="hero-ov-l"></div>
+  <div class="hero-acc"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Beverly Hills, California,  · Personal Injury Attorneys · Est. 2012</div>
+    <h1 class="hero-h1">
+      Uncompromising<br/>
+      <span class="verdict">Advocacy.</span>
+    </h1>
+    <div class="hero-divider"></div>
+
+    <!-- ANNA's revenue leakage data injected here by Division 1 -->
+    <div class="leakage-alert">
+      <div>
+        <div class="leakage-label">⚠ Monthly Revenue Leakage Detected</div>
+        <div class="leakage-val">$12,400 - $38,000</div>
+      </div>
+    </div>
+
+    <p class="hero-sub">Beverly Hills, California Personal Injury Attorneys has fought for Beverly Hills, California clients for over 12 years. Your current website is costing you cases every single day. We've already built the solution.</p>
+    <div class="hero-cta">Request Your Free Case Review →</div>
+  </div>
+
+  <!-- SOREN: Glassmorphism verdict card -->
+  <div class="verdict-card">
+    <div class="vc-label">Trade Experience</div>
+    <div class="vc-stat">15yr</div>
+    <div class="vc-sub">for clients across Beverly Hills, California &amp; </div>
+    <div class="vc-div"></div>
+    <div class="vc-row">
+      <div class="vc-dot"></div>
+      <div class="vc-live">Accepting new cases now</div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHORITY STATS STRIP — white section like ADVMARC -->
+<div class="auth-strip reveal">
+  <div class="auth-item">
+    <div class="auth-num">15yr</div>
+    <div class="auth-label">Trade Experience</div>
+  </div>
+  <div class="auth-item">
+    <div class="auth-num">500+<span class="auth-suf"></span></div>
+    <div class="auth-label">Projects Delivered</div>
+  </div>
+  <div class="auth-item">
+    <div class="auth-num">100%<span class="auth-suf"></span></div>
+    <div class="auth-label">Quality Guarantee</div>
+  </div>
+  <div class="auth-item">
+    <div class="auth-num">12<span class="auth-suf">yr</span></div>
+    <div class="auth-label">Serving Beverly Hills, California</div>
+  </div>
+</div>
+
+<!-- PRACTICE AREAS -->
+<section class="practice-section reveal">
+  <div class="sec-header">
+    <div>
+      <div class="sec-eyebrow">Services</div>
+      <h2 class="sec-title">We fight on<br/><em>every front</em></h2>
+    </div>
+    <p class="sec-desc">Beverly Hills, California Personal Injury Attorneys brings 12 years of aggressive Legal Authority litigation to every case in Beverly Hills, California. No settlements below what you deserve.</p>
+  </div>
+  <div class="practice-grid">
+    <div class="pcard">
+      <div class="pcard-roman">I</div>
+      <div class="pcard-title">Authority Redesign</div>
+      <div class="pcard-desc">Replacing weak legacy sites with high-authority engines that demand instant trust.</div>
+      <div class="pcard-link">View Case Results →</div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-roman">II</div>
+      <div class="pcard-title">Lead Siphon Systems</div>
+      <div class="pcard-desc">Sophisticated funnel strategies that capture high-intent leads before they call a competitor.</div>
+      <div class="pcard-link">View Case Results →</div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-roman">III</div>
+      <div class="pcard-title">Rapid Deployment</div>
+      <div class="pcard-desc">Launch your brand into new territories in record time with our Quantum infrastructure.</div>
+      <div class="pcard-link">View Case Results →</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK RECORD — go.arch big number style -->
+<!-- KAEL: https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85 here -->
+<div class="record-section reveal">
+  <div class="rec-left">
+    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85" alt="Beverly Hills, California Personal Injury Attorneys Beverly Hills, California"
+         onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80'"/>
+    <div class="rec-left-ov"></div>
+  </div>
+  <div class="rec-right">
+    <div class="rec-label">Track Record · Beverly Hills, California, </div>
+    <div class="rec-num">100%<span>+</span></div>
+    <p class="rec-desc">Cases won for clients across Beverly Hills, California and . Every number behind that figure is a life we helped rebuild. That is our standard and what you deserve.</p>
+    <div class="rec-grid">
+      <div class="rec-mini">
+        <div class="rec-mini-num">500+%</div>
+        <div class="rec-mini-label">Projects Delivered</div>
+      </div>
+      <div class="rec-mini">
+        <div class="rec-mini-num">12yr</div>
+        <div class="rec-mini-label">In Beverly Hills, California</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRINCIPAL PROFILE — De Alwis team section style -->
+<!-- KAEL: https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85 here -->
+<section class="profile-section reveal">
+  <div class="prof-img-wrap">
+    <img class="prof-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85" alt="Rody"
+         onerror="this.src='https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=85'"/>
+    <div class="prof-badge">
+      <div class="prof-badge-name">Rody</div>
+      <div class="prof-badge-title">Lead Field Engineer</div>
+    </div>
+  </div>
+  <div>
+    <div class="prof-eyebrow">About The Firm</div>
+    <h2 class="prof-title">A record built on<br/><em>real results</em></h2>
+    <p class="prof-quote">"Every client who walks through our doors deserves our absolute best — and that is what they get."</p>
+    <p class="prof-text">Beverly Hills, California Personal Injury Attorneys has been the go-to Legal Authority firm in Beverly Hills, California since 2012. We take on the cases other firms decline and we win them.</p>
+    <p class="prof-text">Our clients are not case numbers. They are people who trusted us with the most important fight of their lives. We honor that trust with every verdict.</p>
+    <div class="creds">
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Board Certified</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Top 100 National</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Elite Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="test-section reveal">
+  <div class="test-ornament">"</div>
+  <div class="test-stars">★ ★ ★ ★ ★</div>
+  <blockquote class="test-text">Our phone hadn't rang in weeks. After the V15 deploy, we're booked out 3 months.</blockquote>
+  <div class="test-author">— John Miller, Beverly Hills, California</div>
+</section>
+
+<!-- KAEL: Gallery strip — 3 images, law/city specific -->
+<div class="gallery">
+  <div class="gitem">
+    <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&q=85" alt="Authority Redesign"
+         onerror="this.src='https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80'"/>
+    <div class="glabel">Authority Redesign</div>
+  </div>
+  <div class="gitem">
+    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85" alt="Lead Siphon Systems"
+         onerror="this.src='https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&q=80'"/>
+    <div class="glabel">Lead Siphon Systems</div>
+  </div>
+  <div class="gitem">
+    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85" alt="Projects"
+         onerror="this.src='https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&q=80'"/>
+    <div class="glabel">Projects</div>
+  </div>
+</div>
+
+<!-- SOREN: CTA CLOSER -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <!-- SOREN: Countdown — active for Whale tier score >= 75 -->
+    <div class="cd-wrap">
+      <div class="cd-unit"><span class="cd-num" id="cdh">47</span><div class="cd-label">Hours</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdm">59</span><div class="cd-label">Minutes</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cds">59</span><div class="cd-label">Seconds</div></div>
+    </div>
+    <div class="cta-badge">✦ Exclusive Preview · 48 Hours Only</div>
+    <h2 class="cta-title">Your new site is built.<br/><em>Claim it before it expires.</em></h2>
+    <p class="cta-sub">
+      This site was designed exclusively for
+      <strong style="color:var(--gold-light);font-weight:400;">Beverly Hills, California Personal Injury Attorneys</strong>
+      in Beverly Hills, California. Reply to unlock it — live on your domain in under 24 hours.
+      Your Beverly Hills, California competitors have not seen this yet.
+    </p>
+    <div class="cta-btn">🔒 Claim This Site Now</div>
+    <div class="cta-note">Exclusive to Beverly Hills, California Personal Injury Attorneys · Not publicly listed · Expires in 48 hours</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Beverly Hills, California Personal Injury Attorneys</div>
+  <div class="f-tag">"Built to Last. Engineered for Growth."</div>
+  <div class="f-note">Beverly Hills, California,  · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+/* SOREN: Countdown — 48hr from first load, persists in sessionStorage */
+(function(){
+  const DURATION=48*60*60;
+  const key='ri2ch_court_'+('Beverly Hills, California Personal Injury Attorneys'.replace(/\s/g,'_'));
+  let end=sessionStorage.getItem(key);
+  if(!end){end=Date.now()+DURATION*1000;sessionStorage.setItem(key,end);}
+  function tick(){
+    const diff=Math.max(0,Math.floor((end-Date.now())/1000));
+    document.getElementById('cdh').textContent=String(Math.floor(diff/3600)).padStart(2,'0');
+    document.getElementById('cdm').textContent=String(Math.floor((diff%3600)/60)).padStart(2,'0');
+    document.getElementById('cds').textContent=String(diff%60).padStart(2,'0');
+    if(diff>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* Scroll reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* VEX: Pointer isolation enforcement */
+document.addEventListener('click',e=>e.preventDefault(),true);
+document.addEventListener('submit',e=>e.preventDefault(),true);
+document.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code))e.preventDefault();},true);
+
+/* VEX: Image health check — logs broken images for QA review */
+document.querySelectorAll('img').forEach(img=>{
+  img.addEventListener('error',function(){
+    console.warn('[VEX QA] BROKEN IMAGE:',this.src);
+    console.warn('[VEX QA] Triggering Kael fallback for:',this.alt);
+  });
+});
+</script>
+<script>(function() {
+  'use strict';
+
+  // ── Config injected by generate_landing.py ──
+  const LEAD_ID      = '4cd0db2b-97f0-4914-9006-c0674dd9ccb8';
+  const BIZ_NAME     = 'Beverly Hills, California Personal Injury Attorneys';
+  const NICHE        = 'Personal Injury Attorneys';
+  const TEMPLATE     = 'court';
+  const PALETTE      = 'Walnut Ivory';
+  const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
+  const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
+
+  // ── Session dedup — don't double-fire on refresh ──
+  const SESSION_ID = (function() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  })();
+
+  const startTime = Date.now();
+  const firedEvents = new Set();
+
+  // ── Core ping function ──
+  function ping(event, extra = {}) {
+    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+
+    // Dedup scroll events
+    if (firedEvents.has(event)) return;
+    if (event !== 'time_on_site') firedEvents.add(event);
+
+    const payload = {
+      lead_id:      LEAD_ID,
+      session_id:   SESSION_ID,
+      business_name:BIZ_NAME,
+      niche:        NICHE,
+      template:     TEMPLATE,
+      palette:      PALETTE,
+      event:        event,
+      time_on_site: Math.round((Date.now() - startTime) / 1000),
+      timestamp:    new Date().toISOString(),
+      referrer:     document.referrer || 'direct',
+      user_agent:   navigator.userAgent.substring(0, 120),
+      ...extra
+    };
+
+    // Use sendBeacon for reliability (works even on page close)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+    } else {
+      fetch(TRACKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    }
+  }
+
+  // ── 1. Fire immediately on load ──
+  ping('site_opened');
+
+  // ── 2. Scroll depth tracking ──
+  let scrollThresholds = { 25: false, 50: false, 75: false };
+
+  function checkScrollDepth() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    const pct      = Math.round((scrolled / total) * 100);
+
+    if (!scrollThresholds[25] && pct >= 25) {
+      scrollThresholds[25] = true;
+      ping('scroll_25', { scroll_pct: 25 });
+    }
+    if (!scrollThresholds[50] && pct >= 50) {
+      scrollThresholds[50] = true;
+      ping('scroll_50', { scroll_pct: 50 });
+    }
+    if (!scrollThresholds[75] && pct >= 75) {
+      scrollThresholds[75] = true;
+      ping('scroll_75', { scroll_pct: 75 });
+    }
+  }
+
+  // Throttled scroll listener
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(checkScrollDepth, 150);
+  }, { passive: true });
+
+  // ── 3. CTA section visibility tracking ──
+  // Watches for the .cta-section or .cta-inner element
+  let ctaVisibleTimer = null;
+  let ctaReachedFired = false;
+
+  function observeCTA() {
+    const ctaEl = document.querySelector('.cta-section, .cta-inner');
+    if (!ctaEl) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // CTA is visible
+          if (!ctaReachedFired) {
+            ctaReachedFired = true;
+            ping('cta_reached');
+          }
+          // Start 3-second timer for high-intent signal
+          if (!ctaVisibleTimer) {
+            ctaVisibleTimer = setTimeout(function() {
+              ping('cta_visible_3s', { high_intent: true });
+            }, 3000);
+          }
+        } else {
+          // CTA scrolled out of view — cancel timer
+          if (ctaVisibleTimer) {
+            clearTimeout(ctaVisibleTimer);
+            ctaVisibleTimer = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of CTA must be visible
+
+    observer.observe(ctaEl);
+  }
+
+  // ── 4. Time on site — fires every 30s ──
+  setInterval(function() {
+    ping('time_on_site', {
+      seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  }, 30000);
+
+  // ── 5. Page exit signal ──
+  window.addEventListener('beforeunload', function() {
+    ping('site_exited', {
+      total_seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  });
+
+  // ── Init CTA observer after DOM ready ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCTA);
+  } else {
+    observeCTA();
+  }
+
+})();
+
+/**
+ * ============================================================
+ * EXPIRY REDIRECT
+ * ============================================================
+ */
+(function() {
+  const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
+  const LEAD_ID    = '4cd0db2b-97f0-4914-9006-c0674dd9ccb8';
+  const BIZ_SLUG   = encodeURIComponent('Beverly Hills, California Personal Injury Attorneys'.replace(/\s+/g, '-').toLowerCase());
+  const NICHE_SLUG = encodeURIComponent('Personal Injury Attorneys');
+
+  if (!EXPIRY_URL || EXPIRY_URL === 'https://ri2ch.agency/expired.html') return;
+
+  const key = 'ri2ch_timer_' + LEAD_ID;
+  const DURATION = 48 * 60 * 60 * 1000; // 48 hours in ms
+
+  let end = parseInt(sessionStorage.getItem(key) || '0', 10);
+  if (!end || end < Date.now()) {
+    end = Date.now() + DURATION;
+    sessionStorage.setItem(key, end.toString());
+  }
+
+  function checkExpiry() {
+    const remaining = end - Date.now();
+    if (remaining <= 0) {
+      // Build expiry URL with context params
+      const url = `${EXPIRY_URL}?lead_id=${LEAD_ID}&biz=${BIZ_SLUG}&niche=${NICHE_SLUG}`;
+      window.location.href = url;
+    }
+  }
+
+  // Check every minute
+  setInterval(checkExpiry, 60000);
+  // Also check immediately on load
+  checkExpiry();
+})();
+</script>
+    <script>
+    (function() {
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=4cd0db2b-97f0-4914-9006-c0674dd9ccb8&biz=Beverly-Hills,-California-Personal-Injury-Attorneys&niche=Personal Injury Attorneys&template=court&ls=pending&ps=pending";
+        document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
+            if (el.tagName === 'A') el.href = claimUrl;
+            else el.onclick = () => window.location.href = claimUrl;
+        });
+    })();
+    </script>
+    
+</body>
+</html>
