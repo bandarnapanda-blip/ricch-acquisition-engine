@@ -46,9 +46,9 @@ a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:no
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:#f8f6f2;color:#1a2024;overflow-x:hidden;}
 :root{
-  --teal:#E5A9A9;--teal-mid:#E5A9A9;--teal-soft:#F2C7C7;
-  --teal-pale:#FAF7F7;--teal-xpale:#FFFFFF;
-  --cream:#FAF7F7;--white:#FFFFFF;--ink:#1A1A1A;
+  --teal:#7FB3D5;--teal-mid:#7FB3D5;--teal-soft:#A0CBE8;
+  --teal-pale:#F4F9F7;--teal-xpale:#FFFFFF;
+  --cream:#F4F9F7;--white:#FFFFFF;--ink:#1A1A1A;
   --ink-soft:rgba(26,32,36,0.55);
   --border:rgba(13,110,110,0.12);--border-s:rgba(26,32,36,0.08);
 }
@@ -238,7 +238,7 @@ footer{background:var(--teal);padding:2rem 3rem;display:flex;align-items:center;
       <svg class="aw-icon" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
       <div>
         <div class="aw-t">Your site is turning away patients</div>
-        <div class="aw-b">Load speed: <strong>45/100</strong>. Est. <strong>$12,400 - $38,000/mo</strong> in new patients bounce before booking.</div>
+        <div class="aw-b">Load speed: <strong>100/100</strong>. Est. <strong>$12,400 - $38,000/mo</strong> in new patients bounce before booking.</div>
       </div>
     </div>
     <p class="hero-sub">Austin, Texas Dental Implant Specialists has served Austin, Texas since 2012. Your patients deserve a website as modern as your practice.</p>
@@ -410,12 +410,12 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = '041fbded-3379-4b77-8490-86f9818c3496';
+  const LEAD_ID      = 'e3ffa1ca-526b-4ce9-b09d-06ec50b9c1d7';
   const BIZ_NAME     = 'Austin, Texas Dental Implant Specialists';
   const NICHE        = 'Dental Implant Specialists';
   const TEMPLATE     = 'sterling';
-  const PALETTE      = 'Warm Rose';
-  const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
+  const PALETTE      = 'Mint Slate';
+  const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
   // ── Session dedup — don't double-fire on refresh ──
@@ -565,7 +565,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = '041fbded-3379-4b77-8490-86f9818c3496';
+  const LEAD_ID    = 'e3ffa1ca-526b-4ce9-b09d-06ec50b9c1d7';
   const BIZ_SLUG   = encodeURIComponent('Austin, Texas Dental Implant Specialists'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Dental Implant Specialists');
 
@@ -597,7 +597,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=041fbded-3379-4b77-8490-86f9818c3496&biz=Austin,-Texas-Dental-Implant-Specialists&niche=Dental Implant Specialists&template=sterling&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=e3ffa1ca-526b-4ce9-b09d-06ec50b9c1d7&biz=Austin,-Texas-Dental-Implant-Specialists&niche=Dental Implant Specialists&template=sterling&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
