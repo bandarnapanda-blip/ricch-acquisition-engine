@@ -411,7 +411,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = '1294e331-081e-4b4d-aeba-ec3b0e541843';
+  const LEAD_ID      = '47139938-2b61-4278-991b-97776e2d5fa3';
   const BIZ_NAME     = 'Tampa, Florida Concrete Garage Coatings';
   const NICHE        = 'Concrete Garage Coatings';
   const TEMPLATE     = 'ivory';
@@ -434,7 +434,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 
   // ── Core ping function ──
   function ping(event, extra = {}) {
-    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
 
     // Dedup scroll events
     if (firedEvents.has(event)) return;
@@ -566,7 +566,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = '1294e331-081e-4b4d-aeba-ec3b0e541843';
+  const LEAD_ID    = '47139938-2b61-4278-991b-97776e2d5fa3';
   const BIZ_SLUG   = encodeURIComponent('Tampa, Florida Concrete Garage Coatings'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Concrete Garage Coatings');
 
@@ -598,7 +598,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=1294e331-081e-4b4d-aeba-ec3b0e541843&biz=Tampa,-Florida-Concrete-Garage-Coatings&niche=Concrete Garage Coatings&template=ivory&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=47139938-2b61-4278-991b-97776e2d5fa3&biz=Tampa,-Florida-Concrete-Garage-Coatings&niche=Concrete Garage Coatings&template=ivory&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
