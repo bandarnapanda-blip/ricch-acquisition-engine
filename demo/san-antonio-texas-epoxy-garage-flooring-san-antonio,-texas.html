@@ -122,13 +122,13 @@ html{scroll-behavior:smooth;}
 body{font-family:'Barlow',sans-serif;background:#141414;color:#f0ede6;overflow-x:hidden;}
 
 :root{
-  --bg:     #1C1C1B;
-  --bg2:    #2B2B2A;
+  --bg:     #111111;
+  --bg2:    #1F1F1F;
   --bg3:    #282828;
-  --amber:  #D35400;
+  --amber:  #FFD700;
   --orange: #f05a1a;
-  --amber-l:#E67E22;
-  --off:    #FDFEFE;
+  --amber-l:#FFEC8B;
+  --off:    #FFFFFF;
   --warm:   #faf8f4;
   --muted:  rgba(240,237,230,0.5);
   --muted2: rgba(240,237,230,0.25);
@@ -900,7 +900,7 @@ document.querySelectorAll('img').forEach(img=>{
   const BIZ_NAME     = 'San Antonio, Texas Epoxy Garage Flooring';
   const NICHE        = 'Epoxy Garage Flooring';
   const TEMPLATE     = 'forge';
-  const PALETTE      = 'Ember Slate';
+  const PALETTE      = 'Gold Carbon';
   const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
@@ -919,7 +919,7 @@ document.querySelectorAll('img').forEach(img=>{
 
   // ── Core ping function ──
   function ping(event, extra = {}) {
-    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
 
     // Dedup scroll events
     if (firedEvents.has(event)) return;
