@@ -118,13 +118,13 @@ html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:#ffffff;color:#111110;overflow-x:hidden;}
 
 :root{
-  --white:   #1C1C1C;
-  --off:     #2D2D2D;
+  --white:   #0A0A0A;
+  --off:     #1A1A1A;
   --ink:     #111110;
   --ink2:    #1c1c1a;
   --ink3:    #242422;
-  --amber:   #B87333;
-  --amber-l: #CD7F32;
+  --amber:   #FFBF00;
+  --amber-l: #FFD700;
   --muted-l: rgba(17,17,16,0.45);
   --muted-d: rgba(245,243,239,0.45);
   --border-l:rgba(17,17,16,0.08);
@@ -846,11 +846,11 @@ document.querySelectorAll('img').forEach(img=>{
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = '932fa469-61ca-433a-9d6a-a5839e1bcc0b';
+  const LEAD_ID      = '03bca899-d742-4b7d-aff5-c3638b1e840f';
   const BIZ_NAME     = 'New York City, New York Luxury Home Remodeling';
   const NICHE        = 'Luxury Home Remodeling';
   const TEMPLATE     = 'phantom';
-  const PALETTE      = 'Copper Ash';
+  const PALETTE      = 'Amber Onyx';
   const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
@@ -1001,7 +1001,7 @@ document.querySelectorAll('img').forEach(img=>{
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = '932fa469-61ca-433a-9d6a-a5839e1bcc0b';
+  const LEAD_ID    = '03bca899-d742-4b7d-aff5-c3638b1e840f';
   const BIZ_SLUG   = encodeURIComponent('New York City, New York Luxury Home Remodeling'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Luxury Home Remodeling');
 
@@ -1033,7 +1033,7 @@ document.querySelectorAll('img').forEach(img=>{
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=932fa469-61ca-433a-9d6a-a5839e1bcc0b&biz=New-York-City,-New-York-Luxury-Home-Remodeling&niche=Luxury Home Remodeling&template=phantom&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=03bca899-d742-4b7d-aff5-c3638b1e840f&biz=New-York-City,-New-York-Luxury-Home-Remodeling&niche=Luxury Home Remodeling&template=phantom&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
