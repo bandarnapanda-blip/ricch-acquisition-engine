@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  RI2CH AGENCY OS — QUANTUM V15.0
+  TEMPLATE: FORGE
+  ARCHETYPE: Roofing · HVAC · Plumbing · General Contractor
+  VERSION: 1.0
+  BRIEFING: See BRIEFING.md for full pipeline documentation.
+================================================================================
+
+  DIVISION 2 — RODY'S DESIGN NOTES:
+  Visual DNA pulled from:
+  - Roofing (Image 14, Batch 2): Dark charcoal nav. Full-bleed sunset house
+    photography. Bold white headline over image. Amber/gold CTA button.
+    Two-column split below hero (text left, image grid right).
+    Icon row with 3 service pillars. Warm amber footer.
+  - Newel Residential Remodeling (Image 3, Batch 2): Very dark background
+    (#1a1a1a near-black). Full hero photo. Split services section —
+    photo left, bulleted service list right. 4-icon principles row.
+    Projects gallery grid at bottom. Honest, no-nonsense layout.
+  - Image 11 (Batch 2): Numbered stat strip (/1 /2 /3 /4) running across
+    the bottom of the hero. Clean horizontal data presentation.
+    Download CTA card floating right. Property photography full bleed.
+
+  Palette:
+    Background:  Near-black charcoal (#141414) + dark grey (#1e1e1e)
+    Accent:      Forge amber (#e07b2a) + hot orange (#f05a1a)
+    Text:        Off-white (#f0ede6) + muted grey (rgba(240,237,230,0.5))
+    Light sections: Warm white (#faf8f4)
+  Typography:
+    Display: Barlow Condensed (bold, industrial, construction-feel)
+    Body:    Barlow (clean, utilitarian, trustworthy)
+  Layout:
+    Dark full-bleed hero with numbered stat strip →
+    Amber accent rule →
+    Dark services grid (Newel icon row ref) →
+    Split feature (photo + service list) →
+    White trust section (numbered reasons) →
+    Dark profile section →
+    Project gallery grid →
+    Amber CTA closer
+
+  RODY NOTE: FORGE is BOLD and DIRECT. These business owners respond to strength,
+  reliability, and speed — not elegance. Big numbers, strong photography,
+  clear service lists. The amber accent communicates energy and action.
+  Never use thin fonts. Minimum weight 500 everywhere.
+
+  DIVISION 2 — KAEL'S IMAGE NOTES:
+  NICHE TAGS: roofing, HVAC, plumbing, contractor, construction, home repair,
+              tradesman, Corpus Christi
+  Search priority: "Corpus Christi roofing" > "Corpus Christi contractor" > niche fallback pool
+
+  KAEL FALLBACK IMAGE POOL (15 verified trades/contractor Unsplash URLs):
+  Hero / Exterior:
+    https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85
+    https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=85
+    https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1800&q=85
+    https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=85
+    https://images.unsplash.com/photo-1590725121839-892b458a74fe?w=1800&q=85
+  Workers / On-site:
+    https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=1200&q=85
+    https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=1200&q=85
+    https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=85
+    https://images.unsplash.com/photo-1601600576337-c1d8a0d1373c?w=1200&q=85
+  Completed projects / Houses:
+    https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=85
+    https://images.unsplash.com/photo-1592595896551-12b371d546d3?w=1200&q=85
+    https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85
+    https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=1200&q=85
+    https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=1200&q=85
+    https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=1200&q=85
+
+  VEX WILL VERIFY: 4+ images · All trades/construction themed · No 404s
+  onerror fallbacks hardwired on every img tag.
+
+  DIVISION 2 — SOREN'S CONVERSION NOTES:
+  FOMO FOR TRADES CONTEXT:
+  1. Sticky bar: "48-hour exclusive preview" — direct, no fluff
+  2. Hero stat strip: numbered data like Image 11 (/1 /2 /3 /4 format)
+  3. Anna's audit: shown as "What your broken site is costing you per month"
+  4. Countdown timer in CTA (Whale tier: score >= 75)
+  5. Availability framing: "Currently booking Corpus Christi jobs — slots filling fast"
+  TONE: Direct. Blue-collar respect. No fancy language.
+  "Get it done" energy. Every word earns its place.
+
+  DIVISION 3 — LEO'S COPY NOTES:
+  Trades copy hooks:
+  - "Built to last. Priced to be fair."
+  - "Corpus Christi's most trusted roofer / HVAC / plumber"
+  - "Licensed. Insured. On time."
+  - "We don't cut corners. Ever."
+  - Revenue angle: "Every week your site is broken = $X in lost calls"
+  Tone: Confident, working-class pride, zero BS. Short sentences.
+  Leo: Write like a guy who's been doing this for 20 years and knows his worth.
+
+  DIVISION 4 — VEX FINAL CHECKLIST:
+  [ ] All {{PLACEHOLDERS}} replaced
+  [ ] 4+ images loading and trades/construction themed
+  [ ] pointer-events: none on ALL a/button/input
+  [ ] Countdown timer visible if score >= 75
+  [ ] Corpuschristi in title, hero, footer
+  [ ] Corpus Christi appears 3+ times
+  [ ] Mobile viewport meta present
+  [ ] "Claim This Site" CTA present
+  [ ] No broken CSS
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Corpuschristi — Epoxy Garage Flooring Experts in Corpus Christi, </title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* VEX: POINTER ISOLATION */
+a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:none!important;cursor:default!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;background:#141414;color:#f0ede6;overflow-x:hidden;}
+
+:root{
+  --bg:     #141414;
+  --bg2:    #1E1E1E;
+  --bg3:    #282828;
+  --amber:  #E07B2A;
+  --orange: #f05a1a;
+  --amber-l:#F5A855;
+  --off:    #F0EDE6;
+  --warm:   #faf8f4;
+  --muted:  rgba(240,237,230,0.5);
+  --muted2: rgba(240,237,230,0.25);
+  --border: rgba(240,237,230,0.08);
+  --border-a:rgba(224,123,42,0.25);
+}
+.condensed{font-family:'Barlow Condensed',sans-serif;}
+
+/* SOREN: Sticky urgency bar */
+.urgency-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:var(--amber);color:var(--bg);
+  text-align:center;padding:0.5rem 1rem;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:32px;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:68px;
+  background:rgba(20,20,20,0.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo-wrap{display:flex;flex-direction:column;gap:1px;}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--off);letter-spacing:0.02em;line-height:1;text-transform:uppercase;}
+.nav-sub{font-size:0.58rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);opacity:0.8;}
+.nav-links{display:flex;gap:2.5rem;align-items:center;}
+.nav-links span{font-size:0.78rem;font-weight:500;color:var(--muted);letter-spacing:0.04em;}
+.nav-cta{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.82rem;font-weight:800;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--bg);background:var(--amber);
+  padding:0.65rem 1.8rem;border-radius:3px;
+}
+
+/* ══════════════════════════════════════════════
+   HERO — Image 14 dark roofing style.
+   Full-bleed sunset/dusk property photography.
+   Bold Barlow Condensed headline over image.
+   Numbered stat strip at bottom (Image 11 ref).
+   ══════════════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  padding-top:100px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:brightness(0.42) saturate(0.8);
+  transform:scale(1.04);
+  animation:heroZoom 14s ease-out forwards;
+}
+@keyframes heroZoom{to{transform:scale(1);}}
+.hero-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(20,20,20,0.3) 0%,
+    rgba(20,20,20,0.2) 40%,
+    rgba(20,20,20,0.85) 80%,
+    rgba(20,20,20,1) 100%
+  );
+}
+
+/* Amber diagonal accent */
+.hero-amber-line{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--amber) 0%,var(--orange) 40%,transparent 100%);
+  z-index:2;
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  flex:1;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 3rem 0;
+  animation:fadeUp 0.9s ease 0.3s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+
+.hero-eyebrow{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:0.8rem;
+}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--amber);}
+
+.hero-h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(4rem,8vw,8.5rem);
+  font-weight:900;
+  line-height:0.92;
+  letter-spacing:-0.01em;
+  text-transform:uppercase;
+  color:var(--off);
+  margin-bottom:1.5rem;
+  max-width:900px;
+}
+.hero-h1 span{color:var(--amber);}
+
+.hero-bottom-row{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:2rem;padding-bottom:0;
+}
+.hero-sub{
+  font-size:1rem;font-weight:400;
+  line-height:1.7;color:var(--muted);
+  max-width:420px;
+}
+.hero-cta-group{display:flex;gap:0.8rem;flex-shrink:0;}
+.btn-amber{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  background:var(--amber);color:var(--bg);
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;font-size:0.9rem;
+  letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.9rem 2rem;border-radius:3px;
+}
+.btn-border{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  border:1px solid rgba(240,237,230,0.3);
+  color:var(--off);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.9rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.9rem 1.8rem;border-radius:3px;
+}
+
+/* SOREN: Numbered stat strip — Image 11 ref (/1 /2 /3 /4) */
+.stat-strip{
+  position:relative;z-index:2;
+  background:rgba(20,20,20,0.85);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  padding:2rem 3rem;
+  display:grid;grid-template-columns:repeat(4,1fr) auto;
+  gap:0;align-items:center;
+  margin-top:3rem;
+}
+.sstat{padding:0 2rem;position:relative;}
+.sstat:not(:last-child)::after{
+  content:'';position:absolute;right:0;top:50%;
+  transform:translateY(-50%);
+  height:40px;width:1px;background:var(--border);
+}
+.sstat-slash{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.75rem;font-weight:700;
+  color:var(--amber);opacity:0.6;
+  letter-spacing:0.1em;margin-bottom:0.3rem;
+}
+.sstat-num{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2.4rem;font-weight:900;
+  color:var(--off);line-height:1;letter-spacing:-0.02em;
+}
+.sstat-num sup{font-size:1rem;color:var(--amber);}
+.sstat-label{font-size:0.68rem;font-weight:500;color:var(--muted);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.06em;}
+
+/* ANNA's leakage CTA card — right side of strip */
+.strip-cta-card{
+  background:rgba(224,123,42,0.12);
+  border:1px solid var(--border-a);
+  border-radius:6px;
+  padding:1rem 1.4rem;
+  margin-left:2rem;
+  flex-shrink:0;
+  min-width:200px;
+}
+.strip-cta-label{font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:0.3rem;}
+.strip-cta-val{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:var(--amber-l);line-height:1;}
+.strip-cta-sub{font-size:0.65rem;color:var(--muted);margin-top:0.2rem;}
+
+/* ══════════════════════════════════════════════
+   SERVICES SECTION — Newel icon grid style
+   Dark background, 3-column icon cards
+   ══════════════════════════════════════════════ */
+.services-section{background:var(--bg2);padding:6rem 3rem;}
+.sec-eyebrow{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:0.8rem;
+  display:flex;align-items:center;gap:0.8rem;
+}
+.sec-eyebrow::before{content:'';width:24px;height:2px;background:var(--amber);}
+.sec-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(2.5rem,4vw,4rem);
+  font-weight:900;text-transform:uppercase;
+  letter-spacing:-0.01em;line-height:1;
+  color:var(--off);margin-bottom:3.5rem;
+}
+.sec-title span{color:var(--amber);}
+
+/* Newel icon row — 4 icons */
+.icon-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;
+  margin-bottom:3rem;
+}
+.icon-cell{
+  background:var(--bg2);
+  padding:2.5rem 1.5rem;
+  text-align:center;
+  transition:background 0.25s;
+}
+.icon-cell:hover{background:var(--bg3);}
+.icon-svg{
+  width:44px;height:44px;
+  background:rgba(224,123,42,0.12);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.2rem;
+}
+.icon-svg svg{width:22px;height:22px;stroke:var(--amber);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.icon-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--off);margin-bottom:0.4rem;}
+.icon-desc{font-size:0.8rem;line-height:1.6;color:var(--muted);font-weight:300;}
+
+/* Service list cards */
+.service-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.scard{
+  background:var(--bg2);padding:2.5rem 2rem;
+  position:relative;transition:background 0.25s;
+}
+.scard:hover{background:var(--bg3);}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),transparent);opacity:0;transition:opacity 0.3s;}
+.scard:hover::before{opacity:1;}
+.scard-num{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);opacity:0.5;margin-bottom:1rem;}
+.scard-title{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;color:var(--off);margin-bottom:0.8rem;line-height:1.1;}
+.scard-desc{font-size:0.85rem;line-height:1.75;color:var(--muted);font-weight:300;}
+.scard-link{display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.2rem;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--amber);}
+
+/* ══════════════════════════════════════════════
+   SPLIT FEATURE — Newel style.
+   Photo left. Service checklist right.
+   ══════════════════════════════════════════════ */
+.split-section{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:560px;background:var(--bg);
+  border-top:1px solid var(--border);
+}
+.split-img{position:relative;overflow:hidden;}
+.split-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.7) saturate(0.85);transition:transform 6s ease;}
+.split-img:hover img{transform:scale(1.03);}
+.split-img-ov{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--bg) 100%);}
+.split-content{
+  padding:5rem 4rem 5rem 3rem;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.checklist{display:flex;flex-direction:column;gap:0;margin-top:2rem;}
+.check-item{
+  display:flex;align-items:flex-start;gap:1.2rem;
+  padding:1.2rem 0;
+  border-bottom:1px solid var(--border);
+}
+.check-item:last-child{border-bottom:none;}
+.check-icon{
+  width:28px;height:28px;flex-shrink:0;
+  background:rgba(224,123,42,0.12);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:2px;
+}
+.check-icon svg{width:14px;height:14px;stroke:var(--amber);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.check-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--off);margin-bottom:0.3rem;}
+.check-desc{font-size:0.82rem;line-height:1.65;color:var(--muted);font-weight:300;}
+
+/* ══════════════════════════════════════════════
+   TRUST SECTION — white/warm, numbered reasons
+   Image 11 numbered format: /1 /2 /3 /4
+   ══════════════════════════════════════════════ */
+.trust-section{background:var(--warm);padding:6rem 3rem;}
+.trust-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:3.5rem 5rem;margin-top:3.5rem;
+}
+.trust-item{position:relative;}
+.trust-num{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:3.5rem;font-weight:900;
+  color:var(--amber);opacity:0.15;
+  line-height:1;margin-bottom:0.5rem;
+  letter-spacing:-0.02em;
+}
+.trust-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.35rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:0.04em;
+  color:#141414;margin-bottom:0.6rem;
+}
+.trust-desc{font-size:0.88rem;line-height:1.75;color:rgba(20,20,20,0.55);font-weight:300;}
+
+/* ══════════════════════════════════════════════
+   PROFILE SECTION — dark, industrial
+   KAEL: https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85 here
+   ══════════════════════════════════════════════ */
+.profile-section{
+  background:var(--bg2);padding:6rem 3rem;
+  display:grid;grid-template-columns:420px 1fr;
+  gap:5rem;align-items:center;
+  border-top:1px solid var(--border);
+}
+.prof-img-wrap{position:relative;}
+.prof-img{
+  width:100%;aspect-ratio:4/5;
+  object-fit:cover;object-position:top;
+  filter:brightness(0.8) saturate(0.75);
+  border-radius:4px;
+}
+/* Amber left accent bar */
+.prof-img-wrap::before{
+  content:'';
+  position:absolute;top:10%;bottom:10%;left:-12px;
+  width:4px;background:var(--amber);
+  border-radius:2px;opacity:0.6;
+}
+.prof-badge{
+  position:absolute;bottom:2rem;right:-1rem;
+  background:var(--bg);
+  border:1px solid var(--border-a);
+  border-radius:6px;
+  padding:1rem 1.4rem;
+}
+.prof-badge-name{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:var(--off);}
+.prof-badge-title{font-size:0.6rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-top:0.2rem;opacity:0.8;}
+.prof-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;}
+.prof-eyebrow::before{content:'';width:24px;height:2px;background:var(--amber);}
+.prof-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.5rem,4vw,3.8rem);font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;line-height:1;color:var(--off);margin-bottom:1.5rem;}
+.prof-title span{color:var(--amber);}
+.prof-text{font-size:0.9rem;line-height:1.85;color:var(--muted);font-weight:300;margin-bottom:0.8rem;}
+.creds{margin-top:2rem;display:flex;flex-direction:column;}
+.cred-row{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border);}
+.cred-row:first-child{border-top:1px solid var(--border);}
+.cred-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+.cred-text{font-size:0.82rem;color:var(--off);font-weight:400;opacity:0.75;}
+
+/* ══════════════════════════════════════════════
+   PROJECT GALLERY — 3 images dark grid
+   KAEL: project/house images here
+   ══════════════════════════════════════════════ */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;height:320px;background:var(--bg);}
+.gitem{position:relative;overflow:hidden;background:var(--bg3);}
+.gitem img{width:100%;height:100%;object-fit:cover;filter:brightness(0.65) saturate(0.8);transition:transform 0.6s ease,filter 0.4s;}
+.gitem:hover img{transform:scale(1.05);filter:brightness(0.8) saturate(0.9);}
+.gitem-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,20,20,0.8) 0%,transparent 50%);}
+.glabel{position:absolute;bottom:1.2rem;left:1.5rem;font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(240,237,230,0.8);}
+
+/* ══════════════════════════════════════════════
+   CTA — amber energy, direct
+   SOREN: countdown + booking urgency
+   ══════════════════════════════════════════════ */
+.cta-section{background:var(--bg);padding:6rem 3rem;border-top:1px solid var(--border);}
+.cta-inner{
+  position:relative;
+  border:1px solid var(--border-a);
+  border-radius:6px;padding:5rem 4rem;
+  background:var(--bg2);overflow:hidden;
+}
+/* Amber top bar */
+.cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--amber),var(--orange) 50%,transparent 100%);}
+/* Big ghost text */
+.cta-ghost{
+  position:absolute;top:50%;right:-2%;
+  transform:translateY(-50%);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(8rem,18vw,16rem);
+  font-weight:900;text-transform:uppercase;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(224,123,42,0.6);
+  white-space:nowrap;pointer-events:none;
+  letter-spacing:-0.02em;z-index:0;
+}
+
+.cta-layout{
+  display:grid;grid-template-columns:1fr auto;
+  gap:4rem;align-items:center;
+  position:relative;z-index:1;
+}
+/* SOREN: Countdown block */
+.cd-block{flex-shrink:0;}
+.cd-label-top{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:0.8rem;}
+.cd-wrap{display:flex;gap:0.8rem;align-items:flex-start;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:900;color:var(--off);line-height:1;display:block;min-width:55px;letter-spacing:-0.02em;}
+.cd-unit-label{font-size:0.58rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
+.cd-sep{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--amber);opacity:0.4;line-height:1.1;align-self:flex-start;margin-top:0.1rem;}
+
+.cta-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(224,123,42,0.12);border:1px solid var(--border-a);border-radius:3px;padding:0.35rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;}
+.cta-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;line-height:1;color:var(--off);margin-bottom:1rem;}
+.cta-title span{color:var(--amber);}
+.cta-sub{font-size:0.92rem;line-height:1.8;color:var(--muted);font-weight:300;max-width:520px;margin-bottom:2rem;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.7rem;background:var(--amber);color:var(--bg);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 2.5rem;border-radius:3px;}
+.cta-note{margin-top:0.8rem;font-size:0.68rem;letter-spacing:0.08em;color:var(--muted2);text-transform:uppercase;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.f-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:rgba(240,237,230,0.35);}
+.f-tag{font-size:0.8rem;font-weight:300;font-style:italic;color:rgba(240,237,230,0.2);}
+.f-note{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(240,237,230,0.15);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.85s ease,transform 0.85s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:0 1.5rem;}
+  .nav-links{display:none;}
+  .hero-content{padding:0 1.5rem 0;}
+  .stat-strip{grid-template-columns:repeat(2,1fr);padding:1.5rem;}
+  .sstat::after{display:none;}
+  .strip-cta-card{display:none;}
+  .services-section,.trust-section,.profile-section,.cta-section{padding:4rem 1.5rem;}
+  .icon-row{grid-template-columns:repeat(2,1fr);}
+  .service-cards{grid-template-columns:1fr;}
+  .split-section{grid-template-columns:1fr;}
+  .split-img{height:300px;}
+  .split-content{padding:3rem 2rem;}
+  .trust-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .profile-section{grid-template-columns:1fr;gap:3rem;}
+  .prof-img-wrap::before{display:none;}
+  .gallery{height:240px;}
+  .cta-inner{padding:3rem 1.5rem;}
+  .cta-layout{grid-template-columns:1fr;gap:2.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- SOREN: Urgency bar — direct, no-nonsense -->
+<div class="urgency-bar">
+  🔨 48-Hour Exclusive Preview — Built for Corpuschristi · Corpus Christi, 
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo-wrap">
+    <div class="nav-logo">Corpuschristi</div>
+    <div class="nav-sub">Epoxy Garage Flooring · Corpus Christi, </div>
+  </div>
+  <div class="nav-links">
+    <span>Services</span>
+    <span>Projects</span>
+    <span>The Team</span>
+    <span>Contact</span>
+  </div>
+  <div class="nav-cta">Claim This Site</div>
+</nav>
+
+<!-- HERO — Image 14 dark roofing style -->
+<section class="hero">
+  <div class="hero-amber-line"></div>
+  <!-- KAEL: House/property photography, dusk/warm lighting preferred -->
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=85')"></div>
+  <div class="hero-ov"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Corpus Christi,  · Epoxy Garage Flooring · Since 2012</div>
+    <h1 class="hero-h1">Built To<br/><span>Last.</span></h1>
+    <div class="hero-bottom-row">
+      <p class="hero-sub">Corpuschristi has been Corpus Christi's most trusted Epoxy Garage Flooring contractor since 2012. Built to last. Priced to be fair. Done right the first time.</p>
+      <div class="hero-cta-group">
+        <div class="btn-amber">Get a Free Quote →</div>
+        <div class="btn-border">See Our Work</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOREN: Numbered stat strip (Image 11 ref) + Anna's leakage card -->
+  <div class="stat-strip">
+    <div class="sstat">
+      <div class="sstat-slash">/1</div>
+      <div class="sstat-num">15yr<sup></sup></div>
+      <div class="sstat-label">Trade Experience</div>
+    </div>
+    <div class="sstat">
+      <div class="sstat-slash">/2</div>
+      <div class="sstat-num">500+<sup></sup></div>
+      <div class="sstat-label">Projects Delivered</div>
+    </div>
+    <div class="sstat">
+      <div class="sstat-slash">/3</div>
+      <div class="sstat-num">12<sup></sup></div>
+      <div class="sstat-label">In Corpus Christi</div>
+    </div>
+    <div class="sstat">
+      <div class="sstat-slash">/4</div>
+      <div class="sstat-num">24<sup>h</sup></div>
+      <div class="sstat-label">Response Time</div>
+    </div>
+    <!-- ANNA: Revenue leakage card -->
+    <div class="strip-cta-card">
+      <div class="strip-cta-label">⚠ Monthly Revenue Lost</div>
+      <div class="strip-cta-val">$12,400 - $38,000</div>
+      <div class="strip-cta-sub">due to broken website</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<section class="services-section reveal">
+  <div class="sec-eyebrow">What We Do</div>
+  <h2 class="sec-title">Epoxy Garage Flooring<br/><span>Done Right</span></h2>
+
+  <!-- Newel 4-icon principles row -->
+  <div class="icon-row">
+    <div class="icon-cell">
+      <div class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="icon-title">Licensed</div>
+      <div class="icon-desc">Fully licensed in  for all Epoxy Garage Flooring work</div>
+    </div>
+    <div class="icon-cell">
+      <div class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s-8-4-8-10V5l8-3 8 3v7c0 6-8 10-8 10z"/></svg></div>
+      <div class="icon-title">Insured</div>
+      <div class="icon-desc">Full liability and worker's comp coverage</div>
+    </div>
+    <div class="icon-cell">
+      <div class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="icon-title">On Time</div>
+      <div class="icon-desc">We show up when we say we will. Always.</div>
+    </div>
+    <div class="icon-cell">
+      <div class="icon-svg"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="icon-title">Guaranteed</div>
+      <div class="icon-desc">All work backed by our written satisfaction guarantee</div>
+    </div>
+  </div>
+
+  <!-- Service cards -->
+  <div class="service-cards">
+    <div class="scard">
+      <div class="scard-num">01</div>
+      <div class="scard-title">Authority Redesign</div>
+      <div class="scard-desc">Replacing weak legacy sites with high-authority engines that demand instant trust.</div>
+      <div class="scard-link">Get a Quote →</div>
+    </div>
+    <div class="scard">
+      <div class="scard-num">02</div>
+      <div class="scard-title">Lead Siphon Systems</div>
+      <div class="scard-desc">Sophisticated funnel strategies that capture high-intent leads before they call a competitor.</div>
+      <div class="scard-link">Get a Quote →</div>
+    </div>
+    <div class="scard">
+      <div class="scard-num">03</div>
+      <div class="scard-title">Rapid Deployment</div>
+      <div class="scard-desc">Launch your brand into new territories in record time with our Quantum infrastructure.</div>
+      <div class="scard-link">Get a Quote →</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT FEATURE — Newel style -->
+<!-- KAEL: https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85 workers/on-site image -->
+<div class="split-section reveal">
+  <div class="split-img">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Corpuschristi crew at work in Corpus Christi"
+         onerror="this.src='https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=900&q=85'"/>
+    <div class="split-img-ov"></div>
+  </div>
+  <div class="split-content">
+    <div class="sec-eyebrow">Why Corpus Christi Chooses Us</div>
+    <h2 class="sec-title" style="font-size:clamp(2rem,3.5vw,3rem);margin-bottom:0;">No Shortcuts.<br/><span>No Exceptions.</span></h2>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="check-title">Flat-Rate Pricing Upfront</div>
+          <div class="check-desc">We quote before we start. What we say is what you pay — no surprise invoices, ever.</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="check-title">Same-Day Response in Corpus Christi</div>
+          <div class="check-desc">Most Corpus Christi jobs get a same or next-day visit. We know you can't wait weeks.</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="check-title">Clean Site. Every Time.</div>
+          <div class="check-desc">Our crew cleans up completely before leaving. Your property, your rules.</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="check-title">Written Warranty on All Work</div>
+          <div class="check-desc">Every Corpuschristi job comes with a written workmanship warranty. We stand behind what we build.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST SECTION — warm white, numbered -->
+<section class="trust-section reveal">
+  <div class="sec-eyebrow" style="color:var(--amber);">Why We're Different</div>
+  <h2 class="sec-title" style="color:#141414;font-size:clamp(2.5rem,4vw,3.5rem);">Corpus Christi's<br/><span>Standard Bearer</span></h2>
+  <div class="trust-grid">
+    <div class="trust-item">
+      <div class="trust-num">01</div>
+      <div class="trust-title">12 Years in Corpus Christi</div>
+      <div class="trust-desc">We've been building, fixing, and maintaining Corpus Christi homes since 2012. Every neighborhood. Every job type. We know this city.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">02</div>
+      <div class="trust-title">15yr+ Jobs Completed</div>
+      <div class="trust-desc">Over 15yr completed projects across Corpus Christi and surrounding areas. Our reputation is built one job at a time.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">03</div>
+      <div class="trust-title">500+% Satisfaction Rate</div>
+      <div class="trust-desc">500+% of our clients would hire us again. That number only stays high because we refuse to cut corners.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">04</div>
+      <div class="trust-title">100% Transparency</div>
+      <div class="trust-desc">You see the quote before we start, and you sign off before we finish. No surprises. That's the Corpuschristi promise.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE SECTION -->
+<!-- KAEL: https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85 — owner/foreman portrait -->
+<section class="profile-section reveal">
+  <div class="prof-img-wrap">
+    <img class="prof-img" src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85" alt="Rody — Corpuschristi"
+         onerror="this.src='https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=85'"/>
+    <div class="prof-badge">
+      <div class="prof-badge-name">Rody</div>
+      <div class="prof-badge-title">Lead Field Engineer</div>
+    </div>
+  </div>
+  <div>
+    <div class="prof-eyebrow">About The Company</div>
+    <h2 class="prof-title">Built on <span>Trust.</span><br/>Proven by Work.</h2>
+    <p class="prof-text">Corpuschristi was founded in Corpus Christi in 2012 with one rule: do the job right, or don't do it at all. Rody still leads every major project personally.</p>
+    <p class="prof-text">We're not the cheapest contractor in Corpus Christi. We're the best value — because our work lasts and we back it up in writing.</p>
+    <div class="creds">
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Board Certified</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Top 100 National</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Elite Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT GALLERY -->
+<div class="gallery">
+  <div class="gitem">
+    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=85" alt="Authority Redesign — Corpus Christi"
+         onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=85'"/>
+    <div class="gitem-ov"></div>
+    <div class="glabel">Authority Redesign</div>
+  </div>
+  <div class="gitem">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Lead Siphon Systems — Corpus Christi"
+         onerror="this.src='https://images.unsplash.com/photo-1592595896551-12b371d546d3?w=800&q=85'"/>
+    <div class="gitem-ov"></div>
+    <div class="glabel">Lead Siphon Systems</div>
+  </div>
+  <div class="gitem">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=85" alt="Rapid Deployment — Corpus Christi"
+         onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=85'"/>
+    <div class="gitem-ov"></div>
+    <div class="glabel">Rapid Deployment</div>
+  </div>
+</div>
+
+<!-- SOREN: CTA — direct, amber energy -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cta-ghost">FORGE</div>
+    <div class="cta-layout">
+      <div>
+        <div class="cta-badge">🔨 Exclusive Preview · 48 Hours Only</div>
+        <h2 class="cta-title">Your site is built.<br/><span>Claim it now.</span></h2>
+        <p class="cta-sub">This site was built exclusively for <strong style="color:var(--off);font-weight:500;">Corpuschristi</strong> in Corpus Christi. Reply to our email to claim it — live on your domain in under 24 hours. Every day you wait is revenue lost to competitors in Corpus Christi.</p>
+        <div class="cta-btn">🔒 Claim This Site Now</div>
+        <div class="cta-note">Exclusive · Not public · Expires in 48 hours</div>
+      </div>
+      <!-- SOREN: Countdown block -->
+      <div class="cd-block">
+        <div class="cd-label-top">This Preview Expires In</div>
+        <div class="cd-wrap">
+          <div class="cd-unit">
+            <span class="cd-num" id="cdh">47</span>
+            <div class="cd-unit-label">Hrs</div>
+          </div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit">
+            <span class="cd-num" id="cdm">59</span>
+            <div class="cd-unit-label">Min</div>
+          </div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit">
+            <span class="cd-num" id="cds">59</span>
+            <div class="cd-unit-label">Sec</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Corpuschristi</div>
+  <div class="f-tag">"Built to Last. Engineered for Growth."</div>
+  <div class="f-note">Corpus Christi,  · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+/* SOREN: Countdown */
+(function(){
+  const DURATION=48*60*60;
+  const key='ri2ch_forge_'+('Corpuschristi'.replace(/\s/g,'_'));
+  let end=sessionStorage.getItem(key);
+  if(!end){end=Date.now()+DURATION*1000;sessionStorage.setItem(key,end);}
+  function tick(){
+    const diff=Math.max(0,Math.floor((end-Date.now())/1000));
+    document.getElementById('cdh').textContent=String(Math.floor(diff/3600)).padStart(2,'0');
+    document.getElementById('cdm').textContent=String(Math.floor((diff%3600)/60)).padStart(2,'0');
+    document.getElementById('cds').textContent=String(diff%60).padStart(2,'0');
+    if(diff>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* Scroll reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* VEX: Pointer isolation */
+document.addEventListener('click',e=>e.preventDefault(),true);
+document.addEventListener('submit',e=>e.preventDefault(),true);
+document.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code))e.preventDefault();},true);
+
+/* VEX: Image health check */
+document.querySelectorAll('img').forEach(img=>{
+  img.addEventListener('error',function(){
+    console.warn('[VEX QA] BROKEN IMAGE:',this.src);
+    console.warn('[VEX QA] Triggering Kael fallback for:',this.alt);
+  });
+});
+</script>
+<script>(function() {
+  'use strict';
+
+  // ── Config injected by generate_landing.py ──
+  const LEAD_ID      = '70a6b651-7988-4a44-9cc0-48f31854daec';
+  const BIZ_NAME     = 'Corpuschristi';
+  const NICHE        = 'Epoxy Garage Flooring';
+  const TEMPLATE     = 'forge';
+  const PALETTE      = 'Amber Iron';
+  const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
+  const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
+
+  // ── Session dedup — don't double-fire on refresh ──
+  const SESSION_ID = (function() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  })();
+
+  const startTime = Date.now();
+  const firedEvents = new Set();
+
+  // ── Core ping function ──
+  function ping(event, extra = {}) {
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
+
+    // Dedup scroll events
+    if (firedEvents.has(event)) return;
+    if (event !== 'time_on_site') firedEvents.add(event);
+
+    const payload = {
+      lead_id:      LEAD_ID,
+      session_id:   SESSION_ID,
+      business_name:BIZ_NAME,
+      niche:        NICHE,
+      template:     TEMPLATE,
+      palette:      PALETTE,
+      event:        event,
+      time_on_site: Math.round((Date.now() - startTime) / 1000),
+      timestamp:    new Date().toISOString(),
+      referrer:     document.referrer || 'direct',
+      user_agent:   navigator.userAgent.substring(0, 120),
+      ...extra
+    };
+
+    // Use sendBeacon for reliability (works even on page close)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+    } else {
+      fetch(TRACKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    }
+  }
+
+  // ── 1. Fire immediately on load ──
+  ping('site_opened');
+
+  // ── 2. Scroll depth tracking ──
+  let scrollThresholds = { 25: false, 50: false, 75: false };
+
+  function checkScrollDepth() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    const pct      = Math.round((scrolled / total) * 100);
+
+    if (!scrollThresholds[25] && pct >= 25) {
+      scrollThresholds[25] = true;
+      ping('scroll_25', { scroll_pct: 25 });
+    }
+    if (!scrollThresholds[50] && pct >= 50) {
+      scrollThresholds[50] = true;
+      ping('scroll_50', { scroll_pct: 50 });
+    }
+    if (!scrollThresholds[75] && pct >= 75) {
+      scrollThresholds[75] = true;
+      ping('scroll_75', { scroll_pct: 75 });
+    }
+  }
+
+  // Throttled scroll listener
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(checkScrollDepth, 150);
+  }, { passive: true });
+
+  // ── 3. CTA section visibility tracking ──
+  // Watches for the .cta-section or .cta-inner element
+  let ctaVisibleTimer = null;
+  let ctaReachedFired = false;
+
+  function observeCTA() {
+    const ctaEl = document.querySelector('.cta-section, .cta-inner');
+    if (!ctaEl) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // CTA is visible
+          if (!ctaReachedFired) {
+            ctaReachedFired = true;
+            ping('cta_reached');
+          }
+          // Start 3-second timer for high-intent signal
+          if (!ctaVisibleTimer) {
+            ctaVisibleTimer = setTimeout(function() {
+              ping('cta_visible_3s', { high_intent: true });
+            }, 3000);
+          }
+        } else {
+          // CTA scrolled out of view — cancel timer
+          if (ctaVisibleTimer) {
+            clearTimeout(ctaVisibleTimer);
+            ctaVisibleTimer = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of CTA must be visible
+
+    observer.observe(ctaEl);
+  }
+
+  // ── 4. Time on site — fires every 30s ──
+  setInterval(function() {
+    ping('time_on_site', {
+      seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  }, 30000);
+
+  // ── 5. Page exit signal ──
+  window.addEventListener('beforeunload', function() {
+    ping('site_exited', {
+      total_seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  });
+
+  // ── Init CTA observer after DOM ready ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCTA);
+  } else {
+    observeCTA();
+  }
+
+})();
+
+/**
+ * ============================================================
+ * EXPIRY REDIRECT
+ * ============================================================
+ */
+(function() {
+  const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
+  const LEAD_ID    = '70a6b651-7988-4a44-9cc0-48f31854daec';
+  const BIZ_SLUG   = encodeURIComponent('Corpuschristi'.replace(/\s+/g, '-').toLowerCase());
+  const NICHE_SLUG = encodeURIComponent('Epoxy Garage Flooring');
+
+  if (!EXPIRY_URL || EXPIRY_URL === 'https://ri2ch.agency/expired.html') return;
+
+  const key = 'ri2ch_timer_' + LEAD_ID;
+  const DURATION = 48 * 60 * 60 * 1000; // 48 hours in ms
+
+  let end = parseInt(sessionStorage.getItem(key) || '0', 10);
+  if (!end || end < Date.now()) {
+    end = Date.now() + DURATION;
+    sessionStorage.setItem(key, end.toString());
+  }
+
+  function checkExpiry() {
+    const remaining = end - Date.now();
+    if (remaining <= 0) {
+      // Build expiry URL with context params
+      const url = `${EXPIRY_URL}?lead_id=${LEAD_ID}&biz=${BIZ_SLUG}&niche=${NICHE_SLUG}`;
+      window.location.href = url;
+    }
+  }
+
+  // Check every minute
+  setInterval(checkExpiry, 60000);
+  // Also check immediately on load
+  checkExpiry();
+})();
+</script>
+    <script>
+    (function() {
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=70a6b651-7988-4a44-9cc0-48f31854daec&biz=Corpuschristi&niche=Epoxy Garage Flooring&template=forge&ls=pending&ps=pending";
+        document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
+            if (el.tagName === 'A') el.href = claimUrl;
+            else el.onclick = () => window.location.href = claimUrl;
+        });
+    })();
+    </script>
+    
+</body>
+</html>
