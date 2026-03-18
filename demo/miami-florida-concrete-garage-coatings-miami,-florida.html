@@ -434,7 +434,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 
   // ── Core ping function ──
   function ping(event, extra = {}) {
-    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
 
     // Dedup scroll events
     if (firedEvents.has(event)) return;
