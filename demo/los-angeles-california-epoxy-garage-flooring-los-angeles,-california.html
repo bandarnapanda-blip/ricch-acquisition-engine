@@ -122,13 +122,13 @@ html{scroll-behavior:smooth;}
 body{font-family:'Barlow',sans-serif;background:#141414;color:#f0ede6;overflow-x:hidden;}
 
 :root{
-  --bg:     #141414;
-  --bg2:    #1E1E1E;
+  --bg:     #1B1F1C;
+  --bg2:    #2D332F;
   --bg3:    #282828;
-  --amber:  #E07B2A;
+  --amber:  #A0522D;
   --orange: #f05a1a;
-  --amber-l:#F5A855;
-  --off:    #F0EDE6;
+  --amber-l:#CD853F;
+  --off:    #F4F7F5;
   --warm:   #faf8f4;
   --muted:  rgba(240,237,230,0.5);
   --muted2: rgba(240,237,230,0.25);
@@ -896,11 +896,11 @@ document.querySelectorAll('img').forEach(img=>{
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = '6adff0e1-3e97-4465-90f8-97f3661095f8';
+  const LEAD_ID      = '02dbe1fa-0380-4921-97bc-5d78d4cc32e5';
   const BIZ_NAME     = 'Los Angeles, California Epoxy Garage Flooring';
   const NICHE        = 'Epoxy Garage Flooring';
   const TEMPLATE     = 'forge';
-  const PALETTE      = 'Amber Iron';
+  const PALETTE      = 'Forest Rust';
   const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
@@ -919,7 +919,7 @@ document.querySelectorAll('img').forEach(img=>{
 
   // ── Core ping function ──
   function ping(event, extra = {}) {
-    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
 
     // Dedup scroll events
     if (firedEvents.has(event)) return;
@@ -1051,7 +1051,7 @@ document.querySelectorAll('img').forEach(img=>{
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = '6adff0e1-3e97-4465-90f8-97f3661095f8';
+  const LEAD_ID    = '02dbe1fa-0380-4921-97bc-5d78d4cc32e5';
   const BIZ_SLUG   = encodeURIComponent('Los Angeles, California Epoxy Garage Flooring'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Epoxy Garage Flooring');
 
@@ -1083,7 +1083,7 @@ document.querySelectorAll('img').forEach(img=>{
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=6adff0e1-3e97-4465-90f8-97f3661095f8&biz=Los-Angeles,-California-Epoxy-Garage-Flooring&niche=Epoxy Garage Flooring&template=forge&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=02dbe1fa-0380-4921-97bc-5d78d4cc32e5&biz=Los-Angeles,-California-Epoxy-Garage-Flooring&niche=Epoxy Garage Flooring&template=forge&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
