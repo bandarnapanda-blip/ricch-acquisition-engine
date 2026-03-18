@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  RI2CH AGENCY OS — QUANTUM V15.0
+  TEMPLATE: PHANTOM
+  ARCHETYPE: Architecture · Luxury Real Estate
+  VERSION: 1.0
+  BRIEFING: See BRIEFING.md for full pipeline documentation.
+================================================================================
+
+  DIVISION 2 — RODY'S DESIGN NOTES:
+  Visual DNA pulled from:
+  - Kontra Architecture (Image 8, Batch 2): White/black split hero. Futuristic
+    rendered building centred in frame. Stats floating top right. Minimal nav.
+    Dark bottom half with editorial FAQ accordion layout.
+  - go.arch (Image 15, Batch 2): Dark charcoal background. Oversized year number
+    ("12 Years") as a full-width graphic anchor. Horizontal project strip with
+    rotated "ARCHITECTURE" label on each panel. Client logo marquee.
+  - Arhitector.tech (Image 18, Batch 2): Full-bleed dark forest/glass building
+    photography. Split principles section — 3 columns, no boxes, just typography.
+    Wide cinematic proportions. Warm amber accent on secondary headlines.
+
+  Palette:
+    Light half:  Pure white (#ffffff) + deep ink (#111110) + warm amber (#c8922a)
+    Dark half:   Deep charcoal (#111110) + off-white (#e8e4dc) + amber (#c8922a)
+  Typography:
+    Display: Syne (bold, architectural, geometric — ultra-premium feel)
+    Body:    Inter (clean, technical, precise)
+  Layout:
+    Split hero (white top / dark bottom) →
+    White stats strip →
+    Dark full-bleed project photography section →
+    White principles grid (Arhitector ref) →
+    Dark profile section →
+    Horizontal project carousel strip (go.arch ref) →
+    White testimonial →
+    Dark CTA closer
+
+  RODY NOTE: PHANTOM uses a SPLIT PERSONALITY — the page literally transitions
+  from white/light to near-black halfway through. This mirrors how architecture
+  firms present work: clean white studio aesthetic for brand, dark dramatic
+  photography for portfolio. The contrast itself signals premium taste.
+
+  DIVISION 2 — KAEL'S IMAGE NOTES:
+  NICHE TAGS: architecture, luxury real estate, building, modern house,
+              interior design, property, Seattle, Washington
+  Search priority: "Seattle, Washington luxury architecture" > "Seattle, Washington real estate" > fallback pool
+
+  KAEL FALLBACK IMAGE POOL (15 verified architecture/real estate Unsplash URLs):
+  Hero / Exterior:
+    https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1800&q=85
+    https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1800&q=85
+    https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=85
+    https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1800&q=85
+    https://images.unsplash.com/photo-1574958269340-fa927503f3dd?w=1800&q=85
+  Interior / Detail:
+    https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85
+    https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=85
+    https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=85
+    https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&q=85
+  Commercial / Urban:
+    https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=85
+    https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=85
+    https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85
+  Team / Studio:
+    https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=800&q=85
+    https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=85
+    https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=85
+
+  VEX WILL VERIFY: 4+ images · All architecture/property themed · No 404s
+  onerror fallbacks hardwired on every img tag.
+
+  DIVISION 2 — SOREN'S CONVERSION NOTES:
+  FOMO COMPONENTS FOR ARCHITECTURE/REAL ESTATE:
+  1. Sticky bar: "Exclusive preview — this design is held for 48 hours"
+  2. Hero: Project count stat card floating (Kontra ref)
+  3. Portfolio section: "Currently accepting 3 new projects in Seattle, Washington"
+  4. Countdown timer in CTA (Whale tier: score >= 75)
+  5. Scarcity framing: "Limited project slots" — works perfectly for architecture
+  TONE: Architecture buyers are sophisticated. No aggressive tactics.
+  Premium scarcity > urgency panic. "Exclusive" > "Limited time offer".
+
+  DIVISION 3 — LEO'S COPY NOTES:
+  Architecture/RE copy hooks:
+  - "Where vision meets structure" (Kontra ref)
+  - "Seattle, Washington's most recognised residential architect"
+  - "120 projects delivered" / "86% glass coverage" (Kontra stat style)
+  - "We shape the way people feel, move and exist within space"
+  Tone: Intellectual, visionary, precise. Never salesy.
+  Leo: Write copy like an architect speaks — confident, measured, profound.
+
+  DIVISION 4 — VEX FINAL CHECKLIST:
+  [ ] All {{PLACEHOLDERS}} replaced
+  [ ] 4+ images loading and architecture themed
+  [ ] pointer-events: none on ALL a/button/input
+  [ ] Countdown timer visible if score >= 75
+  [ ] Seattle, Washington Luxury Home Remodeling in title, hero, footer
+  [ ] Seattle, Washington appears 3+ times
+  [ ] Mobile viewport meta present
+  [ ] "Claim This Site" CTA present
+  [ ] No broken CSS
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Seattle, Washington Luxury Home Remodeling — Luxury Home Remodeling Studio · Seattle, Washington, </title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* VEX: POINTER ISOLATION */
+a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:none!important;cursor:default!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:#ffffff;color:#111110;overflow-x:hidden;}
+
+:root{
+  --white:   #0A0A0A;
+  --off:     #1A1A1A;
+  --ink:     #111110;
+  --ink2:    #1c1c1a;
+  --ink3:    #242422;
+  --amber:   #FFBF00;
+  --amber-l: #FFD700;
+  --muted-l: rgba(17,17,16,0.45);
+  --muted-d: rgba(245,243,239,0.45);
+  --border-l:rgba(17,17,16,0.08);
+  --border-d:rgba(245,243,239,0.1);
+  --border-a:rgba(200,146,42,0.2);
+}
+.syne{font-family:'Syne',sans-serif;}
+
+/* SOREN: Sticky urgency bar */
+.urgency-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:var(--ink);color:var(--off);
+  text-align:center;padding:0.5rem 1rem;
+  font-size:0.68rem;font-weight:500;letter-spacing:0.12em;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:32px;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:68px;
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-l);
+}
+.nav-logo{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:var(--ink);letter-spacing:-0.02em;}
+.nav-links{display:flex;gap:2.5rem;align-items:center;}
+.nav-links span{font-size:0.75rem;font-weight:500;color:var(--muted-l);letter-spacing:0.04em;}
+/* Nav dots between links — Kontra ref */
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--muted-l);opacity:0.4;flex-shrink:0;}
+.nav-cta{
+  font-size:0.72rem;font-weight:600;
+  border:1px solid var(--ink);color:var(--ink);
+  padding:0.55rem 1.4rem;border-radius:2px;
+  letter-spacing:0.06em;
+}
+
+/* ══════════════════════════════════════════════
+   HERO — Kontra split style.
+   Top: white background, building render centered.
+   Stats floating left and right.
+   Bottom gradient blends into dark section.
+   ══════════════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background:var(--white);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  padding-top:100px;
+}
+
+/* KAEL: Hero building image — centred, large */
+.hero-img-wrap{
+  position:relative;
+  width:100%;
+  flex:1;
+  min-height:65vh;
+  overflow:hidden;
+}
+.hero-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform 10s ease;
+}
+.hero:hover .hero-img{transform:scale(1.02);}
+
+/* Bottom gradient into dark */
+.hero-img-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(17,17,16,0.7) 75%,
+    rgba(17,17,16,1) 100%
+  );
+}
+
+/* Top text over white */
+.hero-top{
+  position:absolute;top:0;left:0;right:0;
+  padding:1.5rem 3rem 0;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  z-index:2;
+  animation:fadeIn 0.9s ease 0.3s both;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:none;}}
+
+.hero-top-left{max-width:460px;}
+.hero-eyebrow{
+  font-size:0.65rem;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted-l);margin-bottom:1rem;
+}
+.hero-h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.8rem,5vw,5rem);
+  font-weight:800;
+  line-height:1.02;
+  letter-spacing:-0.04em;
+  color:var(--ink);
+}
+.hero-h1 span{color:var(--amber);}
+
+/* SOREN: Kontra-style floating stat cards */
+.hero-stats-right{
+  display:flex;flex-direction:column;gap:0.8rem;
+  align-items:flex-end;
+  animation:fadeIn 0.9s ease 0.6s both;
+}
+.hstat{
+  display:flex;align-items:center;gap:0.8rem;
+  background:rgba(255,255,255,0.92);
+  border:1px solid var(--border-l);
+  backdrop-filter:blur(8px);
+  border-radius:6px;
+  padding:0.7rem 1rem;
+}
+.hstat-num{
+  font-family:'Syne',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  color:var(--ink);line-height:1;letter-spacing:-0.03em;
+}
+.hstat-label{font-size:0.62rem;font-weight:500;color:var(--muted-l);letter-spacing:0.06em;text-transform:uppercase;}
+
+/* Bottom hero copy — over dark gradient */
+.hero-bottom{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:0 3rem 3.5rem;
+  z-index:2;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  animation:fadeUp 1s ease 0.5s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.hero-sub{
+  font-size:0.95rem;font-weight:300;
+  line-height:1.75;color:rgba(245,243,239,0.7);
+  max-width:420px;
+}
+.hero-cta-wrap{display:flex;gap:0.8rem;flex-shrink:0;}
+.btn-white{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--white);color:var(--ink);
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:0.78rem;letter-spacing:0.02em;
+  padding:0.8rem 1.8rem;border-radius:2px;
+}
+.btn-ghost-d{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  border:1px solid rgba(245,243,239,0.3);
+  color:var(--off);
+  font-size:0.78rem;font-weight:500;
+  padding:0.8rem 1.8rem;border-radius:2px;
+}
+
+/* ══════════════════════════════════════════════
+   STATS STRIP — white, clean, Kontra-style
+   ══════════════════════════════════════════════ */
+.stats-strip{
+  background:var(--off);
+  border-bottom:1px solid var(--border-l);
+  padding:3rem 3rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+}
+.stat-item{text-align:center;padding:0 2rem;position:relative;}
+.stat-item:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);height:44px;width:1px;background:var(--border-l);}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--ink);line-height:1;letter-spacing:-0.04em;}
+.stat-num span{color:var(--amber);font-size:1.4rem;}
+.stat-label{font-size:0.68rem;font-weight:500;color:var(--muted-l);margin-top:0.4rem;letter-spacing:0.06em;text-transform:uppercase;}
+
+/* ══════════════════════════════════════════════
+   DARK PROJECT SECTION
+   Arhitector.tech full-bleed dark photography.
+   Split 3-column principles below.
+   ══════════════════════════════════════════════ */
+.project-section{background:var(--ink2);}
+
+/* KAEL: Full-bleed project image */
+.project-hero-img{
+  width:100%;height:70vh;
+  object-fit:cover;
+  filter:brightness(0.75) saturate(0.8);
+  display:block;
+}
+
+/* Arhitector principles row */
+.principles{
+  padding:5rem 3rem;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;
+  border-top:1px solid var(--border-d);
+}
+.principle{
+  padding:0 3rem;
+  position:relative;
+}
+.principle:not(:last-child)::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;
+  width:1px;background:var(--border-d);
+}
+.principle:first-child{padding-left:0;}
+.principle-label{
+  font-size:0.62rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.principle-label::before{content:'';width:16px;height:1px;background:var(--amber);opacity:0.6;}
+.principle-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--off);margin-bottom:0.8rem;
+  letter-spacing:-0.02em;line-height:1.3;
+}
+.principle-desc{font-size:0.84rem;line-height:1.8;color:var(--muted-d);font-weight:300;}
+
+/* ══════════════════════════════════════════════
+   PROJECT STRIP — go.arch horizontal panels
+   Rotated "ARCHITECTURE" label on each panel.
+   ══════════════════════════════════════════════ */
+.projects-strip{
+  background:var(--ink);
+  padding:5rem 3rem;
+  border-top:1px solid var(--border-d);
+}
+.projects-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:3rem;
+}
+.projects-sec-eyebrow{
+  font-size:0.62rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:0.8rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.projects-sec-eyebrow::before{content:'';width:16px;height:1px;background:var(--amber);opacity:0.6;}
+.projects-sec-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:800;color:var(--off);
+  letter-spacing:-0.04em;line-height:1.1;
+}
+.projects-sec-title span{color:var(--amber);}
+.projects-see-all{
+  font-size:0.75rem;font-weight:600;
+  color:var(--muted-d);letter-spacing:0.08em;
+  border-bottom:1px solid rgba(245,243,239,0.2);
+  padding-bottom:2px;
+}
+
+.projects-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;height:400px;
+}
+.pproject{
+  position:relative;overflow:hidden;
+  background:var(--ink3);cursor:default;
+}
+.pproject img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(0.6) saturate(0.7);
+  transition:transform 0.7s ease,filter 0.4s;
+}
+.pproject:hover img{transform:scale(1.05);filter:brightness(0.75) saturate(0.85);}
+.pproject-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(17,17,16,0.9) 0%,transparent 60%);
+}
+/* go.arch rotated label */
+.pproject-tag{
+  position:absolute;
+  top:1.5rem;left:0;
+  font-size:0.55rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(245,243,239,0.5);
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  transform:rotate(180deg);
+  padding:0.5rem 0.6rem;
+}
+.pproject-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:1.5rem;
+}
+.pproject-name{
+  font-family:'Syne',sans-serif;
+  font-size:1rem;font-weight:700;
+  color:var(--off);letter-spacing:-0.02em;
+  margin-bottom:0.3rem;line-height:1.2;
+}
+.pproject-type{
+  font-size:0.62rem;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--amber);opacity:0.8;
+}
+
+/* ══════════════════════════════════════════════
+   go.arch OVERSIZED YEAR NUMBER
+   Full-width centred stat anchor
+   ══════════════════════════════════════════════ */
+.big-stat-section{
+  background:var(--ink2);
+  border-top:1px solid var(--border-d);
+  padding:4rem 3rem;
+  text-align:center;
+}
+.big-stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(8rem,20vw,18rem);
+  font-weight:800;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(245,243,239,0.15);
+  line-height:0.85;
+  letter-spacing:-0.06em;
+  display:block;
+}
+.big-stat-label{
+  font-size:0.72rem;font-weight:600;
+  letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--amber);margin-top:1rem;
+}
+
+/* ══════════════════════════════════════════════
+   PROFILE SECTION — dark background
+   KAEL: https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85 left side
+   ══════════════════════════════════════════════ */
+.profile-section{
+  background:var(--ink);
+  padding:6rem 3rem;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;
+  border-top:1px solid var(--border-d);
+}
+.prof-img-wrap{position:relative;}
+.prof-img{
+  width:100%;aspect-ratio:4/5;
+  object-fit:cover;object-position:top;
+  filter:brightness(0.8) saturate(0.75) sepia(0.05);
+  border-radius:4px;
+}
+/* Amber accent corner */
+.prof-img-wrap::after{
+  content:'';
+  position:absolute;bottom:-8px;right:-8px;
+  width:60%;height:60%;
+  border-bottom:2px solid var(--amber);
+  border-right:2px solid var(--amber);
+  border-radius:0 0 4px 0;
+  opacity:0.3;pointer-events:none;
+}
+.prof-badge{
+  position:absolute;bottom:2rem;left:1.5rem;
+  background:rgba(17,17,16,0.85);
+  border:1px solid var(--border-a);
+  backdrop-filter:blur(12px);
+  border-radius:6px;
+  padding:1rem 1.4rem;
+}
+.prof-badge-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--off);letter-spacing:-0.01em;}
+.prof-badge-title{font-size:0.6rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-top:0.2rem;opacity:0.8;}
+
+.prof-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+.prof-eyebrow::before{content:'';width:16px;height:1px;background:var(--amber);opacity:0.6;}
+.prof-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:var(--off);line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.04em;}
+.prof-title span{color:var(--amber);}
+.prof-text{font-size:0.88rem;line-height:1.85;color:var(--muted-d);font-weight:300;margin-bottom:0.8rem;}
+.creds{margin-top:2rem;display:flex;flex-direction:column;}
+.cred-row{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border-d);}
+.cred-row:first-child{border-top:1px solid var(--border-d);}
+.cred-dot{width:4px;height:4px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+.cred-text{font-size:0.82rem;color:var(--off);font-weight:300;opacity:0.75;}
+
+/* ══════════════════════════════════════════════
+   TESTIMONIAL — white, clean
+   ══════════════════════════════════════════════ */
+.test-section{
+  background:var(--off);
+  padding:5rem 3rem;text-align:center;
+  border-top:1px solid var(--border-l);
+}
+.test-ornament{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;color:var(--ink);opacity:0.06;line-height:0.6;margin-bottom:1.5rem;}
+.test-text{font-family:'Syne',sans-serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:600;line-height:1.4;color:var(--ink);max-width:760px;margin:0 auto 2rem;letter-spacing:-0.02em;}
+.test-text em{color:var(--amber);font-style:normal;}
+.test-author{font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted-l);}
+
+/* ══════════════════════════════════════════════
+   CTA — dark, amber accents
+   SOREN: countdown + scarcity framing
+   ══════════════════════════════════════════════ */
+.cta-section{background:var(--ink2);padding:6rem 3rem;}
+.cta-inner{
+  position:relative;
+  border:1px solid var(--border-d);
+  border-radius:4px;padding:5rem 4rem;
+  text-align:center;overflow:hidden;
+}
+/* Amber top line */
+.cta-inner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--amber),transparent);
+}
+/* Large ghost text background */
+.cta-ghost{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Syne',sans-serif;
+  font-size:clamp(6rem,15vw,14rem);
+  font-weight:800;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(245,243,239,0.04);
+  white-space:nowrap;
+  pointer-events:none;
+  letter-spacing:-0.06em;
+  z-index:0;
+}
+
+/* SOREN: Countdown */
+.cd-wrap{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2.5rem;position:relative;z-index:1;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--amber-l);line-height:1;display:block;min-width:60px;letter-spacing:-0.03em;}
+.cd-label{font-size:0.58rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted-d);margin-top:0.3rem;}
+.cd-sep{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--amber);opacity:0.3;line-height:1.2;align-self:flex-start;margin-top:0.2rem;}
+
+.cta-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(200,146,42,0.1);border:1px solid rgba(200,146,42,0.25);border-radius:100px;padding:0.35rem 1rem;font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;position:relative;z-index:1;}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:800;line-height:1.05;color:var(--off);margin-bottom:1.2rem;letter-spacing:-0.04em;position:relative;z-index:1;}
+.cta-title span{color:var(--amber);}
+.cta-sub{font-size:0.92rem;line-height:1.8;color:var(--muted-d);font-weight:300;max-width:540px;margin:0 auto 2.5rem;position:relative;z-index:1;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.7rem;background:var(--amber);color:var(--ink);font-family:'Syne',sans-serif;font-weight:800;font-size:0.78rem;letter-spacing:0.04em;padding:1rem 2.8rem;border-radius:2px;position:relative;z-index:1;}
+.cta-note{margin-top:1.2rem;font-size:0.68rem;letter-spacing:0.08em;color:var(--muted-d);opacity:0.6;position:relative;z-index:1;}
+
+/* FOOTER */
+footer{background:var(--ink);border-top:1px solid var(--border-d);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.f-logo{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:rgba(245,243,239,0.4);letter-spacing:-0.02em;}
+.f-tag{font-size:0.8rem;font-weight:300;color:rgba(245,243,239,0.25);font-style:italic;}
+.f-note{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,243,239,0.18);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.85s ease,transform 0.85s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:0 1.5rem;}
+  .nav-links{display:none;}
+  .hero-top{flex-direction:column;gap:1.5rem;padding:1.5rem 1.5rem 0;}
+  .hero-stats-right{align-items:flex-start;}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:1.5rem;padding:0 1.5rem 3rem;}
+  .hero-img-wrap{min-height:50vh;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);gap:2rem;}
+  .stat-item::after{display:none;}
+  .principles{grid-template-columns:1fr;gap:3rem;}
+  .principle::after{display:none;}
+  .principle{padding:0;}
+  .projects-grid{grid-template-columns:1fr;height:auto;}
+  .pproject{height:280px;}
+  .profile-section{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem;}
+  .prof-img-wrap::after{display:none;}
+  .projects-strip,.big-stat-section,.test-section,.cta-section{padding:4rem 1.5rem;}
+  .cta-inner{padding:3rem 1.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- SOREN: Urgency bar — sophisticated/restrained tone -->
+<div class="urgency-bar">
+  ◆ Exclusive Design Preview · Reserved for Seattle, Washington Luxury Home Remodeling · Seattle, Washington,  · 48 Hours
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Seattle, Washington Luxury Home Remodeling</div>
+  <div class="nav-links">
+    <span>Services</span>
+    <div class="nav-dot"></div>
+    <span>Projects</span>
+    <div class="nav-dot"></div>
+    <span>The Team</span>
+    <div class="nav-dot"></div>
+    <span>Contact</span>
+  </div>
+  <div class="nav-cta">Claim This Site</div>
+</nav>
+
+<!-- HERO — Kontra split style -->
+<section class="hero">
+  <!-- Top: white background with headline + stats -->
+  <div class="hero-top">
+    <div class="hero-top-left">
+      <div class="hero-eyebrow">Seattle, Washington,  · Luxury Home Remodeling · Est. 2012</div>
+      <h1 class="hero-h1">Built To<br/><span>Last.</span></h1>
+    </div>
+    <!-- SOREN: Kontra floating stat cards -->
+    <div class="hero-stats-right">
+      <div class="hstat">
+        <div>
+          <div class="hstat-num">15yr</div>
+          <div class="hstat-label">Trade Experience</div>
+        </div>
+      </div>
+      <div class="hstat">
+        <div>
+          <div class="hstat-num">12<span style="font-size:1rem;color:var(--muted-l);">yr</span></div>
+          <div class="hstat-label">In Seattle, Washington</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KAEL: Full-bleed building render / photography -->
+  <div class="hero-img-wrap">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1800&q=85" alt="Seattle, Washington Luxury Home Remodeling — Seattle, Washington Luxury Home Remodeling"
+         onerror="this.src='https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1800&q=85'"/>
+    <div class="hero-img-grad"></div>
+  </div>
+
+  <!-- Bottom: over dark gradient -->
+  <div class="hero-bottom">
+    <p class="hero-sub">Seattle, Washington Luxury Home Remodeling has defined Seattle, Washington's architectural standard since 2012. Your current website doesn't reflect the work you actually do. We've already fixed that.</p>
+    <div class="hero-cta-wrap">
+      <div class="btn-white">Claim This Site →</div>
+      <div class="btn-ghost-d">View Projects</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip reveal">
+  <div class="stat-item">
+    <div class="stat-num">15yr<span></span></div>
+    <div class="stat-label">Trade Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">500+<span></span></div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">12<span style="font-size:1.2rem;color:var(--muted-l);">yr</span></div>
+    <div class="stat-label">Serving Seattle, Washington</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%<span></span></div>
+    <div class="stat-label">Quality Guarantee</div>
+  </div>
+</div>
+
+<!-- DARK PROJECT SECTION — Arhitector.tech style -->
+<!-- KAEL: Full-bleed project photography -->
+<section class="project-section reveal">
+  <img class="project-hero-img" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Seattle, Washington Luxury Home Remodeling — Seattle, Washington Project"
+       onerror="this.src='https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=85'"/>
+
+  <!-- Principles grid (Arhitector ref) -->
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-label">01</div>
+      <div class="principle-title">Precision Engineering</div>
+      <div class="principle-desc">Every structural decision at Seattle, Washington Luxury Home Remodeling is engineered to perform as beautifully as it looks — functional integrity built into every detail.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-label">02</div>
+      <div class="principle-title">Authority Redesign</div>
+      <div class="principle-desc">Replacing weak legacy sites with high-authority engines that demand instant trust.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-label">03</div>
+      <div class="principle-title">Lead Siphon Systems</div>
+      <div class="principle-desc">Sophisticated funnel strategies that capture high-intent leads before they call a competitor.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT STRIP — go.arch horizontal panels -->
+<section class="projects-strip reveal">
+  <div class="projects-header">
+    <div>
+      <div class="projects-sec-eyebrow">Projects</div>
+      <h2 class="projects-sec-title">Selected<br/><span>Work</span></h2>
+    </div>
+    <div class="projects-see-all">View All Projects →</div>
+  </div>
+  <div class="projects-grid">
+    <div class="pproject">
+      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=85" alt="Project 01"
+           onerror="this.src='https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=85'"/>
+      <div class="pproject-overlay"></div>
+      <div class="pproject-tag">Architecture</div>
+      <div class="pproject-info">
+        <div class="pproject-name">Authority Redesign Project</div>
+        <div class="pproject-type">Seattle, Washington, </div>
+      </div>
+    </div>
+    <div class="pproject">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Project 02"
+           onerror="this.src='https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=85'"/>
+      <div class="pproject-overlay"></div>
+      <div class="pproject-tag">Architecture</div>
+      <div class="pproject-info">
+        <div class="pproject-name">Lead Siphon Systems Project</div>
+        <div class="pproject-type">Seattle, Washington, </div>
+      </div>
+    </div>
+    <div class="pproject">
+      <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1800&q=85" alt="Project 03"
+           onerror="this.src='https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=85'"/>
+      <div class="pproject-overlay"></div>
+      <div class="pproject-tag">Architecture</div>
+      <div class="pproject-info">
+        <div class="pproject-name">Rapid Deployment Project</div>
+        <div class="pproject-type">Seattle, Washington, </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- go.arch OVERSIZED YEAR NUMBER -->
+<div class="big-stat-section reveal">
+  <span class="big-stat-num">12</span>
+  <div class="big-stat-label">Years of defining Seattle, Washington's built environment</div>
+</div>
+
+<!-- PROFILE SECTION — dark -->
+<!-- KAEL: https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85 here -->
+<section class="profile-section reveal">
+  <div class="prof-img-wrap">
+    <img class="prof-img" src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85" alt="Rody"
+         onerror="this.src='https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=800&q=85'"/>
+    <div class="prof-badge">
+      <div class="prof-badge-name">Rody</div>
+      <div class="prof-badge-title">Lead Field Engineer</div>
+    </div>
+  </div>
+  <div>
+    <div class="prof-eyebrow">About The Studio</div>
+    <h2 class="prof-title">We shape how<br/>people <span>feel</span> space</h2>
+    <p class="prof-text">Seattle, Washington Luxury Home Remodeling has been redefining Seattle, Washington's built environment since 2012. Every project begins with a single question: how should this space make people feel?</p>
+    <p class="prof-text">Rody leads a studio that combines precision engineering with architectural intuition — creating structures that are as technically sound as they are beautiful.</p>
+    <div class="creds">
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Board Certified</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Top 100 National</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Elite Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="test-section reveal">
+  <div class="test-ornament">"</div>
+  <blockquote class="test-text">Our phone hadn't rang in weeks. After the V15 deploy, we're booked out 3 months. — <em>exactly what Seattle, Washington needed.</em></blockquote>
+  <div class="test-author">— John Miller, Seattle, Washington</div>
+</section>
+
+<!-- SOREN: CTA CLOSER — dark, amber accents -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cta-ghost">PHANTOM</div>
+    <!-- SOREN: Countdown — Whale tier -->
+    <div class="cd-wrap">
+      <div class="cd-unit"><span class="cd-num" id="cdh">47</span><div class="cd-label">Hours</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdm">59</span><div class="cd-label">Minutes</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cds">59</span><div class="cd-label">Seconds</div></div>
+    </div>
+    <div class="cta-badge">◆ Exclusive Design Preview · 48 Hours Only</div>
+    <h2 class="cta-title">Your new site is built.<br/><span>Claim it now.</span></h2>
+    <p class="cta-sub">This site was designed exclusively for <strong style="color:var(--off);font-weight:500;">Seattle, Washington Luxury Home Remodeling</strong> in Seattle, Washington. Reply to our email to unlock it — live on your domain in under 24 hours. Your Seattle, Washington competitors haven't seen this yet.</p>
+    <div class="cta-btn">🔒 Claim This Site</div>
+    <div class="cta-note">Exclusive to Seattle, Washington Luxury Home Remodeling · Not publicly listed · Expires in 48 hours</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Seattle, Washington Luxury Home Remodeling</div>
+  <div class="f-tag">"Built to Last. Engineered for Growth."</div>
+  <div class="f-note">Seattle, Washington,  · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+/* SOREN: Countdown */
+(function(){
+  const DURATION=48*60*60;
+  const key='ri2ch_phantom_'+('Seattle, Washington Luxury Home Remodeling'.replace(/\s/g,'_'));
+  let end=sessionStorage.getItem(key);
+  if(!end){end=Date.now()+DURATION*1000;sessionStorage.setItem(key,end);}
+  function tick(){
+    const diff=Math.max(0,Math.floor((end-Date.now())/1000));
+    document.getElementById('cdh').textContent=String(Math.floor(diff/3600)).padStart(2,'0');
+    document.getElementById('cdm').textContent=String(Math.floor((diff%3600)/60)).padStart(2,'0');
+    document.getElementById('cds').textContent=String(diff%60).padStart(2,'0');
+    if(diff>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* Scroll reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* VEX: Pointer isolation */
+document.addEventListener('click',e=>e.preventDefault(),true);
+document.addEventListener('submit',e=>e.preventDefault(),true);
+document.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code))e.preventDefault();},true);
+
+/* VEX: Image health check */
+document.querySelectorAll('img').forEach(img=>{
+  img.addEventListener('error',function(){
+    console.warn('[VEX QA] BROKEN IMAGE:',this.src);
+    console.warn('[VEX QA] Triggering Kael fallback for:',this.alt);
+  });
+});
+</script>
+<script>(function() {
+  'use strict';
+
+  // ── Config injected by generate_landing.py ──
+  const LEAD_ID      = '77f13c1e-9c19-4991-82bd-41d6ea241614';
+  const BIZ_NAME     = 'Seattle, Washington Luxury Home Remodeling';
+  const NICHE        = 'Luxury Home Remodeling';
+  const TEMPLATE     = 'phantom';
+  const PALETTE      = 'Amber Onyx';
+  const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
+  const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
+
+  // ── Session dedup — don't double-fire on refresh ──
+  const SESSION_ID = (function() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  })();
+
+  const startTime = Date.now();
+  const firedEvents = new Set();
+
+  // ── Core ping function ──
+  function ping(event, extra = {}) {
+    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+
+    // Dedup scroll events
+    if (firedEvents.has(event)) return;
+    if (event !== 'time_on_site') firedEvents.add(event);
+
+    const payload = {
+      lead_id:      LEAD_ID,
+      session_id:   SESSION_ID,
+      business_name:BIZ_NAME,
+      niche:        NICHE,
+      template:     TEMPLATE,
+      palette:      PALETTE,
+      event:        event,
+      time_on_site: Math.round((Date.now() - startTime) / 1000),
+      timestamp:    new Date().toISOString(),
+      referrer:     document.referrer || 'direct',
+      user_agent:   navigator.userAgent.substring(0, 120),
+      ...extra
+    };
+
+    // Use sendBeacon for reliability (works even on page close)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+    } else {
+      fetch(TRACKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    }
+  }
+
+  // ── 1. Fire immediately on load ──
+  ping('site_opened');
+
+  // ── 2. Scroll depth tracking ──
+  let scrollThresholds = { 25: false, 50: false, 75: false };
+
+  function checkScrollDepth() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    const pct      = Math.round((scrolled / total) * 100);
+
+    if (!scrollThresholds[25] && pct >= 25) {
+      scrollThresholds[25] = true;
+      ping('scroll_25', { scroll_pct: 25 });
+    }
+    if (!scrollThresholds[50] && pct >= 50) {
+      scrollThresholds[50] = true;
+      ping('scroll_50', { scroll_pct: 50 });
+    }
+    if (!scrollThresholds[75] && pct >= 75) {
+      scrollThresholds[75] = true;
+      ping('scroll_75', { scroll_pct: 75 });
+    }
+  }
+
+  // Throttled scroll listener
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(checkScrollDepth, 150);
+  }, { passive: true });
+
+  // ── 3. CTA section visibility tracking ──
+  // Watches for the .cta-section or .cta-inner element
+  let ctaVisibleTimer = null;
+  let ctaReachedFired = false;
+
+  function observeCTA() {
+    const ctaEl = document.querySelector('.cta-section, .cta-inner');
+    if (!ctaEl) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // CTA is visible
+          if (!ctaReachedFired) {
+            ctaReachedFired = true;
+            ping('cta_reached');
+          }
+          // Start 3-second timer for high-intent signal
+          if (!ctaVisibleTimer) {
+            ctaVisibleTimer = setTimeout(function() {
+              ping('cta_visible_3s', { high_intent: true });
+            }, 3000);
+          }
+        } else {
+          // CTA scrolled out of view — cancel timer
+          if (ctaVisibleTimer) {
+            clearTimeout(ctaVisibleTimer);
+            ctaVisibleTimer = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of CTA must be visible
+
+    observer.observe(ctaEl);
+  }
+
+  // ── 4. Time on site — fires every 30s ──
+  setInterval(function() {
+    ping('time_on_site', {
+      seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  }, 30000);
+
+  // ── 5. Page exit signal ──
+  window.addEventListener('beforeunload', function() {
+    ping('site_exited', {
+      total_seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  });
+
+  // ── Init CTA observer after DOM ready ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCTA);
+  } else {
+    observeCTA();
+  }
+
+})();
+
+/**
+ * ============================================================
+ * EXPIRY REDIRECT
+ * ============================================================
+ */
+(function() {
+  const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
+  const LEAD_ID    = '77f13c1e-9c19-4991-82bd-41d6ea241614';
+  const BIZ_SLUG   = encodeURIComponent('Seattle, Washington Luxury Home Remodeling'.replace(/\s+/g, '-').toLowerCase());
+  const NICHE_SLUG = encodeURIComponent('Luxury Home Remodeling');
+
+  if (!EXPIRY_URL || EXPIRY_URL === 'https://ri2ch.agency/expired.html') return;
+
+  const key = 'ri2ch_timer_' + LEAD_ID;
+  const DURATION = 48 * 60 * 60 * 1000; // 48 hours in ms
+
+  let end = parseInt(sessionStorage.getItem(key) || '0', 10);
+  if (!end || end < Date.now()) {
+    end = Date.now() + DURATION;
+    sessionStorage.setItem(key, end.toString());
+  }
+
+  function checkExpiry() {
+    const remaining = end - Date.now();
+    if (remaining <= 0) {
+      // Build expiry URL with context params
+      const url = `${EXPIRY_URL}?lead_id=${LEAD_ID}&biz=${BIZ_SLUG}&niche=${NICHE_SLUG}`;
+      window.location.href = url;
+    }
+  }
+
+  // Check every minute
+  setInterval(checkExpiry, 60000);
+  // Also check immediately on load
+  checkExpiry();
+})();
+</script>
+    <script>
+    (function() {
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=77f13c1e-9c19-4991-82bd-41d6ea241614&biz=Seattle,-Washington-Luxury-Home-Remodeling&niche=Luxury Home Remodeling&template=phantom&ls=pending&ps=pending";
+        document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
+            if (el.tagName === 'A') el.href = claimUrl;
+            else el.onclick = () => window.location.href = claimUrl;
+        });
+    })();
+    </script>
+    
+</body>
+</html>
