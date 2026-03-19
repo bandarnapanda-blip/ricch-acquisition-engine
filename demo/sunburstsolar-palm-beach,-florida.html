@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  RI2CH AGENCY OS — QUANTUM V15.0
+  TEMPLATE: OBSIDIAN
+  ARCHETYPE: Solar · Tech · IT · Smart Home
+  VERSION: 1.0
+  BRIEFING: See BRIEFING.md for full pipeline documentation.
+================================================================================
+
+  DIVISION 2 — RODY'S DESIGN NOTES:
+  Visual DNA pulled from:
+  - Arhitector.tech (Image 4, Batch 1 + Image 18, Batch 2): Full-bleed dark
+    cinematic photography. Split principles section — 3 columns pure typography,
+    no boxes. Wide editorial proportions. Amber/orange accent on subheadlines.
+    Here we use CYAN (#00e5ff) as the tech accent instead.
+  - AMALI Island (Image 10, Batch 1): Widescreen cinematic hero. Business name
+    centered in elegant thin type. Glassmorphism stat cards floating bottom-left
+    and bottom-right with property spec data. "Scroll to learn more" vertical text.
+  - City Arcade (Image 17, Batch 2): Oversized display type filling the full
+    viewport width. Right-aligned stats column. Feature list with arrow links.
+    White/gray palette with one bold image. Brutalist editorial confidence.
+
+  Palette:
+    Deep black:  #050608 (deeper than standard dark — creates premium tech feel)
+    Surface:     #0c0e12 + #111418
+    Cyan accent: #00e5ff (electric, tech, precision)
+    Cyan dim:    rgba(0,229,255,0.12)
+    Off-white:   #e8e6e2
+    Muted:       rgba(232,230,226,0.45)
+  Typography:
+    Display: Syne (geometric, tech, 800 weight for hero)
+    Body:    Space Grotesk (technical, modern, readable)
+  Layout:
+    Cinematic dark hero (AMALI ref) with glassmorphism cards →
+    Scrolling marquee ticker →
+    Dark split services (sticky left / list right) →
+    Full-bleed project image with principles overlay →
+    Cyan metrics grid →
+    Dark profile section →
+    Glassmorphism testimonial card →
+    CTA with ghost display type
+
+  RODY NOTE: OBSIDIAN is the most technically sophisticated template.
+  Every design decision communicates precision, innovation, and speed.
+  Cyan is the only color accent — used sparingly so it hits hard every time.
+  Glassmorphism is reserved for the hero cards and testimonial only.
+  Everywhere else: clean dark surfaces with tight typography.
+
+  DIVISION 2 — KAEL'S IMAGE NOTES:
+  NICHE TAGS: solar panels, technology, IT, smart home, renewable energy,
+              tech office, server room, solar installation, Palm Beach, Florida
+  Search priority: "Palm Beach, Florida solar installation" > "Palm Beach, Florida tech office" > fallback pool
+
+  KAEL FALLBACK IMAGE POOL (15 verified solar/tech Unsplash URLs):
+  Hero / Solar:
+    https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1800&q=85
+    https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1800&q=85
+    https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1800&q=85
+    https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1800&q=85
+    https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=1800&q=85
+  Tech / Office:
+    https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=85
+    https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=85
+    https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=1200&q=85
+    https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=85
+  Smart Home / Installation:
+    https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85
+    https://images.unsplash.com/photo-1558002038-1055907df827?w=1200&q=85
+    https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=85
+  Team / Professional:
+    https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=85
+    https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=85
+    https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=85
+
+  VEX WILL VERIFY: 4+ images · All solar/tech themed · No 404s
+  onerror fallbacks hardwired on every img tag.
+
+  DIVISION 2 — SOREN'S CONVERSION NOTES:
+  FOMO FOR TECH/SOLAR CONTEXT:
+  1. Sticky bar: subtle, professional — tech buyers hate aggressive sales
+  2. Hero glassmorphism cards: energy savings stat + installation count
+  3. Marquee ticker: trust signals scrolling (certifications, partnerships)
+  4. Anna's audit: framed as "Performance Score" — tech buyers understand metrics
+  5. Countdown timer in CTA (Whale tier: score >= 75)
+  6. Scarcity: "Currently accepting Q{{QUARTER}} installs in Palm Beach, Florida"
+  TONE: Precise, technical, forward-looking. These are educated buyers.
+  Never say "amazing deal" — say "optimized ROI" and "measurable results."
+
+  DIVISION 3 — LEO'S COPY NOTES:
+  Solar/Tech copy hooks:
+  - "Palm Beach, Florida's fastest-growing solar installer"
+  - "Average ROI: 6.2 years · 25-year panel warranty"
+  - "Your site loads in 8.4 seconds. Ours loads in 0.8."
+  - "Every day without solar = $X in grid costs"
+  Tone: Data-driven, precise, future-focused. Use numbers everywhere.
+  Leo: Speak to the ROI. These clients want to see the math.
+
+  DIVISION 4 — VEX FINAL CHECKLIST:
+  [ ] All {{PLACEHOLDERS}} replaced
+  [ ] 4+ images loading and solar/tech themed
+  [ ] pointer-events: none on ALL a/button/input
+  [ ] Countdown timer visible if score >= 75
+  [ ] Sunburstsolar in title, hero, footer
+  [ ] Palm Beach, Florida appears 3+ times
+  [ ] Mobile viewport meta present
+  [ ] "Claim This Site" CTA present
+  [ ] No broken CSS
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sunburstsolar — Tech Strategy Solutions · Palm Beach, Florida, </title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* VEX: POINTER ISOLATION */
+a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:none!important;cursor:default!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:#050608;color:#e8e6e2;overflow-x:hidden;}
+
+:root{
+  --bg:     #050505;
+  --bg2:    #0F0F0F;
+  --bg3:    #111418;
+  --bg4:    #161a20;
+  --cyan:   #00E5FF;
+  --cyan2:  #18FFFF;
+  --cyan-d: rgba(0,229,255,0.12);
+  --cyan-b: rgba(0,229,255,0.2);
+  --off:    #FFFFFF;
+  --muted:  rgba(232,230,226,0.45);
+  --muted2: rgba(232,230,226,0.2);
+  --border: rgba(232,230,226,0.07);
+  --border2:rgba(232,230,226,0.12);
+  --border-c:rgba(0,229,255,0.18);
+}
+.syne{font-family:'Syne',sans-serif;}
+
+/* Subtle scanline texture overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events:none;
+}
+
+/* SOREN: Sticky urgency bar — subtle tech tone */
+.urgency-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(0,229,255,0.08);
+  border-bottom:1px solid var(--border-c);
+  color:var(--cyan);
+  text-align:center;padding:0.5rem 1rem;
+  font-size:0.68rem;font-weight:600;letter-spacing:0.14em;
+  font-family:'Space Grotesk',sans-serif;
+  backdrop-filter:blur(20px);
+}
+
+/* NAV */
+nav{
+  position:fixed;top:32px;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:68px;
+  background:rgba(5,6,8,0.88);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--off);letter-spacing:-0.02em;}
+.nav-dot-sep{width:4px;height:4px;border-radius:50%;background:var(--cyan);opacity:0.4;flex-shrink:0;}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links span{font-size:0.75rem;font-weight:500;color:var(--muted);letter-spacing:0.04em;}
+.nav-cta{
+  font-size:0.72rem;font-weight:600;
+  color:var(--bg);background:var(--cyan);
+  padding:0.58rem 1.5rem;border-radius:4px;
+  font-family:'Syne',sans-serif;letter-spacing:0.04em;
+}
+
+/* ══════════════════════════════════════════════
+   HERO — AMALI cinematic style.
+   Full-bleed dark photography.
+   Business name centered in elegant type.
+   Glassmorphism stat cards floating bottom.
+   Vertical "scroll" text right side.
+   ══════════════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:brightness(0.3) saturate(0.6);
+  transform:scale(1.04);
+  animation:heroZoom 16s ease-out forwards;
+}
+@keyframes heroZoom{to{transform:scale(1);}}
+
+/* Multi-layer overlays */
+.hero-ov-main{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,6,8,0.5) 0%,rgba(5,6,8,0.2) 40%,rgba(5,6,8,0.8) 80%,rgba(5,6,8,1) 100%);}
+.hero-ov-left{position:absolute;inset:0;background:linear-gradient(to right,rgba(5,6,8,0.6) 0%,transparent 50%);}
+
+/* Cyan glow bloom */
+.hero-glow{
+  position:absolute;
+  bottom:10%;left:5%;
+  width:700px;height:700px;
+  background:radial-gradient(ellipse,rgba(0,229,255,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Top nav bar area — company name centered (AMALI ref) */
+.hero-center-brand{
+  position:absolute;
+  top:100px;left:0;right:0;
+  text-align:center;z-index:2;
+  animation:fadeIn 1s ease 0.3s both;
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.hero-brand-name{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1rem,2vw,1.4rem);
+  font-weight:400;
+  color:rgba(232,230,226,0.5);
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+}
+
+/* Main hero content */
+.hero-content{
+  position:relative;z-index:2;
+  flex:1;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 3rem 3rem;
+  animation:fadeUp 1s ease 0.4s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+.hero-eyebrow{
+  font-size:0.65rem;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.8rem;
+}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--cyan);opacity:0.6;}
+
+.hero-h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(3.5rem,7vw,7rem);
+  font-weight:800;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  color:var(--off);
+  margin-bottom:2rem;
+  max-width:900px;
+}
+.hero-h1 .outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(232,230,226,0.3);
+}
+
+.hero-bottom{
+  display:flex;align-items:flex-end;
+  justify-content:space-between;gap:2rem;
+}
+.hero-sub{
+  font-size:0.95rem;font-weight:300;
+  line-height:1.8;color:var(--muted);
+  max-width:400px;
+}
+.hero-actions{display:flex;gap:0.8rem;flex-shrink:0;}
+.btn-cyan{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--cyan);color:var(--bg);
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:0.8rem;letter-spacing:0.04em;
+  padding:0.85rem 1.8rem;border-radius:4px;
+}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  border:1px solid var(--border2);color:var(--off);
+  font-size:0.8rem;font-weight:500;
+  padding:0.85rem 1.8rem;border-radius:4px;
+}
+
+/* AMALI: Glassmorphism bottom cards */
+.hero-glass-cards{
+  display:flex;gap:1px;
+  border-top:1px solid var(--border);
+  background:var(--border);
+  margin-top:3rem;
+  position:relative;z-index:3;
+}
+.hgcard{
+  flex:1;
+  background:rgba(5,6,8,0.75);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  padding:1.5rem 2rem;
+  transition:background 0.25s;
+}
+.hgcard:hover{background:rgba(12,14,18,0.85);}
+.hgcard-label{font-size:0.6rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.5rem;}
+.hgcard-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--off);line-height:1;letter-spacing:-0.03em;}
+.hgcard-sub{font-size:0.72rem;color:var(--muted);margin-top:0.3rem;font-weight:300;}
+.hgcard-arrow{font-size:0.75rem;color:var(--cyan);margin-top:0.8rem;font-weight:600;letter-spacing:0.06em;}
+
+/* AMALI: Vertical scroll text right side */
+.hero-scroll-text{
+  position:absolute;
+  right:2rem;top:50%;
+  transform:translateY(-50%) rotate(90deg);
+  font-size:0.6rem;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--muted2);
+  display:flex;align-items:center;gap:0.8rem;
+  z-index:3;
+  animation:fadeIn 1.2s ease 1s both;
+}
+.hero-scroll-text::after{content:'';width:32px;height:1px;background:var(--muted2);}
+
+/* ══════════════════════════════════════════════
+   MARQUEE TICKER — trust signals
+   ══════════════════════════════════════════════ */
+.marquee-strip{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+  padding:1rem 0;overflow:hidden;
+}
+.marquee-track{
+  display:flex;white-space:nowrap;
+  animation:marquee 22s linear infinite;
+}
+@keyframes marquee{to{transform:translateX(-50%);}}
+.mitem{
+  display:inline-flex;align-items:center;gap:2rem;
+  padding:0 2.5rem;
+  font-size:0.7rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.mdot{width:4px;height:4px;border-radius:50%;background:var(--cyan);opacity:0.6;flex-shrink:0;}
+
+/* ══════════════════════════════════════════════
+   SERVICES — City Arcade feature list style.
+   Sticky left column + numbered list right.
+   ══════════════════════════════════════════════ */
+.services-section{background:var(--bg);padding:6rem 3rem;}
+.services-layout{
+  display:grid;grid-template-columns:320px 1fr;
+  gap:5rem;align-items:start;
+}
+.services-sticky{position:sticky;top:110px;}
+.sec-eyebrow{
+  font-size:0.62rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.7rem;
+}
+.sec-eyebrow::before{content:'';width:20px;height:1px;background:var(--cyan);opacity:0.6;}
+.sec-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:800;color:var(--off);
+  letter-spacing:-0.04em;line-height:1.1;
+}
+.sec-title .outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(232,230,226,0.25);
+}
+.sec-desc{font-size:0.88rem;line-height:1.8;color:var(--muted);font-weight:300;margin-top:1.2rem;}
+.services-link{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  margin-top:1.8rem;font-size:0.78rem;font-weight:600;
+  color:var(--cyan);letter-spacing:0.04em;
+  border-bottom:1px solid rgba(0,229,255,0.3);
+  padding-bottom:2px;
+}
+
+/* City Arcade feature list */
+.service-list{display:flex;flex-direction:column;gap:1px;}
+.srow{
+  display:flex;align-items:flex-start;gap:2rem;
+  padding:2rem;
+  border:1px solid var(--border);
+  background:var(--bg2);
+  border-radius:8px;
+  margin-bottom:1px;
+  transition:border-color 0.25s,background 0.25s;
+}
+.srow:hover{border-color:var(--border-c);background:var(--bg3);}
+.srow-num{
+  font-family:'Syne',sans-serif;
+  font-size:0.7rem;font-weight:700;
+  color:var(--cyan);opacity:0.6;
+  letter-spacing:0.1em;margin-top:3px;flex-shrink:0;
+}
+.srow-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--off);letter-spacing:-0.02em;
+  margin-bottom:0.5rem;
+}
+.srow-desc{font-size:0.84rem;line-height:1.75;color:var(--muted);font-weight:300;}
+.srow-arrow{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  margin-top:0.8rem;font-size:0.72rem;font-weight:600;
+  color:var(--cyan);opacity:0.7;letter-spacing:0.04em;
+}
+
+/* ══════════════════════════════════════════════
+   FULL-BLEED PROJECT IMAGE
+   Arhitector.tech principles overlay
+   ══════════════════════════════════════════════ */
+.project-section{background:var(--bg2);}
+.project-img{
+  width:100%;height:65vh;
+  object-fit:cover;
+  filter:brightness(0.55) saturate(0.65);
+  display:block;
+}
+.principles{
+  padding:4.5rem 3rem;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;border-top:1px solid var(--border);
+}
+.principle{padding:0 3rem;position:relative;}
+.principle:not(:last-child)::after{content:'';position:absolute;right:0;top:0;bottom:0;width:1px;background:var(--border);}
+.principle:first-child{padding-left:0;}
+.plabel{
+  font-size:0.6rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.plabel::before{content:'';width:14px;height:1px;background:var(--cyan);opacity:0.6;}
+.ptitle{
+  font-family:'Syne',sans-serif;
+  font-size:1.05rem;font-weight:700;
+  color:var(--off);margin-bottom:0.7rem;
+  letter-spacing:-0.02em;
+}
+.pdesc{font-size:0.84rem;line-height:1.8;color:var(--muted);font-weight:300;}
+
+/* ══════════════════════════════════════════════
+   METRICS GRID — cyan numbers
+   Anna's performance data + our stats
+   ══════════════════════════════════════════════ */
+.metrics-section{
+  background:var(--bg3);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:4rem 3rem;
+}
+.metrics-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;}
+.metrics-note{font-size:0.8rem;color:var(--muted);font-weight:300;max-width:300px;text-align:right;line-height:1.6;}
+.metrics-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border-radius:10px;overflow:hidden;
+}
+.mcell{
+  background:var(--bg3);
+  padding:2.5rem 2rem;
+  transition:background 0.25s;
+}
+.mcell:hover{background:var(--bg4);}
+.mcell-val{
+  font-family:'Syne',sans-serif;
+  font-size:2.8rem;font-weight:800;
+  letter-spacing:-0.04em;color:var(--off);line-height:1;margin-bottom:0.5rem;
+}
+.mcell-val span{color:var(--cyan);font-size:1.4rem;}
+.mcell-label{font-size:0.72rem;color:var(--muted);font-weight:400;line-height:1.5;}
+
+/* SOREN: Anna's audit comparison card */
+.audit-card{
+  background:var(--bg2);
+  border:1px solid var(--border-c);
+  border-radius:10px;
+  padding:2rem;
+  margin-top:2rem;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;
+}
+.audit-item{text-align:center;}
+.audit-score{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;margin-bottom:0.4rem;}
+.audit-score.bad{color:#ff4d4d;}
+.audit-score.good{color:var(--cyan);}
+.audit-label{font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.audit-note{font-size:0.7rem;color:var(--muted);margin-top:0.3rem;font-weight:300;}
+
+/* ══════════════════════════════════════════════
+   PROFILE SECTION
+   KAEL: https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=85 left side
+   ══════════════════════════════════════════════ */
+.profile-section{
+  background:var(--bg);padding:6rem 3rem;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;
+  border-top:1px solid var(--border);
+}
+.prof-img-wrap{position:relative;}
+.prof-img{
+  width:100%;aspect-ratio:4/5;
+  object-fit:cover;object-position:top;
+  filter:brightness(0.75) saturate(0.7);
+  border-radius:6px;
+}
+/* Cyan corner accent */
+.prof-img-wrap::before{
+  content:'';
+  position:absolute;top:-8px;left:-8px;
+  width:50px;height:50px;
+  border-top:2px solid var(--cyan);
+  border-left:2px solid var(--cyan);
+  opacity:0.4;
+  border-radius:0;
+}
+.prof-img-wrap::after{
+  content:'';
+  position:absolute;bottom:-8px;right:-8px;
+  width:50px;height:50px;
+  border-bottom:2px solid var(--cyan);
+  border-right:2px solid var(--cyan);
+  opacity:0.4;
+}
+.prof-badge{
+  position:absolute;bottom:2rem;left:1.5rem;
+  background:rgba(5,6,8,0.9);
+  border:1px solid var(--border-c);
+  backdrop-filter:blur(12px);
+  border-radius:8px;padding:1rem 1.4rem;
+}
+.prof-badge-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--off);letter-spacing:-0.01em;}
+.prof-badge-title{font-size:0.6rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);margin-top:0.2rem;opacity:0.8;}
+
+.prof-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+.prof-eyebrow::before{content:'';width:16px;height:1px;background:var(--cyan);opacity:0.6;}
+.prof-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:var(--off);line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.04em;}
+.prof-title span{color:var(--cyan);}
+.prof-text{font-size:0.88rem;line-height:1.85;color:var(--muted);font-weight:300;margin-bottom:0.8rem;}
+.creds{margin-top:2rem;display:flex;flex-direction:column;}
+.cred-row{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border);}
+.cred-row:first-child{border-top:1px solid var(--border);}
+.cred-dot{width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0;}
+.cred-text{font-size:0.82rem;color:var(--off);font-weight:300;opacity:0.75;}
+
+/* ══════════════════════════════════════════════
+   TESTIMONIAL — glassmorphism card
+   ══════════════════════════════════════════════ */
+.test-section{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:5rem 3rem;
+}
+.test-card{
+  max-width:800px;margin:0 auto;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border2);
+  backdrop-filter:blur(20px);
+  border-radius:16px;padding:3.5rem 4rem;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.test-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-b),transparent);}
+.test-ornament{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;color:var(--cyan);opacity:0.15;line-height:0.6;margin-bottom:1.5rem;}
+.test-stars{color:var(--cyan);font-size:0.85rem;letter-spacing:0.15em;margin-bottom:1.5rem;opacity:0.7;}
+.test-text{font-family:'Syne',sans-serif;font-size:clamp(1.2rem,2vw,1.7rem);font-weight:600;line-height:1.4;color:var(--off);max-width:640px;margin:0 auto 1.8rem;letter-spacing:-0.02em;}
+.test-text em{color:var(--cyan);font-style:normal;}
+.test-author{font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+
+/* ══════════════════════════════════════════════
+   CTA — deep black, cyan precision
+   SOREN: countdown + ROI framing
+   ══════════════════════════════════════════════ */
+.cta-section{background:var(--bg);padding:6rem 3rem;border-top:1px solid var(--border);}
+.cta-inner{
+  position:relative;
+  border:1px solid var(--border-c);
+  border-radius:12px;padding:5rem 4rem;
+  background:var(--bg2);overflow:hidden;
+}
+/* Cyan top line */
+.cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
+/* Cyan glow */
+.cta-glow{
+  position:absolute;top:-100px;right:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(ellipse,rgba(0,229,255,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* Ghost display type */
+.cta-ghost{
+  position:absolute;bottom:-2rem;left:-1%;
+  font-family:'Syne',sans-serif;
+  font-size:clamp(8rem,18vw,16rem);
+  font-weight:800;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(0,229,255,0.04);
+  white-space:nowrap;pointer-events:none;
+  letter-spacing:-0.04em;z-index:0;
+}
+
+/* SOREN: Countdown */
+.cd-wrap{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2.5rem;position:relative;z-index:1;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--cyan);line-height:1;display:block;min-width:60px;letter-spacing:-0.03em;}
+.cd-label{font-size:0.56rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem;}
+.cd-sep{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--cyan);opacity:0.25;line-height:1.2;align-self:flex-start;margin-top:0.2rem;}
+
+.cta-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--cyan-d);border:1px solid var(--border-c);border-radius:100px;padding:0.35rem 1rem;font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.8rem;position:relative;z-index:1;}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:800;line-height:1.05;color:var(--off);margin-bottom:1.2rem;letter-spacing:-0.04em;position:relative;z-index:1;text-align:center;}
+.cta-title span{color:var(--cyan);}
+.cta-sub{font-size:0.92rem;line-height:1.8;color:var(--muted);font-weight:300;max-width:540px;margin:0 auto 2.5rem;position:relative;z-index:1;text-align:center;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.7rem;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-weight:800;font-size:0.82rem;letter-spacing:0.04em;padding:1rem 2.8rem;border-radius:6px;position:relative;z-index:1;}
+.cta-note{margin-top:1.2rem;font-size:0.68rem;letter-spacing:0.08em;color:var(--muted);opacity:0.5;position:relative;z-index:1;}
+
+/* ══════════════════════════════════════════════
+   MOBILE RESPONSIVENESS (LATEST WAVE FIX)
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  nav { padding: 0 1.5rem; top: 32px; height: 60px; }
+  .nav-links { display: none; } /* Hide secondary links on mobile for ultra-clean look */
+  
+  .hero-center-brand { top: 110px; }
+  .hero-brand-name { font-size: 0.8rem; letter-spacing: 0.2em; }
+  
+  .hero-content { padding: 0 1.5rem 2rem; }
+  .hero-h1 { font-size: 3.5rem; margin-bottom: 1.5rem; }
+  
+  .hero-bottom { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .hero-sub { font-size: 0.85rem; max-width: 100%; }
+  
+  .hero-glass-cards { flex-direction: column; }
+  .hgcard { padding: 1.2rem; border-bottom: 1px solid var(--border); }
+  
+  .hero-scroll-text { display: none; }
+  
+  .services-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .services-sticky { position: relative; top: 0; margin-bottom: 2rem; }
+  .sec-title { font-size: 2.2rem; }
+  
+  .srow { padding: 1.2rem; flex-direction: column; gap: 1rem; }
+  .srow-num { font-size: 1.5rem; }
+  
+  .project-section img { height: 40vh; }
+  .principles { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+  .principle { padding: 1.5rem 0; }
+  .principle:not(:last-child)::after { display: none; }
+  .principle:not(:last-child) { border-bottom: 1px solid var(--border); }
+  
+  .metrics-section { padding: 3rem 1.5rem; }
+  .metrics-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .metrics-note { text-align: left; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  
+  .audit-card { grid-template-columns: 1fr; gap: 1.5rem; }
+  
+  .profile-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+  .prof-title { font-size: 2.2rem; }
+  
+  .test-section { padding: 4rem 1.5rem; }
+  .test-card { padding: 2.5rem 1.5rem; }
+  
+  .cta-section { padding: 4rem 1.5rem; }
+  .cta-inner { padding: 3rem 1.5rem; }
+  .cta-ghost { display: none; }
+  .cd-wrap { gap: 0.8rem; }
+  .cd-num { font-size: 2rem; min-width: 45px; }
+  .cta-title { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-h1 { font-size: 2.8rem; }
+  .btn-cyan, .btn-ghost { width: 100%; justify-content: center; }
+  .metrics-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="urgency-bar">PRO PREVIEW · PREPARED FOR Sunburstsolar · Palm Beach, Florida, </div>
+
+<nav>
+  <div class="nav-logo">Sunburstsolar</div>
+  <div class="nav-links">
+    <span>Services</span>
+    <span class="nav-dot-sep"></span>
+    <span>Performance</span>
+    <span class="nav-dot-sep"></span>
+    <span>About</span>
+  </div>
+  <div class="nav-cta">Claim This Site</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1800&q=85')"></div>
+  <div class="hero-ov-main"></div>
+  <div class="hero-ov-left"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-scroll-text">Scroll to learn more</div>
+  
+  <div class="hero-center-brand">
+    <div class="hero-brand-name">Sunburstsolar</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Palm Beach, Florida'S INNOVATION TIER</div>
+    <h1 class="hero-h1">Technical<br/><span class="outline">Absolute.</span></h1>
+    <div class="hero-bottom">
+      <div class="hero-sub">Built to last. Engineered to dominate your local market. We've optimized your digital presence to meet the standard of your technical practice in Palm Beach, Florida.</div>
+      <div class="hero-actions">
+        <div class="btn-cyan">Get Started</div>
+        <div class="btn-ghost">Our Method</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-glass-cards">
+    <div class="hgcard">
+      <div class="hgcard-label">Efficiency ROI</div>
+      <div class="hgcard-val">24.8%</div>
+      <div class="hgcard-sub">Average energy savings</div>
+      <div class="hgcard-arrow">View Data →</div>
+    </div>
+    <div class="hgcard">
+      <div class="hgcard-label">Network Load</div>
+      <div class="hgcard-val">0.4k</div>
+      <div class="hgcard-sub">Milliseconds to interactive</div>
+      <div class="hgcard-arrow">View Tech →</div>
+    </div>
+    <div class="hgcard">
+      <div class="hgcard-label">Precision Log</div>
+      <div class="hgcard-val">100%</div>
+      <div class="hgcard-sub">Uptime confidence</div>
+      <div class="hgcard-arrow">View Status →</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="mitem"><span class="mdot"></span>Board Certified</div>
+    <div class="mitem"><span class="mdot"></span>Top 100 National</div>
+    <div class="mitem"><span class="mdot"></span>Elite Rating</div>
+    <div class="mitem"><span class="mdot"></span>ISO 9001 CERTIFIED</div>
+    <div class="mitem"><span class="mdot"></span>Palm Beach, Florida TECH STANDARD</div>
+    <!-- Double for loop -->
+    <div class="mitem"><span class="mdot"></span>Board Certified</div>
+    <div class="mitem"><span class="mdot"></span>Top 100 National</div>
+    <div class="mitem"><span class="mdot"></span>Elite Rating</div>
+    <div class="mitem"><span class="mdot"></span>ISO 9001 CERTIFIED</div>
+    <div class="mitem"><span class="mdot"></span>Palm Beach, Florida TECH STANDARD</div>
+  </div>
+</div>
+
+<section class="services-section reveal">
+  <div class="services-layout">
+    <div class="services-sticky">
+      <div class="sec-eyebrow">Our Capabilities</div>
+      <h2 class="sec-title">Technical<br/><span class="outline">Absolute.</span></h2>
+      <p class="sec-desc">Precision engineering for the modern enterprise. We deliver technical infrastructure that scales with Palm Beach, Florida's fastest growing innovators.</p>
+      <div class="services-link">View Full Framework →</div>
+    </div>
+    <div class="service-list">
+      <div class="srow">
+        <div class="srow-num">01/</div>
+        <div>
+          <div class="srow-title">Authority Redesign</div>
+          <div class="srow-desc">Replacing weak legacy sites with high-authority engines that demand instant trust.</div>
+          <div class="srow-arrow">Technical Spec →</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="srow-num">02/</div>
+        <div>
+          <div class="srow-title">Lead Siphon Systems</div>
+          <div class="srow-desc">Sophisticated funnel strategies that capture high-intent leads before they call a competitor.</div>
+          <div class="srow-arrow">Technical Spec →</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="srow-num">03/</div>
+        <div>
+          <div class="srow-title">Rapid Deployment</div>
+          <div class="srow-desc">Launch your brand into new territories in record time with our Quantum infrastructure.</div>
+          <div class="srow-arrow">Technical Spec →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="project-section reveal">
+  <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=85" class="project-img" alt="Technical Excellence">
+  <div class="principles">
+    <div class="principle">
+      <div class="plabel">Philosophy</div>
+      <div class="ptitle">Data First</div>
+      <div class="pdesc">We believe technical decisions should be driven by measurable outcomes, not trends.</div>
+    </div>
+    <div class="principle">
+      <div class="plabel">Execution</div>
+      <div class="ptitle">Pure Scale</div>
+      <div class="pdesc">Building for today while ensuring the architecture supports the scale of tomorrow.</div>
+    </div>
+    <div class="principle">
+      <div class="plabel">Outcome</div>
+      <div class="ptitle">Security</div>
+      <div class="pdesc">Zero-trust principles embedded into every layer of our technical delivery.</div>
+    </div>
+  </div>
+</section>
+
+<section class="metrics-section reveal">
+  <div class="metrics-header">
+    <div>
+      <div class="sec-eyebrow">Performance Metrics</div>
+      <h2 class="sec-title">Growth<br/><span class="outline">Validated.</span></h2>
+    </div>
+    <div class="metrics-note">Live operational data from Sunburstsolar's existing implementation framework in Palm Beach, Florida.</div>
+  </div>
+  <div class="metrics-grid">
+    <div class="mcell">
+      <div class="mcell-val">15yr<span></span></div>
+      <div class="mcell-label">Trade Experience</div>
+    </div>
+    <div class="mcell">
+      <div class="mcell-val">500+<span></span></div>
+      <div class="mcell-label">Projects Delivered</div>
+    </div>
+    <div class="mcell">
+      <div class="mcell-val">100%<span></span></div>
+      <div class="mcell-label">Quality Guarantee</div>
+    </div>
+    <div class="mcell">
+      <div class="mcell-val">12<span>yr</span></div>
+      <div class="mcell-label">Industry Tenure</div>
+    </div>
+  </div>
+
+  <div class="audit-card">
+    <div class="audit-item">
+      <div class="audit-score bad">42/100</div>
+      <div class="audit-label">Current Score</div>
+      <div class="audit-note">Current technical health</div>
+    </div>
+    <div class="audit-item" style="display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:1.5rem;">→</div>
+    <div class="audit-item">
+      <div class="audit-score good">98/100</div>
+      <div class="audit-label">Target Score</div>
+      <div class="audit-note">Optimized Obsidian engine</div>
+    </div>
+  </div>
+</section>
+
+<section class="profile-section reveal">
+  <div class="prof-img-wrap">
+    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=85" class="prof-img" alt="Rody">
+    <div class="prof-badge">
+      <div class="prof-badge-name">Rody</div>
+      <div class="prof-badge-title">Lead Field Engineer</div>
+    </div>
+  </div>
+  <div>
+    <div class="prof-eyebrow">The Leadership</div>
+    <h2 class="prof-title">Architecting<br/><span>the Next.</span></h2>
+    <p class="prof-text">Engineering high-authority digital infrastructure for Palm Beach, Florida since 2012. We combine technical mastery with strategic vision to deliver absolute results.</p>
+    <div class="creds">
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Master of Technology</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Elite Cloud Certification</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Security Ops Certified</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="test-section reveal">
+  <div class="test-card">
+    <div class="test-ornament">"</div>
+    <div class="test-stars">★★★★★</div>
+    <div class="test-text">Our phone hadn't rang in weeks. After the V15 deploy, we're booked out 3 months.</div>
+    <div class="test-author">— John Miller</div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cta-glow"></div>
+    <div class="cta-ghost">OBSIDIAN</div>
+    <div class="cd-wrap">
+      <div class="cd-unit"><span class="cd-num" id="cdh">00</span><span class="cd-label">Hours</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdm">00</span><span class="cd-label">Mins</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cds">00</span><span class="cd-label">Secs</span></div>
+    </div>
+    <div class="cta-badge">Restricted Access · Private Preview</div>
+    <h2 class="cta-title">Upgrade to the<br/><span>Absolute Engine.</span></h2>
+    <p class="cta-sub">This private preview for Sunburstsolar expires shortly. Secure your technical advantage in Palm Beach, Florida today.</p>
+    <div class="cta-center">
+      <div class="cta-btn">Claim This Site</div>
+    </div>
+    <div class="cta-note">Strictly limited to one tech lead per region.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Sunburstsolar</div>
+  <div class="f-tag">"Built to Last. Engineered for Growth."</div>
+  <div class="f-note">Palm Beach, Florida,  · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+/* SOREN: Countdown */
+(function(){
+  const DURATION=48*60*60;
+  const key='ri2ch_obsidian_'+('Sunburstsolar'.replace(/\s/g,'_'));
+  let end=sessionStorage.getItem(key);
+  if(!end){end=Date.now()+DURATION*1000;sessionStorage.setItem(key,end);}
+  function tick(){
+    const diff=Math.max(0,Math.floor((end-Date.now())/1000));
+    document.getElementById('cdh').textContent=String(Math.floor(diff/3600)).padStart(2,'0');
+    document.getElementById('cdm').textContent=String(Math.floor((diff%3600)/60)).padStart(2,'0');
+    document.getElementById('cds').textContent=String(diff%60).padStart(2,'0');
+    if(diff>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* Scroll reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* VEX: Pointer isolation */
+document.addEventListener('click',e=>e.preventDefault(),true);
+document.addEventListener('submit',e=>e.preventDefault(),true);
+document.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code))e.preventDefault();},true);
+
+/* VEX: Image health check */
+document.querySelectorAll('img').forEach(img=>{
+  img.addEventListener('error',function(){
+    console.warn('[VEX QA] BROKEN IMAGE:',this.src);
+    console.warn('[VEX QA] Triggering Kael fallback for:',this.alt);
+  });
+});
+</script>
+<script>(function() {
+  'use strict';
+
+  // ── Config injected by generate_landing.py ──
+  const LEAD_ID      = 'cc862a26-a848-42b8-9c89-5da2ba74b09d';
+  const BIZ_NAME     = 'Sunburstsolar';
+  const NICHE        = 'Solar Energy Installers';
+  const TEMPLATE     = 'obsidian';
+  const PALETTE      = 'Cyan Void';
+  const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
+  const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
+
+  // ── Session dedup — don't double-fire on refresh ──
+  const SESSION_ID = (function() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  })();
+
+  const startTime = Date.now();
+  const firedEvents = new Set();
+
+  // ── Core ping function ──
+  function ping(event, extra = {}) {
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
+
+    // Dedup scroll events
+    if (firedEvents.has(event)) return;
+    if (event !== 'time_on_site') firedEvents.add(event);
+
+    const payload = {
+      lead_id:      LEAD_ID,
+      session_id:   SESSION_ID,
+      business_name:BIZ_NAME,
+      niche:        NICHE,
+      template:     TEMPLATE,
+      palette:      PALETTE,
+      event:        event,
+      time_on_site: Math.round((Date.now() - startTime) / 1000),
+      timestamp:    new Date().toISOString(),
+      referrer:     document.referrer || 'direct',
+      user_agent:   navigator.userAgent.substring(0, 120),
+      ...extra
+    };
+
+    // Use sendBeacon for reliability (works even on page close)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+    } else {
+      fetch(TRACKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    }
+  }
+
+  // ── 1. Fire immediately on load ──
+  ping('site_opened');
+
+  // ── 2. Scroll depth tracking ──
+  let scrollThresholds = { 25: false, 50: false, 75: false };
+
+  function checkScrollDepth() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    const pct      = Math.round((scrolled / total) * 100);
+
+    if (!scrollThresholds[25] && pct >= 25) {
+      scrollThresholds[25] = true;
+      ping('scroll_25', { scroll_pct: 25 });
+    }
+    if (!scrollThresholds[50] && pct >= 50) {
+      scrollThresholds[50] = true;
+      ping('scroll_50', { scroll_pct: 50 });
+    }
+    if (!scrollThresholds[75] && pct >= 75) {
+      scrollThresholds[75] = true;
+      ping('scroll_75', { scroll_pct: 75 });
+    }
+  }
+
+  // Throttled scroll listener
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(checkScrollDepth, 150);
+  }, { passive: true });
+
+  // ── 3. CTA section visibility tracking ──
+  // Watches for the .cta-section or .cta-inner element
+  let ctaVisibleTimer = null;
+  let ctaReachedFired = false;
+
+  function observeCTA() {
+    const ctaEl = document.querySelector('.cta-section, .cta-inner');
+    if (!ctaEl) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // CTA is visible
+          if (!ctaReachedFired) {
+            ctaReachedFired = true;
+            ping('cta_reached');
+          }
+          // Start 3-second timer for high-intent signal
+          if (!ctaVisibleTimer) {
+            ctaVisibleTimer = setTimeout(function() {
+              ping('cta_visible_3s', { high_intent: true });
+            }, 3000);
+          }
+        } else {
+          // CTA scrolled out of view — cancel timer
+          if (ctaVisibleTimer) {
+            clearTimeout(ctaVisibleTimer);
+            ctaVisibleTimer = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of CTA must be visible
+
+    observer.observe(ctaEl);
+  }
+
+  // ── 4. Time on site — fires every 30s ──
+  setInterval(function() {
+    ping('time_on_site', {
+      seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  }, 30000);
+
+  // ── 5. Page exit signal ──
+  window.addEventListener('beforeunload', function() {
+    ping('site_exited', {
+      total_seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  });
+
+  // ── Init CTA observer after DOM ready ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCTA);
+  } else {
+    observeCTA();
+  }
+
+})();
+
+/**
+ * ============================================================
+ * EXPIRY REDIRECT
+ * ============================================================
+ */
+(function() {
+  const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
+  const LEAD_ID    = 'cc862a26-a848-42b8-9c89-5da2ba74b09d';
+  const BIZ_SLUG   = encodeURIComponent('Sunburstsolar'.replace(/\s+/g, '-').toLowerCase());
+  const NICHE_SLUG = encodeURIComponent('Solar Energy Installers');
+
+  if (!EXPIRY_URL || EXPIRY_URL === 'https://ri2ch.agency/expired.html') return;
+
+  const key = 'ri2ch_timer_' + LEAD_ID;
+  const DURATION = 48 * 60 * 60 * 1000; // 48 hours in ms
+
+  let end = parseInt(sessionStorage.getItem(key) || '0', 10);
+  if (!end || end < Date.now()) {
+    end = Date.now() + DURATION;
+    sessionStorage.setItem(key, end.toString());
+  }
+
+  function checkExpiry() {
+    const remaining = end - Date.now();
+    if (remaining <= 0) {
+      // Build expiry URL with context params
+      const url = `${EXPIRY_URL}?lead_id=${LEAD_ID}&biz=${BIZ_SLUG}&niche=${NICHE_SLUG}`;
+      window.location.href = url;
+    }
+  }
+
+  // Check every minute
+  setInterval(checkExpiry, 60000);
+  // Also check immediately on load
+  checkExpiry();
+})();
+</script>
+    <script>
+    (function() {
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=cc862a26-a848-42b8-9c89-5da2ba74b09d&biz=Sunburstsolar&niche=Solar Energy Installers&template=obsidian&ls=pending&ps=pending";
+        document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
+            if (el.tagName === 'A') el.href = claimUrl;
+            else el.onclick = () => window.location.href = claimUrl;
+        });
+    })();
+    </script>
+    
+</body>
+</html>
