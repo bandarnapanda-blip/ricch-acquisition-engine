@@ -92,11 +92,11 @@ html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;background:#0d0d0b;color:#f0ece0;overflow-x:hidden;}
 
 :root{
-  --bg:#1C2526;--bg2:#2A3537;--bg3:#1a1a16;
+  --bg:#2B1E16;--bg2:#3D2B1F;--bg3:#1a1a16;
   --bg-light:#f5f2eb;
-  --gold:#708090;--gold-light:#9BB0C1;--gold-dim:rgba(201,168,76,0.15);
+  --gold:#D2B48C;--gold-light:#E6D2B5;--gold-dim:rgba(201,168,76,0.15);
   --gold-border:rgba(201,168,76,0.2);
-  --cream:#F0F0F0;--muted-dark:rgba(240,236,224,0.45);
+  --cream:#FAF9F6;--muted-dark:rgba(240,236,224,0.45);
   --muted-light:rgba(30,28,22,0.55);--ink:#1e1c16;
   --border-dark:rgba(201,168,76,0.12);--border-light:rgba(30,28,22,0.1);
 }
@@ -317,8 +317,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border-dark);padding:2re
 
 <!-- HERO — RODY + KAEL + SOREN -->
 <section class="hero" style="padding-top:102px;">
-  <!-- KAEL: https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1800&q=85 injected by generate_landing.py -->
-  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1800&q=85')"></div>
+  <!-- KAEL: https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1800&q=85 injected by generate_landing.py -->
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1800&q=85')"></div>
   <div class="hero-ov-b"></div>
   <div class="hero-ov-l"></div>
   <div class="hero-acc"></div>
@@ -433,10 +433,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border-dark);padding:2re
 </div>
 
 <!-- PRINCIPAL PROFILE — De Alwis team section style -->
-<!-- KAEL: https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=85 here -->
+<!-- KAEL: https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85 here -->
 <section class="profile-section reveal">
   <div class="prof-img-wrap">
-    <img class="prof-img" src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=85" alt="Rody"
+    <img class="prof-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85" alt="Rody"
          onerror="this.src='https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=85'"/>
     <div class="prof-badge">
       <div class="prof-badge-name">Rody</div>
@@ -478,7 +478,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border-dark);padding:2re
     <div class="glabel">Lead Siphon Systems</div>
   </div>
   <div class="gitem">
-    <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=85" alt="Projects"
+    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=85" alt="Projects"
          onerror="this.src='https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&q=80'"/>
     <div class="glabel">Projects</div>
   </div>
@@ -555,11 +555,11 @@ document.querySelectorAll('img').forEach(img=>{
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = 'f829c3ff-5347-4e07-80ce-25a59e985e1d';
+  const LEAD_ID      = 'fbf4f0ab-4250-4187-bc51-380f73682700';
   const BIZ_NAME     = 'Dallas, Texas Personal Injury Attorneys';
   const NICHE        = 'Personal Injury Attorneys';
   const TEMPLATE     = 'court';
-  const PALETTE      = 'Slate Steel';
+  const PALETTE      = 'Walnut Ivory';
   const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
@@ -710,7 +710,7 @@ document.querySelectorAll('img').forEach(img=>{
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = 'f829c3ff-5347-4e07-80ce-25a59e985e1d';
+  const LEAD_ID    = 'fbf4f0ab-4250-4187-bc51-380f73682700';
   const BIZ_SLUG   = encodeURIComponent('Dallas, Texas Personal Injury Attorneys'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Personal Injury Attorneys');
 
@@ -742,7 +742,7 @@ document.querySelectorAll('img').forEach(img=>{
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=f829c3ff-5347-4e07-80ce-25a59e985e1d&biz=Dallas,-Texas-Personal-Injury-Attorneys&niche=Personal Injury Attorneys&template=court&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=fbf4f0ab-4250-4187-bc51-380f73682700&biz=Dallas,-Texas-Personal-Injury-Attorneys&niche=Personal Injury Attorneys&template=court&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
