@@ -118,13 +118,13 @@ html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:#ffffff;color:#111110;overflow-x:hidden;}
 
 :root{
-  --white:   #0A0A0A;
-  --off:     #1A1A1A;
+  --white:   #0F0F0F;
+  --off:     #1F1F1F;
   --ink:     #111110;
   --ink2:    #1c1c1a;
   --ink3:    #242422;
-  --amber:   #FFBF00;
-  --amber-l: #FFD700;
+  --amber:   #B0C4DE;
+  --amber-l: #D3D3D3;
   --muted-l: rgba(17,17,16,0.45);
   --muted-d: rgba(245,243,239,0.45);
   --border-l:rgba(17,17,16,0.08);
@@ -846,12 +846,12 @@ document.querySelectorAll('img').forEach(img=>{
   'use strict';
 
   // ── Config injected by generate_landing.py ──
-  const LEAD_ID      = '03d24dac-29fa-4227-99a1-51bd089b476b';
+  const LEAD_ID      = 'ebab998d-f76e-4df3-9226-c3d10c2e6688';
   const BIZ_NAME     = 'Palo Alto, California Luxury Home Remodeling';
   const NICHE        = 'Luxury Home Remodeling';
   const TEMPLATE     = 'phantom';
-  const PALETTE      = 'Amber Onyx';
-  const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
+  const PALETTE      = 'Steel Pearl';
+  const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
   // ── Session dedup — don't double-fire on refresh ──
@@ -1001,7 +1001,7 @@ document.querySelectorAll('img').forEach(img=>{
  */
 (function() {
   const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
-  const LEAD_ID    = '03d24dac-29fa-4227-99a1-51bd089b476b';
+  const LEAD_ID    = 'ebab998d-f76e-4df3-9226-c3d10c2e6688';
   const BIZ_SLUG   = encodeURIComponent('Palo Alto, California Luxury Home Remodeling'.replace(/\s+/g, '-').toLowerCase());
   const NICHE_SLUG = encodeURIComponent('Luxury Home Remodeling');
 
@@ -1033,7 +1033,7 @@ document.querySelectorAll('img').forEach(img=>{
 </script>
     <script>
     (function() {
-        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=03d24dac-29fa-4227-99a1-51bd089b476b&biz=Palo-Alto,-California-Luxury-Home-Remodeling&niche=Luxury Home Remodeling&template=phantom&ls=pending&ps=pending";
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=ebab998d-f76e-4df3-9226-c3d10c2e6688&biz=Palo-Alto,-California-Luxury-Home-Remodeling&niche=Luxury Home Remodeling&template=phantom&ls=pending&ps=pending";
         document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
             if (el.tagName === 'A') el.href = claimUrl;
             else el.onclick = () => window.location.href = claimUrl;
