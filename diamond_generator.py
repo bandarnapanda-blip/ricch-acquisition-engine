@@ -152,4 +152,7 @@ def generate_diamond_report(lead_id):
         f.write(html)
         
     logger.info(f"Diamond Report saved: {filepath}")
-    return filepath
+    return {
+        "filepath": filepath,
+        "annual_leakage": f"{annual_leak:,.0f}"
+    }

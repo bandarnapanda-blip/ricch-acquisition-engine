@@ -25,8 +25,14 @@ def send_follow_up_email(lead: dict, follow_up_number: int) -> bool:
     niche = lead.get("niche") or "industry"
     preview_url = lead.get("demo_link") or "#"
 
+    diamond_url = lead.get("metadata", {}).get("diamond_audit_url")
+    annual_leakage = lead.get("metadata", {}).get("annual_leakage", "$495,000")
+
     templates = {
         1: {
+            "subject": f"Your Custom Revenue Audit: {biz_name}",
+            "body": f"Hi {first_name},\n\nI just finished a deep audit of {biz_name} and found a significant annual revenue leak: ${annual_leakage}/yr.\n\nYou can see the full breakdown here: {diamond_url}\n\nLet me know if you want to recover this.\n\n— Khalil\nRI2CH Agency"
+        } if diamond_url and follow_up_number == 1 else {
             "subject": "Did you get a chance to see your preview?",
             "body": f"Hi {first_name},\n\nJust checking in — I sent over a custom preview of your new website a couple days ago.\n\nHere it is again: {preview_url}\n\nLet me know what you think.\n\n— Khalil\nRI2CH Agency"
         },

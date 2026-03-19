@@ -1,4 +1,5 @@
 import time
+import os
 import logging
 from database import db
 from intelligence import compute_deal_score, LeadSignals
@@ -55,13 +56,18 @@ def process_behavioral_signals():
                 
                 # [PHASE 2] Automated Diamond Trigger
                 logger.info(f"💎 TRIGGERING Diamond Audit for {lid}...")
-                report_path = generate_diamond_report(lid)
-                if report_path:
-                    db.update_lead(lid, {"metadata->>diamond_audit_path": report_path})
-                    # Log activity
-                    db._session.post(f"{db.url}/rest/v1/activity_logs", headers=db.headers, json={
-                        "lead_id": lid,
-                        "message": f"Diamond Audit generated automatically after {behavioral['time_on_site']}s engagement."
+                report_data = generate_diamond_report(lid)
+                if report_data:
+                    # Construct live URL
+                    filename = os.path.basename(report_data["filepath"])
+                    audit_url = f"https://bandarnapanda-blip.github.io/ricch-acquisition-engine/diamond_reports/{filename}"
+                    
+                    db.update_lead(lid, {
+                        "metadata": {
+                            "diamond_audit_url": audit_url,
+                            "diamond_audit_path": report_data["filepath"],
+                            "annual_leakage": report_data["annual_leakage"]
+                        }
                     })
         else:
             # Update score regardless if engaged at all
