@@ -415,7 +415,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
   const NICHE        = 'Dental Implant Specialists';
   const TEMPLATE     = 'sterling';
   const PALETTE      = 'Warm Rose';
-  const TRACKING_URL = 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view';
+  const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
   const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
 
   // ── Session dedup — don't double-fire on refresh ──
@@ -433,7 +433,7 @@ document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',func
 
   // ── Core ping function ──
   function ping(event, extra = {}) {
-    if (!TRACKING_URL || TRACKING_URL === 'https://tmujezpueegutjlfzipw.supabase.co/functions/v1/track-view') return;
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
 
     // Dedup scroll events
     if (firedEvents.has(event)) return;
