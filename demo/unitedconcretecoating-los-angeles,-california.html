@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<!--
+  RI2CH AGENCY OS — QUANTUM V15.0 | TEMPLATE: IVORY
+  ARCHETYPE: Interior Design · Home Renovation
+  BRIEFING: See BRIEFING.md for full pipeline documentation.
+
+  RODY: Editorial warm white. Playfair Display serif. Terracotta accent.
+  Feels like Architectural Digest. NO aggression. Aspirational.
+  Layout: White hero (image above, text below) → Ghost text portfolio grid →
+  Dark editorial split → Techno Concierge [01] process → Collage with rotated
+  "Details" text → Profile → Testimonial → Dark warm CTA.
+
+  KAEL FALLBACK POOL (interior/renovation):
+  Hero: https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85
+        https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1800&q=85
+        https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1800&q=85
+        https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1800&q=85
+        https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=1800&q=85
+  Kitchen: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=85
+           https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&q=85
+  Bedroom: https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=85
+           https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=85
+           https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=85
+  Detail:  https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=85
+  Team:    https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=85
+           https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=85
+
+  SOREN: Soft urgency. No leakage alert — use "limited project slots" instead.
+  Countdown styled with serif dots (·) not colons. Feels editorial not digital.
+  LEO: Write like a creative director. "Investment" not "price". Sell the feeling.
+  VEX: 4+ images, interior themed, pointer-events:none, countdown, city 3x.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Unitedconcretecoating — Concrete Garage Coatings Studio · Los Angeles, California, </title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:none!important;cursor:default!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:#faf9f6;color:#1c1a17;overflow-x:hidden;}
+:root{
+  --warm:#F5F7F2;--warm2:#FFFFFF;--warm3:#e8e2d8;--sand:#d4c9b0;
+  --terra:#8A9A5B;--terra-l:#A9BA9D;--terra-d:rgba(184,98,42,0.12);
+  --dark:#1c1a17;--dark2:#2a2520;--dark3:#35302a;
+  --ink:#2D201A;--muted:rgba(28,26,23,0.5);--muted-l:rgba(28,26,23,0.35);
+  --border:rgba(28,26,23,0.08);--border-d:rgba(250,249,246,0.1);
+}
+.serif{font-family:'Playfair Display',Georgia,serif;}
+.urgency-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--dark);color:rgba(250,249,246,0.7);text-align:center;padding:0.5rem 1rem;font-size:0.65rem;font-weight:400;letter-spacing:0.16em;}
+nav{position:fixed;top:32px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:68px;background:rgba(250,249,246,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--ink);letter-spacing:0.02em;}
+.nav-links{display:flex;gap:2.5rem;align-items:center;}
+.nav-links span{font-size:0.75rem;font-weight:400;color:var(--muted);letter-spacing:0.06em;}
+.nav-cta{font-size:0.72rem;font-weight:600;color:#fff;background:var(--dark);padding:0.6rem 1.5rem;border-radius:2px;letter-spacing:0.08em;}
+
+/* HERO */
+.hero{padding-top:100px;}
+.hero-img-wrap{position:relative;width:100%;height:80vh;overflow:hidden;}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(0.92) saturate(0.9);transform:scale(1.03);animation:heroZoom 14s ease-out forwards;}
+@keyframes heroZoom{to{transform:scale(1);}}
+.hero-avail{position:absolute;top:2rem;right:2rem;z-index:2;background:rgba(250,249,246,0.92);border:1px solid var(--border);backdrop-filter:blur(12px);border-radius:100px;padding:0.6rem 1.2rem;display:flex;align-items:center;gap:0.6rem;animation:fadeIn 1s ease 0.6s both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:#4caf50;box-shadow:0 0 8px #4caf50;flex-shrink:0;}
+.avail-text{font-size:0.7rem;font-weight:600;color:var(--ink);letter-spacing:0.06em;}
+.hero-text-block{background:var(--warm);padding:3.5rem 3rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;border-bottom:1px solid var(--border);animation:fadeUp 1s ease 0.3s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.hero-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:1.2rem;}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);font-weight:400;line-height:1.08;letter-spacing:-0.02em;color:var(--ink);}
+.hero-h1 em{font-style:italic;color:var(--terra);}
+.hero-right{display:flex;flex-direction:column;justify-content:flex-end;gap:1.5rem;}
+.hero-sub{font-size:1rem;font-weight:300;line-height:1.8;color:var(--muted);max-width:380px;}
+.hero-cta-row{display:flex;gap:1rem;align-items:center;}
+.btn-dark{display:inline-flex;align-items:center;gap:0.6rem;background:var(--dark);color:#fff;font-size:0.78rem;font-weight:500;padding:0.85rem 2rem;border-radius:2px;letter-spacing:0.04em;}
+.btn-outline{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border);color:var(--muted);font-size:0.78rem;font-weight:400;padding:0.85rem 1.8rem;border-radius:2px;}
+
+/* GHOST TEXT SECTION */
+.ghost-section{position:relative;background:var(--warm2);padding:6rem 3rem;overflow:hidden;}
+.ghost-word{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:clamp(10rem,22vw,22rem);font-weight:700;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(28,26,23,0.07);white-space:nowrap;pointer-events:none;letter-spacing:-0.04em;z-index:0;user-select:none;}
+.ghost-content{position:relative;z-index:1;}
+.ghost-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;}
+.ghost-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;color:var(--ink);letter-spacing:-0.02em;line-height:1.2;}
+.ghost-title em{font-style:italic;color:var(--terra);}
+.ghost-see-all{font-size:0.75rem;font-weight:500;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:2px;}
+.ghost-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;gap:2px;}
+.ghost-img{position:relative;overflow:hidden;background:var(--warm3);}
+.ghost-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.88) saturate(0.9);transition:transform 0.6s ease,filter 0.4s;}
+.ghost-img:hover img{transform:scale(1.04);filter:brightness(0.95) saturate(1);}
+.ghost-img.tall{grid-row:span 2;height:500px;}
+.ghost-img.short{height:240px;}
+.ghost-img-label{position:absolute;bottom:1rem;left:1.2rem;font-size:0.62rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(250,249,246,0.8);}
+
+/* DARK EDITORIAL SPLIT */
+.editorial-section{display:grid;grid-template-columns:1fr 1fr;min-height:600px;}
+.ed-left{position:relative;background:var(--dark2);overflow:hidden;}
+.ed-left img{width:100%;height:100%;object-fit:cover;filter:brightness(0.6) saturate(0.75);transition:transform 6s ease;}
+.ed-left:hover img{transform:scale(1.03);}
+.ed-left-ov{position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,var(--dark) 100%);}
+.ed-category{position:absolute;right:2rem;top:50%;transform:translateY(-50%) rotate(90deg);font-size:0.6rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:rgba(250,249,246,0.35);white-space:nowrap;}
+.ed-right{background:var(--dark);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;}
+.ed-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+.ed-eyebrow::before{content:'';width:16px;height:1px;background:var(--terra);opacity:0.6;}
+.ed-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;font-style:italic;color:#faf9f6;line-height:1.2;margin-bottom:2rem;letter-spacing:-0.01em;}
+.service-list{display:flex;flex-direction:column;gap:0;}
+.sitem{display:flex;align-items:flex-start;gap:1.5rem;padding:1.2rem 0;border-bottom:1px solid var(--border-d);}
+.sitem:last-child{border-bottom:none;}
+.sitem-num{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--terra);opacity:0.6;flex-shrink:0;margin-top:1px;}
+.sitem-title{font-size:0.95rem;font-weight:600;color:#faf9f6;margin-bottom:0.3rem;}
+.sitem-desc{font-size:0.82rem;line-height:1.7;color:rgba(250,249,246,0.45);font-weight:300;}
+
+/* PROCESS */
+.process-section{background:var(--warm2);padding:6rem 3rem;}
+.proc-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem;}
+.proc-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:0.8rem;}
+.proc-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;color:var(--ink);letter-spacing:-0.02em;line-height:1.2;}
+.proc-title em{font-style:italic;color:var(--terra);}
+.proc-desc{font-size:0.9rem;line-height:1.8;color:var(--muted);font-weight:300;align-self:end;}
+.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.pstep{background:var(--warm);padding:2.5rem 2rem;transition:background 0.25s;}
+.pstep:hover{background:#fff;}
+.pstep-bracket{font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;color:var(--terra);opacity:0.7;margin-bottom:1.5rem;}
+.pstep-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:0.8rem;letter-spacing:-0.01em;}
+.pstep-desc{font-size:0.84rem;line-height:1.75;color:var(--muted);font-weight:300;}
+
+/* COLLAGE */
+.collage-section{background:var(--warm);padding:6rem 3rem;position:relative;overflow:hidden;}
+.collage-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.collage-left{position:relative;}
+.collage-rotated{position:absolute;right:-2rem;top:50%;transform:translateY(-50%) rotate(90deg);font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(28,26,23,0.1);white-space:nowrap;letter-spacing:0.1em;pointer-events:none;}
+.collage-imgs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:240px 200px;gap:2px;}
+.cimg{overflow:hidden;background:var(--warm3);}
+.cimg img{width:100%;height:100%;object-fit:cover;filter:brightness(0.88) saturate(0.9);transition:transform 0.5s ease;}
+.cimg:hover img{transform:scale(1.04);}
+.cimg.span2{grid-row:span 2;}
+.collage-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:1rem;}
+.collage-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.02em;}
+.collage-title em{font-style:italic;color:var(--terra);}
+.collage-text{font-size:0.9rem;line-height:1.85;color:var(--muted);font-weight:300;margin-bottom:1.2rem;}
+.stat-row{display:flex;gap:2.5rem;margin-top:2rem;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:600;color:var(--terra);line-height:1;letter-spacing:-0.02em;}
+.stat-label{font-size:0.68rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem;}
+
+/* PROFILE */
+.profile-section{background:var(--warm2);padding:6rem 3rem;display:grid;grid-template-columns:380px 1fr;gap:6rem;align-items:center;border-top:1px solid var(--border);}
+.prof-img-wrap{position:relative;}
+.prof-img-wrap::before{content:'';position:absolute;top:-10px;right:-10px;bottom:10px;left:10px;background:var(--warm3);border-radius:2px;z-index:0;}
+.prof-img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;border-radius:2px;position:relative;z-index:1;filter:brightness(0.88) saturate(0.85);}
+.prof-badge{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;background:rgba(250,249,246,0.95);border:1px solid var(--border);border-radius:4px;padding:1rem 1.6rem;text-align:center;white-space:nowrap;}
+.prof-badge-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--ink);}
+.prof-badge-title{font-size:0.62rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
+.prof-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:1rem;}
+.prof-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.02em;}
+.prof-title em{font-style:italic;color:var(--terra);}
+.prof-quote{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;font-weight:400;line-height:1.6;color:var(--terra);opacity:0.8;padding-left:1.2rem;border-left:2px solid rgba(184,98,42,0.3);margin-bottom:1.5rem;}
+.prof-text{font-size:0.88rem;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:0.8rem;}
+.creds{margin-top:2rem;display:flex;flex-direction:column;}
+.cred-row{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border);}
+.cred-row:first-child{border-top:1px solid var(--border);}
+.cred-dot{width:4px;height:4px;border-radius:50%;background:var(--terra);flex-shrink:0;}
+.cred-text{font-size:0.82rem;color:var(--ink);font-weight:400;opacity:0.75;}
+
+/* TESTIMONIAL */
+.test-section{background:var(--warm);border-top:1px solid var(--border);padding:5rem 3rem;text-align:center;}
+.test-ornament{font-family:'Playfair Display',serif;font-size:5rem;font-weight:700;font-style:italic;color:var(--terra);opacity:0.2;line-height:0.6;margin-bottom:1.5rem;}
+.test-text{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-style:italic;font-weight:400;line-height:1.6;color:var(--ink);max-width:720px;margin:0 auto 1.8rem;}
+.test-author{font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--terra);opacity:0.8;}
+
+/* CTA */
+.cta-section{background:var(--warm2);padding:5rem 3rem;}
+.cta-inner{background:var(--dark);border-radius:4px;padding:5rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.cta-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,98,42,0.05) 0%,transparent 50%,rgba(184,98,42,0.03) 100%);pointer-events:none;}
+.cta-inner::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--terra),transparent);}
+.cd-wrap{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2.5rem;position:relative;z-index:1;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:400;color:var(--terra-l);line-height:1;display:block;min-width:60px;}
+.cd-label{font-size:0.56rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(250,249,246,0.3);margin-top:0.3rem;}
+.cd-sep{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:var(--terra);opacity:0.3;line-height:1.2;align-self:flex-start;margin-top:0.2rem;}
+.cta-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(184,98,42,0.12);border:1px solid rgba(184,98,42,0.25);border-radius:100px;padding:0.35rem 1rem;font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--terra-l);margin-bottom:1.8rem;position:relative;z-index:1;}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:400;font-style:italic;line-height:1.15;color:#faf9f6;margin-bottom:1.2rem;letter-spacing:-0.01em;position:relative;z-index:1;}
+.cta-title em{font-style:normal;color:var(--terra-l);}
+.cta-sub{font-size:0.92rem;line-height:1.8;color:rgba(250,249,246,0.5);font-weight:300;max-width:520px;margin:0 auto 2.5rem;position:relative;z-index:1;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.7rem;background:#faf9f6;color:var(--ink);font-size:0.8rem;font-weight:600;padding:1rem 2.8rem;border-radius:2px;letter-spacing:0.06em;position:relative;z-index:1;}
+.cta-note{margin-top:1.2rem;font-size:0.68rem;letter-spacing:0.1em;color:rgba(250,249,246,0.25);position:relative;z-index:1;}
+footer{background:var(--dark);border-top:1px solid rgba(250,249,246,0.06);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:rgba(250,249,246,0.4);}
+.f-tag{font-family:'Playfair Display',serif;font-size:0.85rem;font-style:italic;color:rgba(250,249,246,0.2);}
+.f-note{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(250,249,246,0.15);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.85s ease,transform 0.85s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:960px){
+  nav{padding:0 1.5rem;}
+  .nav-links{display:none;}
+  .hero-text-block{grid-template-columns:1fr;gap:2rem;padding:2.5rem 1.5rem;}
+  .ghost-section,.process-section,.collage-section,.profile-section,.test-section,.cta-section{padding:4rem 1.5rem;}
+  .ghost-grid{grid-template-columns:1fr;gap:2px;}
+  .ghost-img.tall{height:300px;grid-row:span 1;}
+  .ghost-img.short{height:220px;}
+  .editorial-section{grid-template-columns:1fr;}
+  .ed-left{height:300px;}
+  .ed-right{padding:3rem 1.5rem;}
+  .proc-header{grid-template-columns:1fr;gap:1.5rem;}
+  .proc-grid{grid-template-columns:1fr;}
+  .collage-layout{grid-template-columns:1fr;gap:3rem;}
+  .collage-rotated{display:none;}
+  .profile-section{grid-template-columns:1fr;gap:3rem;}
+  .cta-inner{padding:3rem 1.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+<div class="urgency-bar">◆ Exclusive Design Preview · Reserved for Unitedconcretecoating · Los Angeles, California,  · 48 Hours</div>
+<nav>
+  <div class="nav-logo">Unitedconcretecoating</div>
+  <div class="nav-links"><span>Services</span><span>Projects</span><span>The Team</span><span>Contact</span></div>
+  <div class="nav-cta">Claim This Site</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img-wrap">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1590725121839-892b458a74fe?w=1800&q=85" alt="Unitedconcretecoating — Los Angeles, California Concrete Garage Coatings" onerror="this.src='https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85'"/>
+    <div class="hero-avail"><div class="avail-dot"></div><div class="avail-text">Accepting Los Angeles, California projects now</div></div>
+  </div>
+  <div class="hero-text-block">
+    <div>
+      <div class="hero-eyebrow">Los Angeles, California,  · Concrete Garage Coatings · Est. 2012</div>
+      <h1 class="hero-h1">Built To<br/><em>Last.</em></h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-sub">Unitedconcretecoating has been transforming Los Angeles, California homes since 2012. Your current website doesn't reflect the quality of the spaces you create. We've already fixed that.</p>
+      <div class="hero-cta-row">
+        <div class="btn-dark">Claim This Site →</div>
+        <div class="btn-outline">View Portfolio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GHOST TEXT PORTFOLIO GRID -->
+<section class="ghost-section reveal">
+  <div class="ghost-word">Design</div>
+  <div class="ghost-content">
+    <div class="ghost-header">
+      <div>
+        <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:0.8rem;">Projects</div>
+        <h2 class="ghost-title">Selected<br/><em>Work</em></h2>
+      </div>
+      <div class="ghost-see-all">View All Projects →</div>
+    </div>
+    <div class="ghost-grid">
+      <div class="ghost-img tall">
+        <img src="https://images.unsplash.com/photo-1590725121839-892b458a74fe?w=1800&q=85" alt="Authority Redesign — Los Angeles, California" onerror="this.src='https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=85'"/>
+        <div class="ghost-img-label">Authority Redesign</div>
+      </div>
+      <div class="ghost-img short">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Lead Siphon Systems — Los Angeles, California" onerror="this.src='https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=85'"/>
+        <div class="ghost-img-label">Lead Siphon Systems</div>
+      </div>
+      <div class="ghost-img short">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=85" alt="Rapid Deployment — Los Angeles, California" onerror="this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85'"/>
+        <div class="ghost-img-label">Rapid Deployment</div>
+      </div>
+      <div class="ghost-img short">
+        <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85" alt="Studio" onerror="this.src='https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=85'"/>
+        <div class="ghost-img-label">Studio</div>
+      </div>
+      <div class="ghost-img short">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Los Angeles, California" onerror="this.src='https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=800&q=85'"/>
+        <div class="ghost-img-label">Los Angeles, California</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DARK EDITORIAL SPLIT -->
+<div class="editorial-section reveal">
+  <div class="ed-left">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Unitedconcretecoating Interior" onerror="this.src='https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=900&q=85'"/>
+    <div class="ed-left-ov"></div>
+    <div class="ed-category">Interior · Renovation · Design</div>
+  </div>
+  <div class="ed-right">
+    <div class="ed-eyebrow">Services</div>
+    <h2 class="ed-title">Everything your<br/>home deserves</h2>
+    <div class="service-list">
+      <div class="sitem"><div class="sitem-num">I</div><div><div class="sitem-title">Authority Redesign</div><div class="sitem-desc">Replacing weak legacy sites with high-authority engines that demand instant trust.</div></div></div>
+      <div class="sitem"><div class="sitem-num">II</div><div><div class="sitem-title">Lead Siphon Systems</div><div class="sitem-desc">Sophisticated funnel strategies that capture high-intent leads before they call a competitor.</div></div></div>
+      <div class="sitem"><div class="sitem-num">III</div><div><div class="sitem-title">Rapid Deployment</div><div class="sitem-desc">Launch your brand into new territories in record time with our Quantum infrastructure.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS — Techno Concierge [01] ref -->
+<section class="process-section reveal">
+  <div class="proc-header">
+    <div><div class="proc-eyebrow">How It Works</div><h2 class="proc-title">From vision<br/>to <em>reality</em></h2></div>
+    <p class="proc-desc">Every Unitedconcretecoating project begins with your vision and ends with a space you'll never want to leave.</p>
+  </div>
+  <div class="proc-grid">
+    <div class="pstep"><div class="pstep-bracket">[01]</div><div class="pstep-title">Discovery Consultation</div><div class="pstep-desc">We start by understanding how you live, what you love, and how your space should make you feel — not just what it should look like.</div></div>
+    <div class="pstep"><div class="pstep-bracket">[02]</div><div class="pstep-title">Concept &amp; Design</div><div class="pstep-desc">Our team creates a full design concept — materials, finishes, furniture, and flow — so you can see the future of your space before a single nail is driven.</div></div>
+    <div class="pstep"><div class="pstep-bracket">[03]</div><div class="pstep-title">Delivery &amp; Reveal</div><div class="pstep-desc">We handle every detail of execution and present your transformed space. The only thing left is to move in and love it.</div></div>
+  </div>
+</section>
+
+<!-- COLLAGE — Luxury Homes "Details" rotated text ref -->
+<section class="collage-section reveal">
+  <div class="collage-layout">
+    <div class="collage-left">
+      <div class="collage-rotated">Details</div>
+      <div class="collage-imgs">
+        <div class="cimg span2"><img src="https://images.unsplash.com/photo-1590725121839-892b458a74fe?w=1800&q=85" alt="Portfolio" onerror="this.src='https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=85'"/></div>
+        <div class="cimg"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=85" alt="Detail" onerror="this.src='https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=85'"/></div>
+        <div class="cimg"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85" alt="Detail" onerror="this.src='https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&q=85'"/></div>
+      </div>
+    </div>
+    <div>
+      <div class="collage-eyebrow">About The Studio</div>
+      <h2 class="collage-title">12 years crafting<br/><em>Los Angeles, California's finest spaces</em></h2>
+      <p class="collage-text">Unitedconcretecoating has been redefining what home means to Los Angeles, California families since 2012. Every project is a collaboration — your story told through space, light, and material.</p>
+      <p class="collage-text">We believe a well-designed space doesn't just look beautiful. It changes how you feel the moment you walk in.</p>
+      <div class="stat-row">
+        <div><div class="stat-num">15yr</div><div class="stat-label">Trade Experience</div></div>
+        <div><div class="stat-num">500+</div><div class="stat-label">Projects Delivered</div></div>
+        <div><div class="stat-num">12</div><div class="stat-label">Years in Los Angeles, California</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="profile-section reveal">
+  <div class="prof-img-wrap">
+    <img class="prof-img" src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=85" alt="Rody" onerror="this.src='https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=85'"/>
+    <div class="prof-badge"><div class="prof-badge-name">Rody</div><div class="prof-badge-title">Lead Field Engineer</div></div>
+  </div>
+  <div>
+    <div class="prof-eyebrow">Lead Designer</div>
+    <h2 class="prof-title">Designing spaces<br/><em>you'll never want to leave</em></h2>
+    <p class="prof-quote">"Every room has a soul. My job is to find it."</p>
+    <p class="prof-text">Rody founded Unitedconcretecoating in Los Angeles, California in 2012 with a simple belief: great design should feel personal, not generic.</p>
+    <p class="prof-text">With 12 years of Concrete Garage Coatings experience across Los Angeles, California, Rody has become the designer Los Angeles, California's most discerning homeowners trust.</p>
+    <div class="creds">
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Board Certified</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Top 100 National</div></div>
+      <div class="cred-row"><div class="cred-dot"></div><div class="cred-text">Elite Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="test-section reveal">
+  <div class="test-ornament">"</div>
+  <blockquote class="test-text">Our phone hadn't rang in weeks. After the V15 deploy, we're booked out 3 months.</blockquote>
+  <div class="test-author">— John Miller, Los Angeles, California</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cd-wrap">
+      <div class="cd-unit"><span class="cd-num" id="cdh">47</span><div class="cd-label">Hours</div></div>
+      <div class="cd-sep">·</div>
+      <div class="cd-unit"><span class="cd-num" id="cdm">59</span><div class="cd-label">Minutes</div></div>
+      <div class="cd-sep">·</div>
+      <div class="cd-unit"><span class="cd-num" id="cds">59</span><div class="cd-label">Seconds</div></div>
+    </div>
+    <div class="cta-badge">◆ Exclusive Preview · 48 Hours Only</div>
+    <h2 class="cta-title">Your new site is ready.<br/><em>Claim it</em> today.</h2>
+    <p class="cta-sub">This site was crafted exclusively for <strong style="color:rgba(250,249,246,0.8);font-weight:400;">Unitedconcretecoating</strong> in Los Angeles, California. Reply to our email to claim it — live on your domain within 24 hours.</p>
+    <div class="cta-btn">🔒 Claim This Site</div>
+    <div class="cta-note">Exclusive to Unitedconcretecoating · Not publicly listed · Expires in 48 hours</div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">Unitedconcretecoating</div>
+  <div class="f-tag">"Built to Last. Engineered for Growth."</div>
+  <div class="f-note">Los Angeles, California,  · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+(function(){
+  const DURATION=48*60*60;
+  const key='ri2ch_ivory_'+('Unitedconcretecoating'.replace(/\s/g,'_'));
+  let end=sessionStorage.getItem(key);
+  if(!end){end=Date.now()+DURATION*1000;sessionStorage.setItem(key,end);}
+  function tick(){
+    const diff=Math.max(0,Math.floor((end-Date.now())/1000));
+    document.getElementById('cdh').textContent=String(Math.floor(diff/3600)).padStart(2,'0');
+    document.getElementById('cdm').textContent=String(Math.floor((diff%3600)/60)).padStart(2,'0');
+    document.getElementById('cds').textContent=String(diff%60).padStart(2,'0');
+    if(diff>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.addEventListener('click',e=>e.preventDefault(),true);
+document.addEventListener('submit',e=>e.preventDefault(),true);
+document.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code))e.preventDefault();},true);
+document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',function(){console.warn('[VEX QA] BROKEN IMAGE:',this.src);});});
+</script>
+<script>(function() {
+  'use strict';
+
+  // ── Config injected by generate_landing.py ──
+  const LEAD_ID      = '93082658-eafe-49b3-83ed-942ef5ae1a80';
+  const BIZ_NAME     = 'Unitedconcretecoating';
+  const NICHE        = 'Concrete Garage Coatings';
+  const TEMPLATE     = 'ivory';
+  const PALETTE      = 'Sage Linen';
+  const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
+  const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
+
+  // ── Session dedup — don't double-fire on refresh ──
+  const SESSION_ID = (function() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  })();
+
+  const startTime = Date.now();
+  const firedEvents = new Set();
+
+  // ── Core ping function ──
+  function ping(event, extra = {}) {
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
+
+    // Dedup scroll events
+    if (firedEvents.has(event)) return;
+    if (event !== 'time_on_site') firedEvents.add(event);
+
+    const payload = {
+      lead_id:      LEAD_ID,
+      session_id:   SESSION_ID,
+      business_name:BIZ_NAME,
+      niche:        NICHE,
+      template:     TEMPLATE,
+      palette:      PALETTE,
+      event:        event,
+      time_on_site: Math.round((Date.now() - startTime) / 1000),
+      timestamp:    new Date().toISOString(),
+      referrer:     document.referrer || 'direct',
+      user_agent:   navigator.userAgent.substring(0, 120),
+      ...extra
+    };
+
+    // Use sendBeacon for reliability (works even on page close)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+    } else {
+      fetch(TRACKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    }
+  }
+
+  // ── 1. Fire immediately on load ──
+  ping('site_opened');
+
+  // ── 2. Scroll depth tracking ──
+  let scrollThresholds = { 25: false, 50: false, 75: false };
+
+  function checkScrollDepth() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    const pct      = Math.round((scrolled / total) * 100);
+
+    if (!scrollThresholds[25] && pct >= 25) {
+      scrollThresholds[25] = true;
+      ping('scroll_25', { scroll_pct: 25 });
+    }
+    if (!scrollThresholds[50] && pct >= 50) {
+      scrollThresholds[50] = true;
+      ping('scroll_50', { scroll_pct: 50 });
+    }
+    if (!scrollThresholds[75] && pct >= 75) {
+      scrollThresholds[75] = true;
+      ping('scroll_75', { scroll_pct: 75 });
+    }
+  }
+
+  // Throttled scroll listener
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(checkScrollDepth, 150);
+  }, { passive: true });
+
+  // ── 3. CTA section visibility tracking ──
+  // Watches for the .cta-section or .cta-inner element
+  let ctaVisibleTimer = null;
+  let ctaReachedFired = false;
+
+  function observeCTA() {
+    const ctaEl = document.querySelector('.cta-section, .cta-inner');
+    if (!ctaEl) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // CTA is visible
+          if (!ctaReachedFired) {
+            ctaReachedFired = true;
+            ping('cta_reached');
+          }
+          // Start 3-second timer for high-intent signal
+          if (!ctaVisibleTimer) {
+            ctaVisibleTimer = setTimeout(function() {
+              ping('cta_visible_3s', { high_intent: true });
+            }, 3000);
+          }
+        } else {
+          // CTA scrolled out of view — cancel timer
+          if (ctaVisibleTimer) {
+            clearTimeout(ctaVisibleTimer);
+            ctaVisibleTimer = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of CTA must be visible
+
+    observer.observe(ctaEl);
+  }
+
+  // ── 4. Time on site — fires every 30s ──
+  setInterval(function() {
+    ping('time_on_site', {
+      seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  }, 30000);
+
+  // ── 5. Page exit signal ──
+  window.addEventListener('beforeunload', function() {
+    ping('site_exited', {
+      total_seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  });
+
+  // ── Init CTA observer after DOM ready ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCTA);
+  } else {
+    observeCTA();
+  }
+
+})();
+
+/**
+ * ============================================================
+ * EXPIRY REDIRECT
+ * ============================================================
+ */
+(function() {
+  const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
+  const LEAD_ID    = '93082658-eafe-49b3-83ed-942ef5ae1a80';
+  const BIZ_SLUG   = encodeURIComponent('Unitedconcretecoating'.replace(/\s+/g, '-').toLowerCase());
+  const NICHE_SLUG = encodeURIComponent('Concrete Garage Coatings');
+
+  if (!EXPIRY_URL || EXPIRY_URL === 'https://ri2ch.agency/expired.html') return;
+
+  const key = 'ri2ch_timer_' + LEAD_ID;
+  const DURATION = 48 * 60 * 60 * 1000; // 48 hours in ms
+
+  let end = parseInt(sessionStorage.getItem(key) || '0', 10);
+  if (!end || end < Date.now()) {
+    end = Date.now() + DURATION;
+    sessionStorage.setItem(key, end.toString());
+  }
+
+  function checkExpiry() {
+    const remaining = end - Date.now();
+    if (remaining <= 0) {
+      // Build expiry URL with context params
+      const url = `${EXPIRY_URL}?lead_id=${LEAD_ID}&biz=${BIZ_SLUG}&niche=${NICHE_SLUG}`;
+      window.location.href = url;
+    }
+  }
+
+  // Check every minute
+  setInterval(checkExpiry, 60000);
+  // Also check immediately on load
+  checkExpiry();
+})();
+</script>
+    <script>
+    (function() {
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=93082658-eafe-49b3-83ed-942ef5ae1a80&biz=Unitedconcretecoating&niche=Concrete Garage Coatings&template=ivory&ls=pending&ps=pending";
+        document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
+            if (el.tagName === 'A') el.href = claimUrl;
+            else el.onclick = () => window.location.href = claimUrl;
+        });
+    })();
+    </script>
+    
+</body>
+</html>
