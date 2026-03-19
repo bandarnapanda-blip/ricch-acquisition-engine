@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  RI2CH AGENCY OS — QUANTUM V15.0 | TEMPLATE: STERLING
+  ARCHETYPE: Medical (Dental · Orthodontics · Medical Clinics · Health)
+  BRIEFING: See BRIEFING.md for full pipeline documentation.
+================================================================================
+  RODY: Light clinical hero (NOT dark like COURT). Armodent teal palette.
+  Serif: DM Serif Display. Sans: DM Sans.
+  Flow: Light split hero → teal stats → service grid → why us → process → profile → CTA
+
+  KAEL FALLBACK POOL (15 medical/dental Unsplash URLs):
+  Hero: https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1800&q=85
+        https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=1800&q=85
+        https://images.unsplash.com/photo-1588776814546-1ffbb172d936?w=1800&q=85
+        https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1800&q=85
+  Team: https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=85
+        https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=800&q=85
+        https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=85
+  Clinic: https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1200&q=85
+          https://images.unsplash.com/photo-1598256989014-78b79b40f02c?w=1200&q=85
+          https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1200&q=85
+          https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=1200&q=85
+          https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=85
+          https://images.unsplash.com/photo-1530026405186-ed1f139313f3?w=1200&q=85
+          https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=85
+          https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=1200&q=85
+
+  SOREN: Medical = TRUST not fear. Use "patients turned away" not "revenue leakage."
+  SOREN: Countdown + "Limited slots this month" soft FOMO.
+  VEX: Flag if hero background is dark — STERLING must be LIGHT.
+  VEX: 4+ images, all clinical/bright. pointer-events:none. CTA visible.
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Seattle Dental Implant Specialists — Dental Implant Specialists in Seattle, </title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+a,button,input,select,textarea,[role="button"],[onclick],label{pointer-events:none!important;cursor:default!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:#f8f6f2;color:#1a2024;overflow-x:hidden;}
+:root{
+  --teal:#5BBFB5;--teal-mid:#5BBFB5;--teal-soft:#82CEC5;
+  --teal-pale:#F4F7F6;--teal-xpale:#FFFFFF;
+  --cream:#F4F7F6;--white:#FFFFFF;--ink:#1A1A1A;
+  --ink-soft:rgba(26,32,36,0.55);
+  --border:rgba(13,110,110,0.12);--border-s:rgba(26,32,36,0.08);
+}
+.urgency-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--teal);color:#fff;text-align:center;padding:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;}
+nav{position:fixed;top:32px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:68px;background:rgba(248,246,242,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-s);}
+.nl{display:flex;align-items:center;gap:0.8rem;}
+.ni{width:36px;height:36px;background:var(--teal);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.ni svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;}
+.nlogo{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);}
+.nsub{font-size:0.58rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);opacity:0.7;}
+.nav-links{display:flex;gap:2.5rem;}.nav-links span{font-size:0.78rem;font-weight:500;color:var(--ink-soft);}
+.nav-cta{font-size:0.72rem;font-weight:600;color:#fff;background:var(--teal);padding:0.65rem 1.6rem;border-radius:100px;}
+
+/* HERO */
+.hero{padding-top:100px;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;background:var(--cream);position:relative;overflow:hidden;}
+.blob1{position:absolute;right:-100px;top:-100px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(77,184,184,0.1) 0%,transparent 70%);pointer-events:none;}
+.blob2{position:absolute;left:-150px;bottom:-150px;width:500px;height:500px;background:radial-gradient(ellipse,rgba(13,110,110,0.05) 0%,transparent 70%);pointer-events:none;}
+.hero-left{padding:4rem 3rem;position:relative;z-index:2;animation:fadeUp 0.9s ease 0.2s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+.eyebrow-dot{display:inline-flex;align-items:center;gap:0.6rem;font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin-bottom:1.6rem;}
+.eyebrow-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal-soft);flex-shrink:0;}
+.hero-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:1.5rem;}
+.hero-h1 em{font-style:italic;color:var(--teal);}
+.audit-warn{display:flex;align-items:flex-start;gap:0.8rem;background:rgba(13,110,110,0.06);border:1px solid rgba(13,110,110,0.15);border-left:3px solid var(--teal);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.8rem;}
+.aw-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px;}
+.aw-t{font-size:0.72rem;font-weight:600;color:var(--teal);margin-bottom:0.2rem;}
+.aw-b{font-size:0.8rem;color:var(--ink-soft);line-height:1.5;}
+.hero-sub{font-size:1rem;font-weight:300;line-height:1.75;color:var(--ink-soft);max-width:400px;margin-bottom:2rem;}
+.cta-row{display:flex;align-items:center;gap:1.2rem;}
+.cta-main{display:inline-flex;align-items:center;gap:0.6rem;background:var(--teal);color:#fff;font-size:0.85rem;font-weight:600;padding:0.9rem 2rem;border-radius:100px;}
+.cta-ghost{font-size:0.82rem;font-weight:500;color:var(--teal);}
+.hero-right{position:relative;height:100%;min-height:600px;display:flex;align-items:center;justify-content:center;animation:fadeUp 0.9s ease 0.4s both;}
+.him{position:relative;width:380px;height:480px;border-radius:200px 200px 24px 24px;overflow:hidden;}
+.him img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.hfc{position:absolute;left:-2rem;bottom:3rem;background:#fff;border:1px solid var(--border-s);border-radius:16px;padding:1.2rem 1.6rem;box-shadow:0 8px 32px rgba(0,0,0,0.08);}
+.hfc-n{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--teal);line-height:1;}
+.hfc-l{font-size:0.68rem;font-weight:600;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;margin-top:0.2rem;}
+.hrc{position:absolute;right:-1.5rem;top:3rem;background:#fff;border:1px solid var(--border-s);border-radius:16px;padding:1rem 1.4rem;box-shadow:0 8px 32px rgba(0,0,0,0.08);text-align:center;}
+.hrc-s{color:#f0a500;font-size:0.75rem;letter-spacing:0.1em;margin-bottom:0.3rem;}
+.hrc-n{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ink);line-height:1;}
+.hrc-l{font-size:0.6rem;font-weight:600;color:var(--ink-soft);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.2rem;}
+
+/* STATS */
+.stats-strip{background:var(--teal);padding:3rem;display:grid;grid-template-columns:repeat(4,1fr);}
+.si{text-align:center;padding:0 1.5rem;position:relative;}
+.si:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);height:40px;width:1px;background:rgba(255,255,255,0.15);}
+.sn{font-family:'DM Serif Display',serif;font-size:2.8rem;color:#fff;line-height:1;letter-spacing:-0.03em;}
+.ss{font-size:1.2rem;color:rgba(255,255,255,0.5);}
+.sl{font-size:0.7rem;font-weight:500;color:rgba(255,255,255,0.55);margin-top:0.4rem;letter-spacing:0.06em;}
+
+/* SERVICES */
+.svc-section{background:var(--white);padding:6rem 3rem;}
+.two-col{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;}
+.eyebrow{font-size:0.66rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.8rem;}
+.stitle{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;letter-spacing:-0.02em;line-height:1.15;color:var(--ink);}
+.stitle em{font-style:italic;color:var(--teal);}
+.sdesc{font-size:0.9rem;line-height:1.8;color:var(--ink-soft);font-weight:300;margin-top:1.2rem;}
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+.sc{background:var(--teal-xpale);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:background 0.25s;}
+.sc:hover{background:var(--teal-pale);}
+.sc-icon{width:48px;height:48px;background:rgba(13,110,110,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;}
+.sc-icon svg{width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.sc-t{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:0.6rem;}
+.sc-d{font-size:0.83rem;line-height:1.7;color:var(--ink-soft);}
+.sc-l{display:inline-flex;align-items:center;gap:0.3rem;margin-top:1rem;font-size:0.72rem;font-weight:600;color:var(--teal);}
+
+/* WHY US */
+.why-section{background:var(--teal-pale);padding:6rem 3rem;}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.wimg{position:relative;border-radius:20px;overflow:hidden;}
+.wimg img{width:100%;height:480px;object-fit:cover;}
+.wbadge{position:absolute;bottom:1.5rem;left:1.5rem;background:rgba(255,255,255,0.95);border-radius:12px;padding:1rem 1.4rem;backdrop-filter:blur(8px);}
+.wb-n{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--teal);line-height:1;}
+.wb-l{font-size:0.65rem;font-weight:600;color:var(--ink-soft);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.2rem;}
+.why-list{display:flex;flex-direction:column;gap:2rem;margin-top:2rem;}
+.wi{display:flex;gap:1.4rem;align-items:flex-start;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+.wi:last-child{border-bottom:none;padding-bottom:0;}
+.wi-n{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--teal-soft);opacity:0.6;line-height:1;flex-shrink:0;width:2.5rem;}
+.wi-t{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:0.4rem;}
+.wi-d{font-size:0.84rem;line-height:1.75;color:var(--ink-soft);font-weight:300;}
+
+/* PROCESS */
+.proc-section{background:var(--white);padding:6rem 3rem;}
+.psteps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3.5rem;position:relative;}
+.psteps::before{content:'';position:absolute;top:2.4rem;left:calc(16.67% + 1rem);right:calc(16.67% + 1rem);height:1px;background:var(--border);z-index:0;}
+.ps{padding:0 2rem;text-align:center;position:relative;z-index:1;}
+.ps-n{width:48px;height:48px;border-radius:50%;background:var(--teal-pale);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--teal);}
+.ps-t{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:0.6rem;}
+.ps-d{font-size:0.83rem;line-height:1.7;color:var(--ink-soft);font-weight:300;}
+
+/* PROFILE */
+.prof-section{background:var(--cream);padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.pimg{position:relative;}
+.pimg-main{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;border-radius:20px;filter:brightness(0.92) saturate(0.9);}
+.cert-strip{display:flex;gap:0.8rem;margin-top:1.2rem;flex-wrap:wrap;}
+.cert{display:inline-flex;align-items:center;gap:0.4rem;background:var(--teal-pale);border:1px solid var(--border);border-radius:100px;padding:0.35rem 0.9rem;font-size:0.65rem;font-weight:600;color:var(--teal);letter-spacing:0.04em;}
+.peyebrow{font-size:0.66rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.8rem;}
+.ptitle{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em;}
+.ptitle em{font-style:italic;color:var(--teal);}
+.pquote{font-family:'DM Serif Display',serif;font-size:1.2rem;font-style:italic;line-height:1.6;color:var(--teal);opacity:0.85;padding-left:1.2rem;border-left:3px solid rgba(13,110,110,0.25);margin-bottom:1.5rem;}
+.ptext{font-size:0.88rem;line-height:1.85;color:var(--ink-soft);font-weight:300;margin-bottom:0.8rem;}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem;}
+.psi{text-align:center;padding:1rem;background:var(--white);border:1px solid var(--border-s);border-radius:12px;}
+.psi-n{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--teal);line-height:1;}
+.psi-l{font-size:0.62rem;font-weight:600;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;margin-top:0.2rem;}
+
+/* TEST */
+.test-section{background:var(--teal);padding:6rem 3rem;text-align:center;}
+.t-orn{font-family:'DM Serif Display',serif;font-size:5rem;font-style:italic;color:rgba(255,255,255,0.15);line-height:0.7;margin-bottom:1.2rem;}
+.t-stars{color:#f0a500;font-size:0.85rem;letter-spacing:0.15em;margin-bottom:1.5rem;}
+.t-text{font-family:'DM Serif Display',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-style:italic;line-height:1.55;color:#fff;max-width:760px;margin:0 auto 1.8rem;}
+.t-auth{font-size:0.68rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);}
+
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;height:280px;}
+.gi{position:relative;overflow:hidden;background:var(--teal-pale);}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
+.gi:hover img{transform:scale(1.04);}
+.gl{position:absolute;bottom:1rem;left:1.2rem;font-size:0.62rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(26,32,36,0.7);background:rgba(255,255,255,0.85);padding:0.3rem 0.7rem;border-radius:100px;}
+
+/* CTA */
+.cta-section{background:var(--cream);padding:6rem 3rem;}
+.cta-inner{background:var(--white);border:1px solid var(--border);border-radius:24px;padding:5rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--teal-soft));border-radius:24px 24px 0 0;}
+.cta-inner::after{content:'';position:absolute;right:-100px;top:-100px;width:350px;height:350px;background:radial-gradient(ellipse,rgba(77,184,184,0.07) 0%,transparent 70%);pointer-events:none;}
+.cd-wrap{display:flex;justify-content:center;gap:1.2rem;margin-bottom:2rem;}
+.cdu{text-align:center;}
+.cdn{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--teal);line-height:1;display:block;min-width:56px;}
+.cdl{font-size:0.58rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:0.3rem;}
+.cds{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--teal-soft);opacity:0.5;align-self:flex-start;margin-top:0.2rem;}
+.slots-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(13,110,110,0.08);border:1px solid rgba(13,110,110,0.2);border-radius:100px;padding:0.4rem 1.2rem;font-size:0.68rem;font-weight:600;color:var(--teal);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1.8rem;}
+.sdot{width:6px;height:6px;border-radius:50%;background:#27ae60;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.cta-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:400;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);margin-bottom:1rem;}
+.cta-title em{font-style:italic;color:var(--teal);}
+.cta-sub{font-size:0.92rem;line-height:1.8;color:var(--ink-soft);font-weight:300;max-width:520px;margin:0 auto 2.5rem;}
+.cta-btn{display:inline-flex;align-items:center;gap:0.6rem;background:var(--teal);color:#fff;font-size:0.82rem;font-weight:600;padding:1rem 2.8rem;border-radius:100px;}
+.cta-note{margin-top:1rem;font-size:0.68rem;color:var(--ink-soft);opacity:0.6;}
+
+footer{background:var(--teal);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.fl{font-family:'DM Serif Display',serif;font-size:1.1rem;color:rgba(255,255,255,0.7);}
+.ft{font-size:0.8rem;font-style:italic;font-family:'DM Serif Display',serif;color:rgba(255,255,255,0.4);}
+.fn{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+@media(max-width:900px){
+  nav{padding:0 1.5rem;}.nav-links{display:none;}
+  .hero{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;}
+  .hero-right{display:none;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);gap:2rem;padding:2.5rem 1.5rem;}
+  .si::after{display:none;}
+  .svc-section,.why-section,.proc-section,.prof-section,.cta-section{padding:4rem 1.5rem;}
+  .two-col,.why-grid,.prof-section{grid-template-columns:1fr;}
+  .sgrid{grid-template-columns:1fr;}
+  .psteps{grid-template-columns:1fr;gap:2rem;}
+  .psteps::before{display:none;}
+  .gallery{height:200px;}
+  .cta-inner{padding:3rem 1.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="urgency-bar">🦷 Exclusive 48-Hour Preview — Built for Seattle Dental Implant Specialists · Seattle, </div>
+
+<nav>
+  <div class="nl">
+    <div class="ni"><svg viewBox="0 0 24 24"><path d="M12 22C12 22 4 17 4 10a8 8 0 0116 0c0 7-8 12-8 12z"/></svg></div>
+    <div><div class="nlogo">Seattle Dental Implant Specialists</div><div class="nsub">Dental Implant Specialists · Seattle</div></div>
+  </div>
+  <div class="nav-links">
+    <span>Services</span><span>Projects</span><span>The Team</span><span>Contact</span>
+  </div>
+  <div class="nav-cta">🔒 Claim This Site</div>
+</nav>
+
+<section class="hero">
+  <div class="blob1"></div><div class="blob2"></div>
+  <div class="hero-left">
+    <div class="eyebrow-dot">Seattle,  · Dental Implant Specialists · Est. 2012</div>
+    <h1 class="hero-h1">Built To<br/><em>Last.</em></h1>
+    <!-- ANNA's data: patient-friendly language -->
+    <div class="audit-warn">
+      <svg class="aw-icon" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <div>
+        <div class="aw-t">Your site is turning away patients</div>
+        <div class="aw-b">Load speed: <strong>85/100</strong>. Est. <strong>$12,400 - $38,000/mo</strong> in new patients bounce before booking.</div>
+      </div>
+    </div>
+    <p class="hero-sub">Seattle Dental Implant Specialists has served Seattle since 2012. Your patients deserve a website as modern as your practice.</p>
+    <div class="cta-row">
+      <div class="cta-main">Book an Appointment →</div>
+      <div class="cta-ghost">See Our Work ↓</div>
+    </div>
+  </div>
+  <!-- KAEL: https://images.unsplash.com/photo-1467664631004-58beab1ece0d?w=1800&q=85 — bright clinical photo -->
+  <div class="hero-right">
+    <div class="him">
+      <img src="https://images.unsplash.com/photo-1467664631004-58beab1ece0d?w=1800&q=85" alt="Seattle Dental Implant Specialists"
+           onerror="this.src='https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=85'"/>
+    </div>
+    <div class="hfc"><div class="hfc-n">100%<span style="font-size:1rem;opacity:0.5;">+</span></div><div class="hfc-l">Quality Guarantee</div></div>
+    <div class="hrc"><div class="hrc-s">★★★★★</div><div class="hrc-n">500+</div><div class="hrc-l">Projects Delivered</div></div>
+  </div>
+</section>
+
+<div class="stats-strip reveal">
+  <div class="si"><div class="sn">15yr<span class="ss"></span></div><div class="sl">Trade Experience</div></div>
+  <div class="si"><div class="sn">12<span class="ss">yr</span></div><div class="sl">Serving Seattle</div></div>
+  <div class="si"><div class="sn">500+<span class="ss"></span></div><div class="sl">Projects Delivered</div></div>
+  <div class="si"><div class="sn">100%<span class="ss"></span></div><div class="sl">Quality Guarantee</div></div>
+</div>
+
+<section class="svc-section reveal">
+  <div class="two-col">
+    <div>
+      <div class="eyebrow">Services</div>
+      <h2 class="stitle">Everything your<br/><em>smile needs</em></h2>
+      <p class="sdesc">Comprehensive Dental Implant Specialists care under one roof in Seattle. Every treatment delivered with precision and genuine care.</p>
+    </div>
+    <div class="sgrid">
+      <div class="sc">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5c0 5-5 11-5 11S7 12 7 7a5 5 0 015-5z"/></svg></div>
+        <div class="sc-t">Authority Redesign</div><div class="sc-d">Replacing weak legacy sites with high-authority engines that demand instant trust.</div><div class="sc-l">Learn more →</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="sc-t">Lead Siphon Systems</div><div class="sc-d">Sophisticated funnel strategies that capture high-intent leads before they call a competitor.</div><div class="sc-l">Learn more →</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
+        <div class="sc-t">Rapid Deployment</div><div class="sc-d">Launch your brand into new territories in record time with our Quantum infrastructure.</div><div class="sc-l">Learn more →</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <div class="sc-t">Patient Comfort</div><div class="sc-d">From the moment you walk in, every detail is designed around your comfort and confidence in Seattle.</div><div class="sc-l">Our approach →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KAEL: https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=85 -->
+<section class="why-section reveal">
+  <div class="why-grid">
+    <div class="wimg">
+      <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=85" alt="Seattle Dental Implant Specialists clinic"
+           onerror="this.src='https://images.unsplash.com/photo-1629909615184-74f495363b67?w=900&q=85'"/>
+      <div class="wbadge"><div class="wb-n">100%+</div><div class="wb-l">Happy patients in Seattle</div></div>
+    </div>
+    <div>
+      <div class="eyebrow">Why Seattle Chooses Us</div>
+      <h2 class="stitle" style="margin-bottom:0;">The standard<br/><em>others miss</em></h2>
+      <div class="why-list">
+        <div class="wi"><div class="wi-n">01</div><div><div class="wi-t">Modern Equipment, Gentle Touch</div><div class="wi-d">Seattle Dental Implant Specialists invests in the latest technology so visits are faster, more comfortable, and more precise than anywhere in Seattle.</div></div></div>
+        <div class="wi"><div class="wi-n">02</div><div><div class="wi-t">Same-Day &amp; Evening Appointments</div><div class="wi-d">Flexible booking around Seattle schedules — you never have to wait weeks for care that cannot wait.</div></div></div>
+        <div class="wi"><div class="wi-n">03</div><div><div class="wi-t">Transparent, Upfront Pricing</div><div class="wi-d">No surprise bills. We walk you through the full cost before beginning any treatment.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proc-section reveal">
+  <div class="eyebrow" style="text-align:center;">Your Journey</div>
+  <h2 class="stitle" style="text-align:center;margin-top:0.5rem;">From first visit to <em>lasting results</em></h2>
+  <div class="psteps">
+    <div class="ps"><div class="ps-n">01</div><div class="ps-t">Schedule &amp; Arrive</div><div class="ps-d">Book in seconds. Walk in to a welcoming Seattle practice built around your comfort.</div></div>
+    <div class="ps"><div class="ps-n">02</div><div class="ps-t">Comprehensive Assessment</div><div class="ps-d">Rody conducts a full examination and presents a clear treatment plan with zero pressure.</div></div>
+    <div class="ps"><div class="ps-n">03</div><div class="ps-t">Treatment &amp; Follow-Up</div><div class="ps-d">Precision care with the latest technology — we follow up to ensure your results last.</div></div>
+  </div>
+</section>
+
+<!-- KAEL: https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=85 -->
+<section class="prof-section reveal">
+  <div class="pimg">
+    <img class="pimg-main" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=85" alt="Rody"
+         onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=85'"/>
+    <div class="cert-strip">
+      <div class="cert">✓ Board Certified</div>
+      <div class="cert">✓ Top 100 National</div>
+      <div class="cert">✓ Elite Rating</div>
+    </div>
+  </div>
+  <div>
+    <div class="peyebrow">Meet Your Provider</div>
+    <h2 class="ptitle">Rody,<br/><em>Lead Field Engineer</em></h2>
+    <p class="pquote">"Every patient who trusts us deserves world-class care — not just in Seattle, but anywhere."</p>
+    <p class="ptext">Rody has been transforming smiles in Seattle since 2012. With 12 years of experience, Seattle Dental Implant Specialists stands apart.</p>
+    <p class="ptext">Clinical precision meets a warm, patient-first approach — because great Dental Implant Specialists care is about the person, not just the procedure.</p>
+    <div class="pstats">
+      <div class="psi"><div class="psi-n">15yr+</div><div class="psi-l">Trade Experience</div></div>
+      <div class="psi"><div class="psi-n">12yr</div><div class="psi-l">In Seattle</div></div>
+      <div class="psi"><div class="psi-n">500+★</div><div class="psi-l">Projects Delivered</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="test-section reveal">
+  <div class="t-orn">"</div>
+  <div class="t-stars">★ ★ ★ ★ ★</div>
+  <blockquote class="t-text">Our phone hadn't rang in weeks. After the V15 deploy, we're booked out 3 months.</blockquote>
+  <div class="t-auth">— John Miller, Seattle</div>
+</section>
+
+<!-- KAEL: gallery images -->
+<div class="gallery">
+  <div class="gi"><img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=85" alt="Authority Redesign" onerror="this.src='https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80'"/><div class="gl">Authority Redesign</div></div>
+  <div class="gi"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=85" alt="Lead Siphon Systems" onerror="this.src='https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&q=80'"/><div class="gl">Lead Siphon Systems</div></div>
+  <div class="gi"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=85" alt="Our Team" onerror="this.src='https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=80'"/><div class="gl">Our Team</div></div>
+</div>
+
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cd-wrap">
+      <div class="cdu"><span class="cdn" id="cdh">47</span><div class="cdl">Hours</div></div>
+      <div class="cds">:</div>
+      <div class="cdu"><span class="cdn" id="cdm">59</span><div class="cdl">Minutes</div></div>
+      <div class="cds">:</div>
+      <div class="cdu"><span class="cdn" id="cds">59</span><div class="cdl">Seconds</div></div>
+    </div>
+    <div class="slots-badge"><div class="sdot"></div>Limited slots available this month in Seattle</div>
+    <h2 class="cta-title">Your practice deserves<br/><em>this site today.</em></h2>
+    <p class="cta-sub">Built exclusively for <strong style="color:var(--teal);font-weight:500;">Seattle Dental Implant Specialists</strong> in Seattle. Reply to claim it — live on your domain in 24 hours. No competitors have access to this preview.</p>
+    <div class="cta-btn">🔒 Claim This Site Now</div>
+    <div class="cta-note">Exclusive to Seattle Dental Implant Specialists · Not publicly listed · Expires in 48 hours</div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">Seattle Dental Implant Specialists</div>
+  <div class="ft">"Built to Last. Engineered for Growth."</div>
+  <div class="fn">Seattle,  · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+(function(){
+  const D=48*60*60,k='ri2ch_sterling_'+('Seattle Dental Implant Specialists'.replace(/\s/g,'_'));
+  let e=sessionStorage.getItem(k);
+  if(!e){e=Date.now()+D*1000;sessionStorage.setItem(k,e);}
+  function t(){
+    const d=Math.max(0,Math.floor((e-Date.now())/1000));
+    document.getElementById('cdh').textContent=String(Math.floor(d/3600)).padStart(2,'0');
+    document.getElementById('cdm').textContent=String(Math.floor((d%3600)/60)).padStart(2,'0');
+    document.getElementById('cds').textContent=String(d%60).padStart(2,'0');
+    if(d>0)setTimeout(t,1000);
+  }
+  t();
+})();
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.addEventListener('click',e=>e.preventDefault(),true);
+document.addEventListener('submit',e=>e.preventDefault(),true);
+document.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code))e.preventDefault();},true);
+document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',function(){console.warn('[VEX QA] BROKEN IMAGE — STERLING:',this.src);});});
+</script>
+<script>(function() {
+  'use strict';
+
+  // ── Config injected by generate_landing.py ──
+  const LEAD_ID      = '0512414f-c975-4dc8-8c9a-0ff5c22da918';
+  const BIZ_NAME     = 'Seattle Dental Implant Specialists';
+  const NICHE        = 'Dental Implant Specialists';
+  const TEMPLATE     = 'sterling';
+  const PALETTE      = 'Sage Teal';
+  const TRACKING_URL = 'https://kinsley-nonconducting-faustino.ngrok-free.dev/track-view';
+  const SESSION_KEY  = 'ri2ch_session_' + LEAD_ID;
+
+  // ── Session dedup — don't double-fire on refresh ──
+  const SESSION_ID = (function() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  })();
+
+  const startTime = Date.now();
+  const firedEvents = new Set();
+
+  // ── Core ping function ──
+  function ping(event, extra = {}) {
+    if (!TRACKING_URL || TRACKING_URL.includes('{{')) return;
+
+    // Dedup scroll events
+    if (firedEvents.has(event)) return;
+    if (event !== 'time_on_site') firedEvents.add(event);
+
+    const payload = {
+      lead_id:      LEAD_ID,
+      session_id:   SESSION_ID,
+      business_name:BIZ_NAME,
+      niche:        NICHE,
+      template:     TEMPLATE,
+      palette:      PALETTE,
+      event:        event,
+      time_on_site: Math.round((Date.now() - startTime) / 1000),
+      timestamp:    new Date().toISOString(),
+      referrer:     document.referrer || 'direct',
+      user_agent:   navigator.userAgent.substring(0, 120),
+      ...extra
+    };
+
+    // Use sendBeacon for reliability (works even on page close)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+    } else {
+      fetch(TRACKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    }
+  }
+
+  // ── 1. Fire immediately on load ──
+  ping('site_opened');
+
+  // ── 2. Scroll depth tracking ──
+  let scrollThresholds = { 25: false, 50: false, 75: false };
+
+  function checkScrollDepth() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    const pct      = Math.round((scrolled / total) * 100);
+
+    if (!scrollThresholds[25] && pct >= 25) {
+      scrollThresholds[25] = true;
+      ping('scroll_25', { scroll_pct: 25 });
+    }
+    if (!scrollThresholds[50] && pct >= 50) {
+      scrollThresholds[50] = true;
+      ping('scroll_50', { scroll_pct: 50 });
+    }
+    if (!scrollThresholds[75] && pct >= 75) {
+      scrollThresholds[75] = true;
+      ping('scroll_75', { scroll_pct: 75 });
+    }
+  }
+
+  // Throttled scroll listener
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(checkScrollDepth, 150);
+  }, { passive: true });
+
+  // ── 3. CTA section visibility tracking ──
+  // Watches for the .cta-section or .cta-inner element
+  let ctaVisibleTimer = null;
+  let ctaReachedFired = false;
+
+  function observeCTA() {
+    const ctaEl = document.querySelector('.cta-section, .cta-inner');
+    if (!ctaEl) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // CTA is visible
+          if (!ctaReachedFired) {
+            ctaReachedFired = true;
+            ping('cta_reached');
+          }
+          // Start 3-second timer for high-intent signal
+          if (!ctaVisibleTimer) {
+            ctaVisibleTimer = setTimeout(function() {
+              ping('cta_visible_3s', { high_intent: true });
+            }, 3000);
+          }
+        } else {
+          // CTA scrolled out of view — cancel timer
+          if (ctaVisibleTimer) {
+            clearTimeout(ctaVisibleTimer);
+            ctaVisibleTimer = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of CTA must be visible
+
+    observer.observe(ctaEl);
+  }
+
+  // ── 4. Time on site — fires every 30s ──
+  setInterval(function() {
+    ping('time_on_site', {
+      seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  }, 30000);
+
+  // ── 5. Page exit signal ──
+  window.addEventListener('beforeunload', function() {
+    ping('site_exited', {
+      total_seconds: Math.round((Date.now() - startTime) / 1000)
+    });
+  });
+
+  // ── Init CTA observer after DOM ready ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCTA);
+  } else {
+    observeCTA();
+  }
+
+})();
+
+/**
+ * ============================================================
+ * EXPIRY REDIRECT
+ * ============================================================
+ */
+(function() {
+  const EXPIRY_URL = 'https://ri2ch.agency/expired.html';
+  const LEAD_ID    = '0512414f-c975-4dc8-8c9a-0ff5c22da918';
+  const BIZ_SLUG   = encodeURIComponent('Seattle Dental Implant Specialists'.replace(/\s+/g, '-').toLowerCase());
+  const NICHE_SLUG = encodeURIComponent('Dental Implant Specialists');
+
+  if (!EXPIRY_URL || EXPIRY_URL === 'https://ri2ch.agency/expired.html') return;
+
+  const key = 'ri2ch_timer_' + LEAD_ID;
+  const DURATION = 48 * 60 * 60 * 1000; // 48 hours in ms
+
+  let end = parseInt(sessionStorage.getItem(key) || '0', 10);
+  if (!end || end < Date.now()) {
+    end = Date.now() + DURATION;
+    sessionStorage.setItem(key, end.toString());
+  }
+
+  function checkExpiry() {
+    const remaining = end - Date.now();
+    if (remaining <= 0) {
+      // Build expiry URL with context params
+      const url = `${EXPIRY_URL}?lead_id=${LEAD_ID}&biz=${BIZ_SLUG}&niche=${NICHE_SLUG}`;
+      window.location.href = url;
+    }
+  }
+
+  // Check every minute
+  setInterval(checkExpiry, 60000);
+  // Also check immediately on load
+  checkExpiry();
+})();
+</script>
+    <script>
+    (function() {
+        const claimUrl = "https://ri2ch.agency/claim_handoff.html?lead_id=0512414f-c975-4dc8-8c9a-0ff5c22da918&biz=Seattle-Dental-Implant-Specialists&niche=Dental Implant Specialists&template=sterling&ls=pending&ps=pending";
+        document.querySelectorAll('a[href*="#cta"], a[href*="checkout"], .cta-btn, button.primary').forEach(el => {
+            if (el.tagName === 'A') el.href = claimUrl;
+            else el.onclick = () => window.location.href = claimUrl;
+        });
+    })();
+    </script>
+    
+</body>
+</html>
