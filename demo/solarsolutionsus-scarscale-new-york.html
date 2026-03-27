@@ -8,14 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-  /* ── POINTER ISOLATION ── */
-  a, button, input, select, textarea, [role="button"] {
-    pointer-events: none !important;
-    cursor: default !important;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── Base ── */
   html { scroll-behavior: smooth; }
 
   body {
@@ -626,19 +619,6 @@
     .cta-inner { padding: 2.5rem 1.5rem; }
   }
 </style>
-
-    <style>
-        /* This disables all links from redirecting, keeping them trapped safely in the preview */
-        a {
-            pointer-events: none !important;
-            cursor: default !important;
-        }
-        /* Add a custom cursor so it still feels like a real site */
-        body {
-            cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
-        }
-    </style>
-    
 </head>
 <body>
 
@@ -649,7 +629,7 @@
     <span>Services</span>
     <span>Projects</span>
     <span>About</span>
-    <div class="nav-cta">Claim This Site</div>
+    <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=b2125e6e-4578-41aa-ac66-cf5218e8e44f" class="nav-cta">Claim This Site</a>
   </div>
 </nav>
 
@@ -669,7 +649,7 @@
     <div class="hero-bottom">
       <p class="hero-sub">Solarsolutionsus delivers precision-grade Solar Energy to homes and businesses across Scarscale, New York. Fast, warranted, and built to last.</p>
       <div class="hero-actions">
-        <div class="btn-primary">Get a Free Quote →</div>
+        <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=b2125e6e-4578-41aa-ac66-cf5218e8e44f" class="btn-primary">Get a Free Quote →</a>
         <div class="btn-ghost">See Our Work</div>
       </div>
     </div>
@@ -821,7 +801,7 @@
         <p class="cta-sub">This shadow site was crafted specifically for <strong style="color:var(--white);">Solarsolutionsus</strong>. Reply to claim it — live on your domain in under 24 hours.</p>
       </div>
       <div class="cta-actions">
-        <div class="cta-btn-main">🔒 Claim This Site</div>
+        <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=b2125e6e-4578-41aa-ac66-cf5218e8e44f" class="cta-btn-main">🔒 Claim This Site</a>
         <div class="cta-lock-note">
           <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
           Exclusive to Solarsolutionsus — not public
@@ -845,13 +825,6 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  // Full pointer lock
-  document.addEventListener('click', e => e.preventDefault(), true);
-  document.addEventListener('submit', e => e.preventDefault(), true);
-  document.addEventListener('keydown', e => {
-    if (['Enter','Space'].includes(e.code)) e.preventDefault();
-  }, true);
 </script>
 </body>
 </html>
