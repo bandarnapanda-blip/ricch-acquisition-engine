@@ -8,13 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-  /* ── POINTER ISOLATION — lead stays locked in the preview ── */
-  a, button, input, select, textarea, [role="button"] {
-    pointer-events: none !important;
-    cursor: default !important;
-  }
-
   /* ── Base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -453,19 +446,6 @@
     section { padding: 4rem 1.2rem; }
   }
 </style>
-
-    <style>
-        /* This disables all links from redirecting, keeping them trapped safely in the preview */
-        a {
-            pointer-events: none !important;
-            cursor: default !important;
-        }
-        /* Add a custom cursor so it still feels like a real site */
-        body {
-            cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
-        }
-    </style>
-    
 </head>
 <body>
 
@@ -476,7 +456,7 @@
     <span style="font-size:0.85rem;color:var(--muted);font-weight:400;">Services</span>
     <span style="font-size:0.85rem;color:var(--muted);font-weight:400;">About</span>
     <span style="font-size:0.85rem;color:var(--muted);font-weight:400;">Reviews</span>
-    <div class="nav-cta">Claim This Site</div>
+    <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=20bd3501-a972-4c08-beb7-ec0dcc8d43ec" class="nav-cta">Claim This Site</a>
   </div>
 </nav>
 
@@ -488,9 +468,7 @@
     <div class="hero-eyebrow">📍 Serving Austin &amp; Surrounding Areas</div>
     <h1 class="hero-h1">Industry-leading results, guaranteed.<br/><em>Done Right.</em></h1>
     <p class="hero-sub">360 Plastic Surgery brings professional-grade results to every home in Austin. Trusted, insured, and ready within 24 hours.</p>
-    <div class="hero-cta">
-      Get a Free Quote →
-    </div>
+      <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=20bd3501-a972-4c08-beb7-ec0dcc8d43ec" class="hero-cta">Get a Free Quote →</a>
   </div>
   <div class="hero-badge">
     <div class="hero-badge-num">100%</div>
@@ -618,9 +596,9 @@
   <div class="cta-box reveal">
     <h2 class="cta-title">Your new site is ready.<br/>Claim it before someone else does.</h2>
     <p class="cta-sub">This preview was built specifically for <strong>360 Plastic Surgery</strong> in Austin. Reply to unlock the full site, live in 24 hours.</p>
-    <div class="cta-btn">
+    <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=20bd3501-a972-4c08-beb7-ec0dcc8d43ec" class="cta-btn">
       🔒 Claim This Site
-    </div>
+    </a>
     <div class="cta-lock">
       <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
       Exclusive preview — expires in 48 hours
@@ -645,13 +623,6 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Extra safety: kill all click/keyboard on interactive elements
-  document.addEventListener('click', e => e.preventDefault(), true);
-  document.addEventListener('submit', e => e.preventDefault(), true);
-  document.addEventListener('keydown', e => {
-    if (['Enter','Space'].includes(e.code)) e.preventDefault();
-  }, true);
 </script>
 </body>
 </html>
