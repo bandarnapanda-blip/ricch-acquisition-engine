@@ -1,5 +1,6 @@
 import time
 import os
+import json
 import logging
 from database import db
 from intelligence import compute_deal_score, LeadSignals
@@ -63,11 +64,11 @@ def process_behavioral_signals():
                     audit_url = f"https://bandarnapanda-blip.github.io/ricch-acquisition-engine/diamond_reports/{filename}"
                     
                     db.update_lead(lid, {
-                        "metadata": {
+                        "website_roast": json.dumps({
                             "diamond_audit_url": audit_url,
                             "diamond_audit_path": report_data["filepath"],
                             "annual_leakage": report_data["annual_leakage"]
-                        }
+                        })
                     })
         else:
             # Update score regardless if engaged at all

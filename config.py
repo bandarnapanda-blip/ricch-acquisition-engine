@@ -4,40 +4,25 @@
 STATE = ""
 
 CITIES = [
-    "Los Angeles, California",
+    "Scottsdale, Arizona",
+    "Austin, Texas",
+    "Raleigh, North Carolina",
+    "Miami, Florida",
+    "Nashville, Tennessee",
+    "Denver, Colorado",
     "Beverly Hills, California",
     "Palo Alto, California",
-    "Greenwich, Connecticut",
-    "Scarscale, New York",
-    "Atherton, California",
-    "Palm Beach, Florida",
-    "Miami, Florida",
-    "Austin, Texas",
-    "New York City, New York",
-    "Dallas, Texas",
-    "Houston, Texas",
-    "Chicago, Illinois",
-    "San Francisco, California",
-    "Newport Beach, California",
-    "San Diego, California",
-    "Seattle, Washington",
-    "Boston, Massachusetts",
-    "Atlanta, Georgia",
-    "Denver, Colorado"
+    "Palm Beach, Florida"
 ]
 
 NICHES = [
-    "Solar Energy Installers",
-    "Personal Injury Attorneys",
-    "Luxury Home Remodeling",
-    "HVAC & Climate Control",
+    "Medical Aesthetics",
     "Dental Implant Specialists",
-    "Epoxy Garage Flooring",
-    "Roofing Contractors",
-    "Concrete & Paving",
-    "Landscaping Design",
-    "Pool & Spa Builders",
-    "Kitchen & Bath Remodelers"
+    "Solar Energy Installers",
+    "Luxury Home Remodelling",
+    "HVAC & Climate Control",
+    "Smart-Home Infrastructure",
+    "Personal Injury Attorneys"
 ]
 
 # Outreach identity

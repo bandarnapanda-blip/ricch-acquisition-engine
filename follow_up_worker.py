@@ -25,8 +25,16 @@ def send_follow_up_email(lead: dict, follow_up_number: int) -> bool:
     niche = lead.get("niche") or "industry"
     preview_url = lead.get("demo_link") or "#"
 
-    diamond_url = lead.get("metadata", {}).get("diamond_audit_url")
-    annual_leakage = lead.get("metadata", {}).get("annual_leakage", "$495,000")
+    import json
+    roast_data = {}
+    if lead.get("website_roast"):
+        try:
+            roast_data = json.loads(lead.get("website_roast"))
+        except:
+            pass
+            
+    diamond_url = roast_data.get("diamond_audit_url")
+    annual_leakage = roast_data.get("annual_leakage", "$495,000")
 
     templates = {
         1: {

@@ -9,7 +9,8 @@ import template_router
 import niche_images
 
 
-load_dotenv()
+from site_validator import validate_and_deploy
+from database import db
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")            # anon key (for public reads)
@@ -554,28 +555,19 @@ def main():
         f.write(html)
     print(f"DONE: Shadow Site saved to {filepath}")
     
-    # 5. Deployment Channel 1: Netlify (Isolated Site Strategy)
-    deployed_url = upload_to_netlify(html, lead_id or "preview", business_name)
-    if deployed_url:
-        print(f"Netlify Deployment Successful: {deployed_url}")
-    
-    # 5. Deployment Channel 2: GitHub (Redundant Backup)
-    if not deployed_url:
-        github_url = upload_to_github(html, filename)
-        if github_url:
-            print(f"GitHub API Upload Successful: {github_url}")
-            deployed_url = github_url
-    
-    # Always save to DB as a secondary preview bridge
-    if lead_id:
-        db_preview = save_preview_to_db(html, lead_id)
-        if not deployed_url:
-            deployed_url = db_preview
-    
-    # 6. Update Database
-    if lead_id and deployed_url:
-        if update_lead_demo_link(lead_id, deployed_url):
-            print(f"DONE Updated lead {lead_id} with Link: {deployed_url}")
+    # Deploy + verify across all 3 channels (Vex: Zero-404 guarantee)
+    deployed_url = validate_and_deploy(
+        html=html,
+        filename=filename,
+        lead_id=lead_id or "preview",
+        business_name=business_name,
+        niche=niche,
+        city=city,
+        db=db,
+        upload_netlify_fn=upload_to_netlify,
+        upload_github_fn=upload_to_github,
+        save_db_fn=save_preview_to_db
+    )
     
     print("\nDone! The landing page is ready to send.")
 

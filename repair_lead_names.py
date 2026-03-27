@@ -48,7 +48,8 @@ def extract_business_name(lead):
 
 def main():
     leads = db.fetch_leads()
-    to_repair = [l for l in leads if not l.get('business_name')]
+    placeholders = ["", "none", "unknown", "unknown business"]
+    to_repair = [l for l in leads if not l.get('business_name') or l.get('business_name').lower() in placeholders]
     
     print(f"Identified {len(to_repair)} leads requiring name repair.")
     

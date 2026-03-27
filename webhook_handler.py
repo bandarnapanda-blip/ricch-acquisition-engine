@@ -15,6 +15,11 @@ logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
+@app.route("/", methods=["GET"])
+def index():
+    return '{"status": "online", "service": "RI2CH Webhook Handler", "message": "Listening for Paystack events."}', 200, {'Content-Type': 'application/json'}
+
+
 KHALIL_EMAIL = os.getenv("KHALIL_EMAIL")
 
 def send_confirmation_emails(lead_data: dict, amount: float):
@@ -59,26 +64,15 @@ Lead ID: {lead_data.get('id')}
 The confirmation email has been sent to the client.
 """
 
-    def send(to, sub, body):
-        msg = MIMEMultipart()
-        msg['From'] = f"{AGENCY_NAME} <{GMAIL_USER}>"
-        msg['To'] = to
-        msg['Subject'] = sub
-        msg.attach(MIMEText(body, 'plain'))
-        try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
-            server.send_message(msg)
-            server.quit()
-        except Exception as e:
-            logger.error(f"Failed to send email to {to}: {e}")
 
-    # Send both
+    from silas_accounts import send_warm_email
+    email_success = True
     if email:
-        send(email, client_subject, client_body)
+        res = send_warm_email(to_email=email, subject=client_subject, body_text=client_body, body_html=None, lead_id=lead_data.get('id'))
+        if not res.get("success"): email_success = False
     if KHALIL_EMAIL:
-        send(KHALIL_EMAIL, khalil_subject, khalil_body)
+        send_warm_email(to_email=KHALIL_EMAIL, subject=khalil_subject, body_text=khalil_body, body_html=None, lead_id=lead_data.get('id'))
+
 
 @app.route("/paystack-webhook", methods=["POST"])
 def paystack_webhook():

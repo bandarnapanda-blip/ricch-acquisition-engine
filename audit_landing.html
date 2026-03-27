@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Revenue Audit — RI2CH Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black:   #080706;
+    --white:   #f5f2ee;
+    --gold:    #c9a84c;
+    --gold2:   #e8c97a;
+    --red:     #c0392b;
+    --gray:    #2a2825;
+    --muted:   #7a7570;
+  }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.15); background: rgba(8,7,6,0.85); backdrop-filter: blur(12px); }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 4px; color: var(--gold); }
+  .logo span { color: var(--white); }
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 40px 80px; position: relative; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(48px, 7vw, 88px); line-height: 1.0; margin-bottom: 12px; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { color: var(--muted); margin: 28px 0 48px; max-width: 520px; }
+  .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: var(--white); }
+  .audit-form { display: flex; flex-direction: column; gap: 16px; max-width: 520px; }
+  .form-field input { background: rgba(245,242,238,0.05); border: 1px solid rgba(201,168,76,0.2); padding: 14px 18px; color: var(--white); width: 100%; outline: none; }
+  .cta-btn { background: var(--gold); color: var(--black); border: none; padding: 18px 32px; font-weight: 500; text-transform: uppercase; cursor: pointer; }
+  .success-overlay { display: none; position: fixed; inset: 0; background: rgba(8,7,6,0.95); z-index: 200; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .success-overlay.active { display: flex; }
+</style>
+</head>
+<body>
+<header><div class="logo">RI2CH <span>Agency</span></div></header>
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Your website is<br><em>bleeding money.</em><br>We'll prove it.</h1>
+    <p class="hero-sub">Get a full technical audit and exact revenue leakage report in under 60 minutes.</p>
+    <div class="price-amount">$47</div>
+    <form class="audit-form" id="auditForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+      <input type="url" id="website" placeholder="https://yourwebsite.com" required>
+      <input type="text" id="niche" placeholder="Business Type (e.g. Dental, Law)">
+      <button type="submit" class="cta-btn" id="submitBtn">Get My Audit Report</button>
+    </form>
+  </div>
+</section>
+<div class="success-overlay" id="successOverlay">
+  <h2>Payment <em>confirmed.</em></h2>
+  <p>Your audit is running. Check <strong id="confirmEmail"></strong> in 60 minutes.</p>
+</div>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+  const PAYSTACK_PUBLIC_KEY = 'pk_live_21c6b463a73f4c567315cbb81d8f0a09ed72e6ee';
+  const API_URL = 'http://localhost:8001';
+  document.getElementById('auditForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value;
+    const website = document.getElementById('website').value;
+    const niche = document.getElementById('niche').value;
+    const handler = PaystackPop.setup({
+      key: PAYSTACK_PUBLIC_KEY, email: email, amount: 47 * 1500 * 10, currency: 'GHS',
+      callback: function(response) {
+        fetch(`${API_URL}/api/audit/purchase`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reference: response.reference, name, email, website, niche })
+        });
+        document.getElementById('confirmEmail').textContent = email;
+        document.getElementById('successOverlay').classList.add('active');
+      }
+    });
+    handler.openIframe();
+  });
+</script>
+</body>
+</html>

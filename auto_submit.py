@@ -263,15 +263,22 @@ async def main():
     
     print("Fetching uncontacted leads...")
     try:
-        # Fetch High Intel leads first
-        intel_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Intel%20Ready&select=*"
-        res = request_with_retry("GET", intel_endpoint, headers=headers)
+        # Priority 1: Bespoke Diamond Audits
+        diamond_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.Diamond%20Audit%20Ready&select=*"
+        res = request_with_retry("GET", diamond_endpoint, headers=headers)
         leads = res.json() if res and res.status_code == 200 else []
         
-        hp_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Priority&select=*"
-        res = request_with_retry("GET", hp_endpoint, headers=headers)
+        # Priority 2: High Intel/High Priority
+        intel_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.High%20Intel%20Ready&select=*"
+        res = request_with_retry("GET", intel_endpoint, headers=headers)
         leads += res.json() if res and res.status_code == 200 else []
         
+        # Priority 3: Mass Produced Shadow Sites (The 763 leads)
+        shadow_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.Shadow%20Site%20Ready&select=*"
+        res = request_with_retry("GET", shadow_endpoint, headers=headers)
+        leads += res.json() if res and res.status_code == 200 else []
+        
+        # Priority 4: Fresh leads
         new_endpoint = f"{SUPABASE_URL}/rest/v1/leads?status=eq.New&select=*"
         res = request_with_retry("GET", new_endpoint, headers=headers)
         leads += res.json() if res and res.status_code == 200 else []

@@ -22,9 +22,22 @@ def render_intelligence():
     data = []
     for l in leads:
         biz_name = l.get('business_name', 'Unknown')
-        # Match audit filename logic
-        audit_filename = f"{biz_name.lower().replace(' ', '-')}-audit.html"
-        audit_url = f"https://bandarnapanda-blip.github.io/ricch-acquisition-engine/diamond_reports/{audit_filename}"
+        
+        # Pull from website_roast JSON if available
+        import json
+        audit_url = None
+        roast_raw = l.get('website_roast')
+        if roast_raw:
+            try:
+                roast_data = json.loads(roast_raw)
+                audit_url = roast_data.get('diamond_audit_url')
+            except:
+                pass
+
+        if not audit_url:
+            # Fallback to dynamic (maintenance mode)
+            audit_filename = f"{biz_name.lower().replace(' ', '-')}-audit.html"
+            audit_url = f"https://bandarnapanda-blip.github.io/ricch-acquisition-engine/diamond_reports/{audit_filename}"
         
         data.append({
             "Business": biz_name,
