@@ -9,12 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-  /* ── POINTER ISOLATION ── */
-  a, button, input, select, textarea, [role="button"] {
-    pointer-events: none !important;
-    cursor: default !important;
-  }
-
+  /* ── Base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
@@ -710,19 +705,6 @@
     .cta-inner { padding: 3rem 1.5rem; }
   }
 </style>
-
-    <style>
-        /* This disables all links from redirecting, keeping them trapped safely in the preview */
-        a {
-            pointer-events: none !important;
-            cursor: default !important;
-        }
-        /* Add a custom cursor so it still feels like a real site */
-        body {
-            cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
-        }
-    </style>
-    
 </head>
 <body>
 
@@ -738,7 +720,7 @@
     <span>The Firm</span>
     <span>Contact</span>
   </div>
-  <div class="nav-cta">Claim This Site</div>
+  <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=d343b829-22b0-4633-b2a4-d9046e22a1a4" class="nav-cta">Claim This Site</a>
 </nav>
 
 <!-- ── HERO ── -->
@@ -749,7 +731,7 @@
     <div class="hero-divider"></div>
     <p class="hero-sub">Trustimplants has served Newport Beach, California with uncompromising standards for over 12 years. Uncompromising quality for every project.</p>
     <div class="hero-actions">
-      <div class="btn-gold">Request a Consultation</div>
+      <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=d343b829-22b0-4633-b2a4-d9046e22a1a4" class="btn-gold">Request a Consultation</a>
       <div class="btn-outline">Our Practice →</div>
     </div>
   </div>
@@ -891,7 +873,7 @@
     <div class="cta-eyebrow">✦ Exclusive Preview · 48 Hours Only</div>
     <h2 class="cta-title">Your new site is waiting.<br/><em>Claim it today.</em></h2>
     <p class="cta-sub">This site was designed exclusively for <strong style="color:var(--gold-light);font-weight:400;">Trustimplants</strong> in Newport Beach, California. Reply to our email to unlock it — fully live on your domain within 24 hours.</p>
-    <div class="cta-btn">🔒 Claim This Site</div>
+    <a href="https://bandarnapanda-blip.github.io/ricch-acquisition-engine//api/public/claim?lead_id=d343b829-22b0-4633-b2a4-d9046e22a1a4" class="cta-btn">🔒 Claim This Site</a>
     <div class="cta-expiry">This preview expires in 48 hours · Not publicly available</div>
   </div>
 </section>
@@ -910,12 +892,6 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  document.addEventListener('click', e => e.preventDefault(), true);
-  document.addEventListener('submit', e => e.preventDefault(), true);
-  document.addEventListener('keydown', e => {
-    if (['Enter','Space'].includes(e.code)) e.preventDefault();
-  }, true);
 </script>
 </body>
 </html>
