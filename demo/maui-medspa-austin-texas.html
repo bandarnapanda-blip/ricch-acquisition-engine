@@ -1,937 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Maui MedSpa — Austin, Texas</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Maui MedSpa — Medical Aesthetics</title>
+<meta name="description" content="Industry-leading results, guaranteed."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
 <style>
-  /* ── POINTER ISOLATION ── */
-  a, button, input, select, textarea, [role="button"] {
-    pointer-events: none !important;
-    cursor: default !important;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Jost', sans-serif;
-    background: #0a0a08;
-    color: #d4c9a8;
-    overflow-x: hidden;
-  }
-
-  :root {
-    --bg:         #0a0a08;
-    --bg2:        #111109;
-    --bg3:        #181714;
-    --gold:       #c9a84c;
-    --gold-light: #c9a84c;
-    --gold-dim:   rgba(201,168,76,0.2);
-    --gold-line:  rgba(201,168,76,0.18);
-    --cream:      #d4c9a8;
-    --muted:      rgba(212,201,168,0.45);
-    --border:     rgba(201,168,76,0.12);
-    --border-hi:  rgba(201,168,76,0.28);
-    --white:      #f0ebe0;
-  }
-
-  .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
-
-  /* Subtle grain */
-  body::after {
-    content: '';
-    position: fixed; inset: 0; z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.025;
-    pointer-events: none;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 3rem;
-    height: 72px;
-    background: rgba(10,10,8,0.88);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo-wrap {
-    display: flex; flex-direction: column; gap: 1px;
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--gold-light);
-    letter-spacing: 0.06em;
-    line-height: 1;
-  }
-  .nav-logo-sub {
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-  }
-  .nav-center {
-    display: flex; gap: 2.8rem;
-  }
-  .nav-center span {
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .nav-cta {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--gold);
-    padding: 0.6rem 1.6rem;
-    border-radius: 2px;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    overflow: hidden;
-  }
-  .hero-left {
-    position: relative;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 4rem 5rem;
-    z-index: 2;
-    background: var(--bg);
-  }
-  /* Gold vertical rule */
-  .hero-left::after {
-    content: '';
-    position: absolute; right: 0; top: 15%; bottom: 15%;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--gold-line) 30%, var(--gold-line) 70%, transparent);
-  }
-  .hero-right {
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-img {
-    position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?w=1800&q=85');
-    background-size: cover;
-    background-position: center top;
-    filter: brightness(0.45) saturate(0.5) sepia(0.15);
-    transform: scale(1.05);
-    animation: heroZoom 14s ease-out forwards;
-  }
-  @keyframes heroZoom { to { transform: scale(1); } }
-  .hero-img-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, var(--bg) 0%, transparent 30%),
-                linear-gradient(to top, rgba(10,10,8,0.6) 0%, transparent 50%);
-  }
-
-  /* Gold corner ornament */
-  .hero-ornament {
-    position: absolute; top: 4rem; right: 2.5rem; z-index: 3;
-    opacity: 0.5;
-  }
-  .hero-ornament svg { width: 48px; height: 48px; }
-
-  .hero-eyebrow {
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.8rem;
-    animation: fadeIn 1s ease 0.3s both;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .hero-eyebrow::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--gold-line);
-    max-width: 60px;
-  }
-  .hero-h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.2rem, 5vw, 5.2rem);
-    font-weight: 300;
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    color: var(--white);
-    margin-bottom: 1.8rem;
-    animation: fadeIn 1s ease 0.45s both;
-  }
-  .hero-h1 em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .hero-divider {
-    width: 48px; height: 1px;
-    background: var(--gold);
-    opacity: 0.6;
-    margin-bottom: 1.8rem;
-    animation: fadeIn 1s ease 0.6s both;
-  }
-  .hero-sub {
-    font-size: 0.92rem;
-    font-weight: 300;
-    line-height: 1.85;
-    color: var(--muted);
-    max-width: 380px;
-    margin-bottom: 2.5rem;
-    animation: fadeIn 1s ease 0.7s both;
-  }
-  .hero-actions {
-    display: flex; gap: 1rem; align-items: center;
-    animation: fadeIn 1s ease 0.85s both;
-  }
-  .btn-gold {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    background: var(--gold);
-    color: var(--bg);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 0.9rem 2.2rem;
-    border-radius: 2px;
-  }
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    border: 1px solid var(--border-hi);
-    color: var(--cream);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.9rem 2rem;
-    border-radius: 2px;
-  }
-
-  /* Credentials floating panel */
-  .hero-credentials {
-    position: absolute;
-    left: 0; bottom: 3rem; right: 0;
-    z-index: 3;
-    display: flex; gap: 1px;
-  }
-  .cred-item {
-    flex: 1;
-    background: rgba(10,10,8,0.75);
-    border-top: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-    padding: 1.2rem 1.5rem;
-    text-align: center;
-  }
-  .cred-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--gold-light);
-    line-height: 1;
-  }
-  .cred-label {
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.3rem;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  /* ── GOLD RULE DIVIDER ── */
-  .rule-divider {
-    display: flex; align-items: center; gap: 1.5rem;
-    padding: 0 3rem;
-    margin: 0;
-  }
-  .rule-line { flex: 1; height: 1px; background: var(--border); }
-  .rule-ornament {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    color: var(--gold);
-    opacity: 0.5;
-    line-height: 1;
-  }
-
-  /* ── PRACTICE AREAS / SERVICES ── */
-  .practice-section {
-    background: var(--bg);
-    padding: 6rem 3rem;
-  }
-  .practice-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: end;
-    margin-bottom: 4rem;
-  }
-  .section-eyebrow {
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    line-height: 1.15;
-    color: var(--white);
-  }
-  .section-title em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .section-desc {
-    font-size: 0.88rem;
-    line-height: 1.85;
-    color: var(--muted);
-    font-weight: 300;
-    align-self: end;
-  }
-
-  .practice-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .practice-card {
-    background: var(--bg2);
-    padding: 2.8rem 2.2rem;
-    position: relative;
-    transition: background 0.3s;
-  }
-  .practice-card:hover { background: var(--bg3); }
-  .practice-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .practice-card:hover::before { opacity: 1; }
-
-  .practice-roman {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--gold);
-    opacity: 0.5;
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-  }
-  .practice-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--white);
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-  .practice-desc {
-    font-size: 0.82rem;
-    line-height: 1.8;
-    color: var(--muted);
-    font-weight: 300;
-  }
-  .practice-link {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    margin-top: 1.5rem;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.8;
-  }
-
-  /* ── AUTHORITY STRIP ── */
-  .authority-section {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 4rem 3rem;
-  }
-  .authority-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3rem;
-    align-items: center;
-  }
-  .authority-item {
-    text-align: center;
-    padding: 2rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--bg);
-    position: relative;
-  }
-  .authority-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    font-weight: 600;
-    color: var(--gold-light);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .authority-denom {
-    font-size: 1rem;
-    color: var(--gold);
-    opacity: 0.7;
-  }
-  .authority-label {
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.6rem;
-    line-height: 1.5;
-  }
-
-  /* ── PROFILE / ABOUT ── */
-  .profile-section {
-    background: var(--bg);
-    padding: 6rem 3rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-  }
-  .profile-img-wrap {
-    position: relative;
-  }
-  .profile-img {
-    width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: top;
-    filter: brightness(0.7) saturate(0.6) sepia(0.1);
-    border-radius: 4px;
-  }
-  /* Gold frame accent */
-  .profile-img-wrap::before {
-    content: '';
-    position: absolute;
-    top: -12px; left: -12px;
-    right: 12px; bottom: 12px;
-    border: 1px solid var(--border-hi);
-    border-radius: 4px;
-    z-index: 0;
-    pointer-events: none;
-  }
-  .profile-img-wrap::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0; right: 0;
-    height: 50%;
-    background: linear-gradient(to top, var(--bg), transparent);
-    z-index: 1;
-    pointer-events: none;
-  }
-  .profile-badge {
-    position: absolute;
-    bottom: 2rem; left: 50%; transform: translateX(-50%);
-    z-index: 2;
-    background: rgba(10,10,8,0.9);
-    border: 1px solid var(--border-hi);
-    border-radius: 4px;
-    padding: 1rem 1.5rem;
-    text-align: center;
-    white-space: nowrap;
-    backdrop-filter: blur(12px);
-  }
-  .profile-badge-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--gold-light);
-    letter-spacing: 0.04em;
-  }
-  .profile-badge-title {
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.2rem;
-  }
-  .profile-content {}
-  .profile-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 1.5;
-    color: var(--gold-light);
-    opacity: 0.9;
-    margin-bottom: 2rem;
-    padding-left: 1.5rem;
-    border-left: 2px solid var(--gold);
-    border-left-color: rgba(201,168,76,0.4);
-  }
-  .profile-text {
-    font-size: 0.88rem;
-    line-height: 1.9;
-    color: var(--muted);
-    font-weight: 300;
-    margin-bottom: 1rem;
-  }
-  .credentials-list {
-    margin-top: 2rem;
-    display: flex; flex-direction: column; gap: 0.7rem;
-  }
-  .credential-row {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .credential-row:first-child { border-top: 1px solid var(--border); }
-  .cred-bullet {
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex-shrink: 0;
-  }
-  .cred-text {
-    font-size: 0.8rem;
-    color: var(--cream);
-    font-weight: 300;
-    letter-spacing: 0.02em;
-  }
-
-  /* ── GALLERY ── */
-  .gallery-section {
-    background: var(--bg2);
-    padding: 6rem 3rem;
-    border-top: 1px solid var(--border);
-  }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .gallery-item {
-    position: relative;
-    aspect-ratio: 4/5;
-    overflow: hidden;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-  }
-  .gallery-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: brightness(0.8) saturate(0.7) sepia(0.1);
-    transition: transform 0.6s ease;
-  }
-  .gallery-item:hover .gallery-img {
-    transform: scale(1.1);
-    filter: brightness(1) saturate(1) sepia(0);
-  }
-  .gallery-item::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(10,10,8,0.4), transparent);
-  }
-
-  /* ── TESTIMONIAL ── */
-
-  /* ── CTA ── */
-  .cta-section {
-    background: var(--bg);
-    padding: 6rem 3rem;
-  }
-  .cta-inner {
-    position: relative;
-    border: 1px solid var(--border-hi);
-    border-radius: 4px;
-    padding: 5rem 4rem;
-    background: var(--bg2);
-    text-align: center;
-    overflow: hidden;
-  }
-  /* Gold corner accents */
-  .cta-inner::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 60px; height: 60px;
-    border-top: 1px solid var(--gold);
-    border-left: 1px solid var(--gold);
-    opacity: 0.4;
-    border-radius: 0;
-  }
-  .cta-inner::after {
-    content: '';
-    position: absolute; bottom: 0; right: 0;
-    width: 60px; height: 60px;
-    border-bottom: 1px solid var(--gold);
-    border-right: 1px solid var(--gold);
-    opacity: 0.4;
-  }
-  .cta-eyebrow {
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-  }
-  .cta-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    color: var(--white);
-    margin-bottom: 1.2rem;
-  }
-  .cta-title em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .cta-sub {
-    font-size: 0.9rem;
-    line-height: 1.8;
-    color: var(--muted);
-    font-weight: 300;
-    max-width: 520px;
-    margin: 0 auto 2.5rem;
-  }
-  .cta-btn {
-    display: inline-flex; align-items: center; gap: 0.7rem;
-    background: var(--gold);
-    color: var(--bg);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    padding: 1rem 2.8rem;
-    border-radius: 2px;
-  }
-  .cta-expiry {
-    margin-top: 1.4rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    opacity: 0.7;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    padding: 2rem 3rem;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--gold);
-    opacity: 0.6;
-    letter-spacing: 0.06em;
-  }
-  .footer-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.85rem;
-    font-style: italic;
-    color: var(--muted);
-    opacity: 0.6;
-  }
-  .footer-note {
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    opacity: 0.35;
-    text-transform: uppercase;
-  }
-
-  /* ── REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.85s ease, transform 0.85s ease;
-  }
-  .reveal.visible { opacity: 1; transform: none; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-right { height: 60vw; }
-    .hero-left { padding: 7rem 1.5rem 3rem; }
-    .hero-left::after { display: none; }
-    .hero-credentials { position: static; display: grid; grid-template-columns: repeat(3,1fr); }
-    .practice-header { grid-template-columns: 1fr; gap: 1.5rem; }
-    .practice-grid { grid-template-columns: 1fr; }
-    .authority-grid { grid-template-columns: repeat(2, 1fr); }
-    .profile-section { grid-template-columns: 1fr; gap: 3rem; }
-    nav { padding: 0 1.2rem; }
-    .nav-center { display: none; }
-    .practice-section, .authority-section,
-    .profile-section, .testimonial-section,
-    .cta-section { padding: 4rem 1.5rem; }
-    .cta-inner { padding: 3rem 1.5rem; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--slate:#1e2f2f;--teal:#5a9e9e;--teal2:#7cbebe;--light:#f5fafa;--white:#ffffff;--muted:#7a9a9a;--fd:'Jost',sans-serif;--fb:'Outfit',sans-serif}
+html{scroll-behavior:smooth}body{background:var(--white);color:var(--slate);font-family:var(--fb);font-weight:300;line-height:1.7;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(90,158,158,.12);display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem}
+.nav-logo{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--slate);text-decoration:none}.nav-logo span{color:var(--teal)}
+.nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{font-size:.8rem;letter-spacing:.08em;color:#999;text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--teal)}
+.nav-cta{font-size:.78rem;letter-spacing:.1em;color:var(--white);background:var(--teal);padding:.7rem 1.8rem;text-decoration:none;border-radius:100px;transition:opacity .25s}.nav-cta:hover{opacity:.85}
+.hero{position:relative;background:var(--slate);overflow:hidden;min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:clamp(5rem,18vw,16rem);font-weight:700;color:rgba(255,255,255,.04);text-transform:uppercase;white-space:nowrap;pointer-events:none;user-select:none}
+.hero-full{position:absolute;inset:0}.hero-full img{width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.55;display:block}
+.hero-full::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(30,47,47,.94) 0%,rgba(30,47,47,.48) 55%,rgba(30,47,47,.12) 100%)}
+.hero-content{position:relative;z-index:2;padding:4rem 4rem 5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal2);background:rgba(90,158,158,.12);border:1px solid rgba(90,158,158,.25);padding:.4rem 1rem;border-radius:100px;margin-bottom:2rem}
+.hero-title{font-family:var(--fd);font-size:clamp(2.5rem,5.5vw,5rem);font-weight:700;line-height:1.05;color:var(--white);margin-bottom:1.5rem;max-width:700px}
+.hero-title em{font-style:italic;font-weight:300;color:var(--teal2)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.58);max-width:480px;line-height:1.75;margin-bottom:2.5rem}
+.hero-ctas{display:flex;gap:1.2rem;flex-wrap:wrap}
+.btn-teal{display:inline-block;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--teal);padding:.95rem 2.4rem;border-radius:100px;text-decoration:none;transition:opacity .25s}.btn-teal:hover{opacity:.85}
+.btn-out{display:inline-block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);border:1px solid rgba(255,255,255,.3);padding:.9rem 2.2rem;border-radius:100px;text-decoration:none;transition:border-color .25s}.btn-out:hover{border-color:var(--teal2)}
+.stats-float{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;padding:3rem 4rem;background:var(--light)}
+.sf-card{background:var(--white);padding:2rem;border-radius:16px;box-shadow:0 4px 20px rgba(90,158,158,.07);transition:transform .3s}.sf-card:hover{transform:translateY(-3px)}
+.sf-n{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:var(--teal);line-height:1;margin-bottom:.3rem}.sf-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.sf-sub{font-size:.8rem;color:#aaa;margin-top:.25rem}
+.section-services{padding:6rem 4rem;background:var(--white)}
+.services-header{text-align:center;max-width:600px;margin:0 auto 4rem}
+.section-chip{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;display:block}
+.section-h{font-family:var(--fd);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.15;color:var(--slate)}.section-h em{font-style:italic;color:var(--teal)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.svc-card{padding:2.5rem;background:var(--light);border-radius:20px;transition:transform .3s,box-shadow .3s,border-color .3s;border:1px solid transparent}.svc-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(90,158,158,.1);border-color:rgba(90,158,158,.15)}
+.svc-icon{width:3rem;height:3rem;border-radius:14px;background:rgba(90,158,158,.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem}
+.svc-name{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--slate);margin-bottom:.5rem}.svc-desc{font-size:.86rem;color:var(--muted);line-height:1.7}
+.section-about{display:grid;grid-template-columns:1fr 1fr;min-height:75vh;background:var(--light)}
+.about-img-col{overflow:hidden;position:relative;background:var(--slate)}.about-img-col img{width:100%;height:100%;object-fit:cover;display:block}
+.about-text-col{padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.about-feat-list{list-style:none;margin:1.5rem 0 2rem}.about-feat-list li{display:flex;gap:.8rem;font-size:.9rem;color:var(--slate);padding:.55rem 0;border-bottom:1px solid rgba(90,158,158,.1)}.about-feat-list li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+.section-team{padding:6rem 4rem;background:var(--white)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.team-card{border-radius:20px;overflow:hidden;background:var(--light)}
+.tp{height:320px;overflow:hidden;background:#f0f7f7;position:relative}.tp img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block;transition:transform .6s;z-index:2}.tp::before{content:'';position:absolute;inset:0;background:linear-gradient(45deg,#f0f7f7,#e0eeee);z-index:1;animation:shimmer 2s infinite linear;background-size:200% 100%}@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}.team-card:hover .tp img{transform:scale(1.05)}
+.ti{padding:1.5rem}.t-nm{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--slate);margin-bottom:.25rem}.t-role{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem}.t-bio{font-size:.82rem;color:var(--muted);line-height:1.65}
+.section-transform{padding:6rem 4rem;background:var(--slate)}
+.transform-header{text-align:center;margin-bottom:4rem}.transform-header .section-h{color:var(--white)}
+.ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.ba-card{border-radius:16px;overflow:hidden;position:relative;min-height:300px;background:rgba(255,255,255,.04)}.ba-card img{width:100%;height:100%;object-fit:cover;display:block}
+.ba-label{position:absolute;top:1rem;left:1rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:var(--teal);padding:.3rem .8rem;border-radius:100px}
+.ba-cap{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(to top,rgba(30,47,47,.9),transparent)}.ba-cap-title{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--white)}.ba-cap-desc{font-size:.8rem;color:rgba(255,255,255,.65);margin-top:.25rem}
+.section-testi{padding:6rem 4rem;background:var(--light)}.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.tc{background:var(--white);border-radius:20px;padding:2.2rem}.tc-stars{color:var(--teal);font-size:.85rem;margin-bottom:1rem}.tc-text{font-size:.92rem;color:var(--slate);line-height:1.72;margin-bottom:1.5rem;font-weight:300}.tc-nm{font-size:.88rem;font-weight:600;color:var(--slate)}.tc-role{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+.section-cta{background:var(--teal);padding:5rem 4rem;text-align:center}
+.cta-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--white);margin-bottom:1.2rem;line-height:1.15}
+.cta-sub{font-size:.98rem;color:rgba(255,255,255,.72);max-width:500px;margin:0 auto 2.5rem}
+.btn-white{display:inline-block;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);background:var(--white);padding:1.1rem 3rem;border-radius:100px;text-decoration:none;transition:opacity .25s}.btn-white:hover{opacity:.88}
+footer{padding:3rem 4rem;background:var(--slate);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--white)}.footer-copy{font-size:.72rem;color:rgba(255,255,255,.35)}
+.footer-links{display:flex;gap:2rem;list-style:none}.footer-links a{font-size:.72rem;color:rgba(245,240,232,.45);text-decoration:none;transition:color .2s}.footer-links a:hover{color:var(--teal2)}
+@media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links{display:none}.hero-content{padding:3rem 1.5rem 4rem}.stats-float{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.section-services{padding:4rem 1.5rem}.svc-grid{grid-template-columns:1fr}.section-about{grid-template-columns:1fr}.about-img-col{min-height:55vw}.about-text-col{padding:3rem 1.5rem}.section-team{padding:4rem 1.5rem}.team-grid{grid-template-columns:1fr}.section-transform{padding:4rem 1.5rem}.ba-grid{grid-template-columns:1fr}.section-testi{padding:4rem 1.5rem}.testi-grid{grid-template-columns:1fr}.section-cta{padding:4rem 1.5rem}footer{flex-direction:column;gap:1.5rem;text-align:center}}
 </style>
-
-    <style>
-        /* This disables all links from redirecting, keeping them trapped safely in the preview */
-        a {
-            pointer-events: none !important;
-            cursor: default !important;
-        }
-        /* Add a custom cursor so it still feels like a real site */
-        body {
-            cursor: url('https://cdn-icons-png.flaticon.com/16/271/271228.png'), auto;
-        }
-    </style>
-    
 </head>
 <body>
-
-<!-- ── NAV ── -->
 <nav>
-  <div class="nav-logo-wrap">
-    <div class="nav-logo">Maui MedSpa</div>
-    <div class="nav-logo-sub">Austin, Texas, </div>
-  </div>
-  <div class="nav-center">
-    <span>Treatments</span>
-    <span>Gallery</span>
-    <span>The Clinic</span>
-    <span>Contact</span>
-  </div>
-  <div class="nav-cta">Claim This Site</div>
+  <a class="nav-logo" href="#">Maui MedSpa<span>.</span></a>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="nav-cta" href="#contact">Reserve Now</a>
 </nav>
-
-<!-- ── HERO ── -->
-<section class="hero" style="padding:0;">
-  <div class="hero-left">
-    <div class="hero-eyebrow">Austin, Texas,  · Est. 2012</div>
-    <h1 class="hero-h1">Mastering.<br/><em>Rejuvenation.</em></h1>
-    <div class="hero-divider"></div>
-    <p class="hero-sub">Maui MedSpa has served Austin, Texas with uncompromising standards for over 12 years. Clinical precision for natural beauty. <br/><br/> <span style="color:var(--gold-light); font-weight:500;">Benchmarked against top-performing Dallas clinics for 40% higher conversion floor.</span></p>
-    <div class="hero-actions">
-      <div class="btn-gold">Request a Consultation</div>
-      <div class="btn-outline">Our Practice →</div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-img"></div>
-    <div class="hero-img-overlay"></div>
-    <!-- SVG ornament -->
-    <div class="hero-ornament">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="1" y="1" width="46" height="46" stroke="#c9a84c" stroke-width="0.5"/>
-        <rect x="8" y="8" width="32" height="32" stroke="#c9a84c" stroke-width="0.3" stroke-dasharray="2 3"/>
-        <circle cx="24" cy="24" r="4" stroke="#c9a84c" stroke-width="0.5"/>
-        <line x1="24" y1="8" x2="24" y2="20" stroke="#c9a84c" stroke-width="0.4"/>
-        <line x1="24" y1="28" x2="24" y2="40" stroke="#c9a84c" stroke-width="0.4"/>
-        <line x1="8" y1="24" x2="20" y2="24" stroke="#c9a84c" stroke-width="0.4"/>
-        <line x1="28" y1="24" x2="40" y2="24" stroke="#c9a84c" stroke-width="0.4"/>
-      </svg>
-    </div>
-    <!-- Credentials strip -->
-    <div class="hero-credentials">
-      <div class="cred-item">
-        <div class="cred-num">Elite</div>
-        <div class="cred-label">Medical Standards</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-num">Verified</div>
-        <div class="cred-label">Clinical Results</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-num">Premium</div>
-        <div class="cred-label">Patient Care</div>
-      </div>
-    </div>
+<section class="hero" id="home">
+  <div class="hero-bg-text">Medical Aesthetics</div>
+  <div class="hero-full"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="Maui MedSpa Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
+  <div class="hero-content">
+    <div class="hero-badge">Elite Performance</div>
+    <h1 class="hero-title">Elite<br/><em>Performance.</em></h1>
+    <p class="hero-sub">Industry-leading results, guaranteed. We provide sophisticated solutions for complex challenges. Our reputation is built on a foundation of integrity and results.</p>
+    <div class="hero-ctas"><a class="btn-teal" href="#contact">Book Consultation</a><a class="btn-out" href="#services">Our Services</a></div>
   </div>
 </section>
-
-<!-- ── RULE ── -->
-<div class="rule-divider" style="padding:1.5rem 3rem;">
-  <div class="rule-line"></div>
-  <div class="rule-ornament">✦</div>
-  <div class="rule-line"></div>
+<div class="stats-float">
+  <div class="sf-card" data-aos="fade-up">
+    <div class="sf-n">100%</div>
+    <div class="sf-label">Satisfaction Rate</div>
+    <div class="sf-sub">In Austin, Texas</div>
+  </div>
+  <div class="sf-card" data-aos="fade-up" data-aos-delay="80">
+    <div class="sf-n">Verified</div>
+    <div class="sf-label">Top Performance</div>
+    <div class="sf-sub">Verified excellence</div>
+  </div>
+  <div class="sf-card" data-aos="fade-up" data-aos-delay="160">
+    <div class="sf-n">A-Tier</div>
+    <div class="sf-label">Quality Control</div>
+    <div class="sf-sub">Expert care</div>
+  </div>
 </div>
-
-<!-- ── PRACTICE AREAS ── -->
-<section class="practice-section reveal">
-  <div class="practice-header">
-    <div>
-      <div class="section-eyebrow">Our Excellence</div>
-      <h2 class="section-title">Excellence in<br/><em>every matter</em></h2>
-    </div>
-    <p class="section-desc">Maui MedSpa handles each case with the same level of precision and dedication — because your situation deserves nothing less than our absolute best.</p>
+<section class="section-services" id="services">
+  <div class="services-header" data-aos="fade-up">
+    <span class="section-chip">What We Offer</span>
+    <h2 class="section-h">Our Excellence<br/><em>every visit</em></h2>
+    <p style="font-size:.92rem;color:var(--muted);margin-top:1rem;line-height:1.75">Uncompromising quality for every project.</p>
   </div>
-  <div class="practice-grid">
-    <div class="practice-card">
-      <div class="practice-roman">I</div>
-      <div class="practice-title">Facial Rejuvenation</div>
-      <div class="practice-desc">Advanced injectable and laser treatments designed to restore natural brilliance and youthful contour.</div>
-      <div class="practice-link">Learn More →</div>
+  <div class="svc-grid">
+    <div class="svc-card" data-aos="fade-up">
+      <div class="svc-icon">🦷</div>
+      <h3 class="svc-name">Primary Service</h3>
+      <p class="svc-desc">High-authority execution of our core industry solutions, delivered with total precision.</p>
     </div>
-    <div class="practice-card">
-      <div class="practice-roman">II</div>
-      <div class="practice-title">Body Sculpting</div>
-      <div class="practice-desc">Non-invasive medical procedures to refine your silhouette with precision and zero downtime.</div>
-      <div class="practice-link">Learn More →</div>
+    <div class="svc-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="svc-icon">✨</div>
+      <h3 class="svc-name">Strategic Growth</h3>
+      <p class="svc-desc">Optimizing every aspect of your project for maximum ROI and long-term durability.</p>
     </div>
-    <div class="practice-card">
-      <div class="practice-roman">III</div>
-      <div class="practice-title">Clinical Skincare</div>
-      <div class="practice-desc">Expert-led medical grade protocols for permanent skin health and luminous clarity.</div>
-      <div class="practice-link">Learn More →</div>
+    <div class="svc-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="svc-icon">🔬</div>
+      <h3 class="svc-name">Elite Support</h3>
+      <p class="svc-desc">Dedicated consultation and white-glove service to ensure your total satisfaction.</p>
     </div>
   </div>
 </section>
-
-<!-- ── AUTHORITY STRIP ── -->
-<section class="authority-section reveal">
-  <div class="authority-grid">
-    <div class="authority-item">
-      <div class="authority-num">Elite<span class="authority-denom">+</span></div>
-      <div class="authority-label">Medical Standards</div>
-    </div>
-    <div class="authority-item">
-      <div class="authority-num">12<span class="authority-denom">yr</span></div>
-      <div class="authority-label">Years Serving Austin, Texas</div>
-    </div>
-    <div class="authority-item">
-      <div class="authority-num">Verified<span class="authority-denom">%</span></div>
-      <div class="authority-label">Clinical Results</div>
-    </div>
-    <div class="authority-item">
-      <div class="authority-num">Premium<span class="authority-denom">★</span></div>
-      <div class="authority-label">Average Google Rating</div>
-    </div>
+<section class="section-about" id="about">
+  <div class="about-img-col"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="About Maui MedSpa" style="width:100%;height:100%;object-fit:cover;"/></div>
+  <div class="about-text-col">
+    <span class="section-chip">Our Philosophy</span>
+    <h2 class="section-h" style="margin-bottom:1rem">Aesthetics that<br/><em>inspire confidence</em></h2>
+    <p style="font-size:.9rem;color:var(--muted);line-height:1.78;margin-bottom:1rem">We provide sophisticated solutions for complex challenges. Our reputation is built on a foundation of integrity and results.</p>
+    <ul class="about-feat-list">
+      <li>Certified Industry Leader</li>
+      <li>Over 500 Successful Projects</li>
+      <li>Award-Winning Service</li>
+      <li>Serving Austin, Texas with excellence</li>
+    </ul>
+    <a class="btn-teal" href="#contact" style="align-self:flex-start">Meet Our Team</a>
   </div>
 </section>
-
-<!-- ── PROFILE ── -->
-<section class="profile-section reveal">
-  <div class="profile-img-wrap">
-    <img class="profile-img" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=85" alt="Dr. Julianna Moore"/>
-    <div class="profile-badge">
-      <div class="profile-badge-name">Dr. Julianna Moore</div>
-      <div class="profile-badge-title">Medical Director</div>
-    </div>
+<section class="section-transform">
+  <div class="transform-header" data-aos="fade-up">
+    <span class="section-chip" style="color:var(--teal2)">Case Studies</span>
+    <h2 class="section-h">Results that<br/><em style="color:var(--teal2)">speak for themselves</em></h2>
   </div>
-  <div class="profile-content">
-    <div class="section-eyebrow">About The Firm</div>
-    <h2 class="section-title" style="margin-bottom:1.8rem;">A reputation<br/><em>built on results</em></h2>
-    <p class="profile-quote">"True beauty is the reflection of vitality and health."</p>
-    <p class="profile-text">We combine state-of-the-art medical technology with a luxury boutique experience to deliver life-changing results.</p>
-    <div class="credentials-list">
-      <div class="credential-row">
-        <div class="cred-bullet"></div>
-        <div class="cred-text">Certified Industry Leader</div>
+  <div class="ba-grid">
+    <div class="ba-card" data-aos="fade-up"><span class="ba-label">Transformation</span></div>
+    <div class="ba-card" data-aos="fade-up" data-aos-delay="100"><span class="ba-label">Precision</span></div>
+  </div>
+</section>
+<section class="section-team" id="team">
+  <div data-aos="fade-up"><span class="section-chip">Our Specialists</span><h2 class="section-h">Meet your<br/><em>care team</em></h2></div>
+  <div class="team-grid">
+    <div class="team-card" data-aos="fade-up">
+      <div class="tp"><img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1400&q=80" alt="Team Representative 1" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"/></div>
+      <div class="ti">
+        <div class="t-nm">Alexander Vance</div>
+        <div class="t-role">Medical Director</div>
+        <p class="t-bio">Board-certified specialist in aesthetic medicine and non-invasive rejuvenation.</p>
       </div>
-      <div class="credential-row">
-        <div class="cred-bullet"></div>
-        <div class="cred-text">Over 500 Successful Projects</div>
+    </div>
+    <div class="team-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="tp"></div>
+      <div class="ti">
+        <div class="t-nm">Specialist Associate</div>
+        <div class="t-role">Aesthetic Specialist</div>
+        <p class="t-bio">Lead clinician specializing in advanced skin treatments and dermal artistry.</p>
       </div>
-      <div class="credential-row">
-        <div class="cred-bullet"></div>
-        <div class="cred-text">Award-Winning Service</div>
+    </div>
+    <div class="team-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="tp"></div>
+      <div class="ti">
+        <div class="t-nm">Clinical Specialist</div>
+        <div class="t-role">Care Coordinator</div>
+        <p class="t-bio">Ensuring a seamless, personalized journey for every client's aesthetic goals.</p>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ── GALLERY ── -->
-<section class="gallery-section reveal">
-  <div class="practice-header">
-    <div>
-      <div class="section-eyebrow">Project Showcase</div>
-      <h2 class="section-title">Visual Proof of<br/><em>Excellence</em></h2>
-    </div>
-    <p class="section-desc">A curated look at our recent high-performance Aesthetics deployments. Precision engineering meets aesthetic perfection.</p>
+<section class="section-testi" id="reviews">
+  <div style="text-align:center;max-width:500px;margin:0 auto 3.5rem" data-aos="fade-up">
+    <span class="section-chip">Client Reviews</span>
+    <h2 class="section-h">What clients<br/><em>say about us</em></h2>
   </div>
-  <div class="gallery-grid">
-    <div class="gallery-item"><img class="gallery-img" src="https://images.unsplash.com/photo-1616391159740-a2e9da4ee0ff?w=800&q=80" alt="Project 1"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?w=800&q=80" alt="Project 2"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80" alt="Project 3"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=800&q=80" alt="Project 4"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="{{GALLERY_IMG_5}}" alt="Project 5"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="{{GALLERY_IMG_6}}" alt="Project 6"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="{{GALLERY_IMG_7}}" alt="Project 7"/></div>
-    <div class="gallery-item"><img class="gallery-img" src="{{GALLERY_IMG_8}}" alt="Project 8"/></div>
+  <div class="testi-grid">
+    <div class="tc" data-aos="fade-up"><div class="tc-stars">★★★★★</div><p class="tc-text">"Professional, precise, and highly recommended."</p><div class="tc-nm">Robert Chen</div><div class="tc-role">Verified Client</div></div>
+    <div class="tc" data-aos="fade-up" data-aos-delay="80"><div class="tc-stars">★★★★★</div><p class="tc-text">"The most professional team in Austin, Texas. Truly life-changing results."</p><div class="tc-nm">Happy Patient</div><div class="tc-role">Cosmetic Client</div></div>
+    <div class="tc" data-aos="fade-up" data-aos-delay="160"><div class="tc-stars">★★★★★</div><p class="tc-text">"Incredible attention to detail and a luxury experience from start to finish."</p><div class="tc-nm">Verified Reviewer</div><div class="tc-role">Austin Local</div></div>
   </div>
 </section>
-
-<!-- ── TESTIMONIAL ── -->
-<section class="testimonial-section reveal">
-  <div class="testimonial-quote-mark">"</div>
-  <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-  <blockquote class="testimonial-text">Professional, precise, and highly recommended.</blockquote>
-  <div class="testimonial-author">— Robert Chen, Austin, Texas</div>
+<section class="section-cta" id="contact">
+  <h2 class="cta-title" data-aos="fade-up">Ready to enhance<br/>your natural beauty?</h2>
+  <p class="cta-sub" data-aos="fade-up" data-aos-delay="80">Excellence. Precision. Results.</p>
+  <a class="btn-white" href="#contact">Contact Us</a>
 </section>
-
-<!-- ── CTA ── -->
-<section class="cta-section">
-  <div class="cta-inner reveal">
-    <div class="cta-eyebrow">✦ Exclusive Preview · 48 Hours Only</div>
-    <h2 class="cta-title">Your new site is waiting.<br/><em>Claim it today.</em></h2>
-    <p class="cta-sub">This site was designed exclusively for <strong style="color:var(--gold-light);font-weight:400;">Maui MedSpa</strong> in Austin, Texas. Benchmarked against top-performing Dallas clinics for 40% higher conversion floor. <br/> Reply to our email to unlock it.</p>
-    <div class="cta-btn">🔒 Claim Your Exclusive Aesthetics Asset</div>
-    <div class="cta-expiry">This preview expires in 48 hours · Not publicly available</div>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-logo">Maui MedSpa</div>
-  <div class="footer-tagline">"Excellence. Precision. Results."</div>
-  <div class="footer-note">Austin, Texas,  · Preview by RI2CH Agency</div>
+  <p class="footer-copy">© 2012 Maui MedSpa · Austin, Texas</p>
+  <ul class="footer-links"><li><a href="#services">Services</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul>
 </footer>
-
-<script>
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  document.addEventListener('click', e => e.preventDefault(), true);
-  document.addEventListener('submit', e => e.preventDefault(), true);
-  document.addEventListener('keydown', e => {
-    if (['Enter','Space'].includes(e.code)) e.preventDefault();
-  }, true);
-</script>
+<script>window.addEventListener('load',function(){if(typeof AOS!=='undefined')AOS.init({once:true,offset:60,duration:700,easing:'ease-out-cubic'});});</script>
 </body>
 </html>
