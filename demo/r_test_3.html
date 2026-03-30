@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Resilience Test 3 — Law</title>
+<meta name="description" content="Uncompromising advocacy. Unparalleled results."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a1628;--fg:#f0ece3;--accent:#c9a84c;--muted:#7a8599;--steel:#121f38;--fd:'Libre Baskerville',Georgia,serif;--fb:'DM Sans',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--fb);font-weight:300;line-height:1.65;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.009) 3px,rgba(255,255,255,.009) 4px)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;border-bottom:1px solid rgba(201,168,76,.12);backdrop-filter:blur(14px);background:rgba(10,22,40,.88)}
+.logo{font-family:var(--fd);font-size:1.05rem;font-weight:700;letter-spacing:.05em;color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:.75rem}
+.logo-bar{width:3px;height:1.3rem;background:var(--accent)}
+.nav-links{display:flex;gap:2.4rem;list-style:none}
+.nav-links a{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,236,227,.5);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:.7rem 1.8rem;text-decoration:none;transition:opacity .3s;font-weight:500}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-parallax{position:absolute;inset:-18%;will-change:transform}
+.hero-parallax img,.hero-parallax>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.25;mix-blend-mode:luminosity}
+<img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" alt="Resilience Test 3 Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+.hero-parallax::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,rgba(10,22,40,.98) 0%,rgba(10,22,40,.72) 55%,rgba(10,22,40,.18) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 4rem 6rem;max-width:880px}
+.hero-eyebrow{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-bottom:1.6rem;display:flex;align-items:center;gap:1rem}
+.hero-eyebrow::before{content:'';width:38px;height:1px;background:var(--accent);flex-shrink:0}
+h1.hero-title{font-family:var(--fd);font-size:clamp(3rem,8vw,7rem);font-weight:700;line-height:.98;color:var(--fg);margin-bottom:2rem}
+h1.hero-title em{font-style:italic;color:var(--accent);display:block}
+.hero-desc{font-size:1rem;color:rgba(240,236,227,.6);max-width:460px;line-height:1.78;margin-bottom:3rem}
+.hero-btns{display:flex;gap:1.5rem;flex-wrap:wrap}
+.btn-gold{display:inline-block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:1rem 2.6rem;text-decoration:none;font-weight:500;transition:opacity .3s}
+.btn-gold:hover{opacity:.85}
+.btn-outline-g{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,236,227,.6);text-decoration:none;border:1px solid rgba(201,168,76,.3);padding:1rem 2rem;transition:all .3s}
+.btn-outline-g:hover{border-color:var(--accent);color:var(--accent)}
+.scroll-hint{position:absolute;bottom:2.5rem;right:4rem;z-index:3;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.scroll-hint span{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(240,236,227,.3);writing-mode:vertical-rl}
+.scroll-line{width:1px;height:52px;background:linear-gradient(to bottom,var(--accent),transparent);animation:sl 2.2s ease infinite}
+@keyframes sl{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+
+/* TICKER */
+.ticker-band{background:var(--accent);padding:.9rem 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:ticker 24s linear infinite}
+.ticker-track span{font-family:var(--fd);font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);padding:0 3rem}
+.ticker-dot{color:rgba(10,22,40,.3)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(201,168,76,.08)}
+.stat{padding:2.8rem 3rem;border-right:1px solid rgba(201,168,76,.07);transition:background .3s}
+.stat:last-child{border-right:none}
+.stat:hover{background:rgba(201,168,76,.04)}
+.stat-n{font-family:var(--fd);font-size:2.8rem;font-weight:700;color:var(--accent);line-height:1;margin-bottom:.4rem}
+.stat-lbl{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+/* PRACTICE AREAS */
+.section{padding:7rem 4rem}
+.sec-sup{font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem}
+.sec-h{font-family:var(--fd);font-size:clamp(2rem,4vw,3.4rem);font-weight:700;line-height:1.1;color:var(--fg)}
+.sec-h em{font-style:italic;color:var(--accent)}
+.sec-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem}
+.practice-list{display:flex;flex-direction:column}
+.prow{display:grid;grid-template-columns:70px 1fr 1fr auto;align-items:center;gap:2rem;padding:2rem 0;border-bottom:1px solid rgba(201,168,76,.07);transition:background .3s,padding-left .35s}
+.prow:hover{background:rgba(201,168,76,.04);padding-left:1rem}
+.prow-num{font-family:var(--fd);font-size:.72rem;color:var(--accent);letter-spacing:.15em}
+.prow-name{font-family:var(--fd);font-size:1.35rem;font-weight:700;color:var(--fg)}
+.prow-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+.prow-arrow{font-size:1.1rem;color:var(--accent);opacity:0;transition:opacity .3s}
+.prow:hover .prow-arrow{opacity:1}
+
+/* ABOUT */
+.about-split{display:grid;grid-template-columns:1fr 1fr;min-height:80vh}
+.about-img{position:relative;overflow:hidden;background:var(--steel)}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" alt="About Resilience Test 3" style="width:100%;height:100%;object-fit:cover;"/>
+.about-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,22,40,.35),transparent)}
+.about-text{background:var(--steel);padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.about-badge{display:inline-block;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:.38rem 1rem;margin-bottom:2rem;align-self:flex-start}
+.about-body{font-size:.95rem;color:rgba(240,236,227,.6);line-height:1.8;margin:1.2rem 0 1.8rem;max-width:440px}
+.checks{list-style:none;margin-bottom:2.5rem;display:flex;flex-direction:column;gap:.75rem}
+.checks li{display:flex;align-items:flex-start;gap:.8rem;font-size:.87rem;color:rgba(240,236,227,.7)}
+.checks li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
+
+/* TEAM */
+.section-dark{padding:7rem 4rem;background:rgba(255,255,255,.018)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.07);margin-top:3.5rem}
+.team-card{background:var(--bg);overflow:hidden}
+.team-img{height:310px;overflow:hidden;background:var(--steel)}
+.team-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(35%);transition:filter .6s,transform .6s;display:block}
+.team-card:hover .team-img img{filter:grayscale(0);transform:scale(1.04)}
+
+.team-info{padding:1.8rem 2rem;border-top:2px solid transparent;transition:border-color .3s}
+.team-card:hover .team-info{border-top-color:var(--accent)}
+.team-name{font-family:var(--fd);font-size:1.05rem;color:var(--fg);margin-bottom:.3rem}
+.team-role{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.team-exp{font-size:.75rem;color:var(--muted);margin-top:.4rem}
+
+/* TESTIMONIALS */
+.testimonials-section{padding:7rem 4rem;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:center}
+.t-deck{display:flex;flex-direction:column;gap:2px}
+.t-card{background:var(--steel);padding:2.2rem 2.5rem;border-left:3px solid transparent;transition:border-color .3s}
+.t-card:hover{border-left-color:var(--accent)}
+.t-stars{color:var(--accent);letter-spacing:.1em;font-size:.82rem;margin-bottom:.9rem}
+.t-text{font-family:var(--fd);font-style:italic;font-size:.98rem;color:var(--fg);line-height:1.65;margin-bottom:1.1rem}
+.t-who{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.t-who strong{color:var(--accent);font-weight:400}
+
+/* PROCESS */
+.process-section{padding:6rem 4rem;background:var(--steel)}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3.5rem;position:relative}
+.process-steps::before{content:'';position:absolute;top:2rem;left:12%;right:12%;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent)}
+.pstep{text-align:center;padding:0 1.5rem}
+.pstep-num{width:3.8rem;height:3.8rem;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.9rem;font-weight:700;color:var(--accent);margin:0 auto 1.5rem;background:var(--bg);position:relative;z-index:1}
+.pstep-title{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--fg);margin-bottom:.6rem}
+.pstep-body{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* CTA */
+.cta-section{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:6rem 2rem}
+.cta-parallax{position:absolute;inset:-18%;will-change:transform}
+.cta-parallax img,.cta-parallax>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;mix-blend-mode:luminosity}
+
+.cta-parallax::after{content:'';position:absolute;inset:0;background:rgba(10,22,40,.84)}
+.cta-inner{position:relative;z-index:2;max-width:680px}
+.cta-tag{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem}
+.cta-h{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;line-height:1.08;color:var(--fg);margin-bottom:1.2rem}
+.cta-h em{font-style:italic;color:var(--accent)}
+.cta-sub{font-size:.94rem;color:rgba(240,236,227,.6);margin-bottom:3rem}
+.cta-note{display:inline-block;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,236,227,.35);margin-top:1.5rem;border-bottom:1px solid rgba(201,168,76,.2);padding-bottom:2px}
+
+/* FOOTER */
+footer{background:#060f1e;padding:4rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid rgba(201,168,76,.08)}
+.footer-brand p{font-size:.82rem;color:var(--muted);line-height:1.7;max-width:260px;margin-top:.8rem}
+.fcol h4{font-family:var(--fd);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.fcol ul a{font-size:.8rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.fcol ul a:hover{color:var(--fg)}
+.footer-bar{padding:1.5rem 4rem;border-top:1px solid rgba(201,168,76,.05);display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted)}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}.nav-links{display:none}
+  .hero-content{padding:0 1.5rem 5rem}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .section{padding:5rem 1.5rem}.section-dark{padding:5rem 1.5rem}
+  .prow{grid-template-columns:50px 1fr}.prow-desc,.prow-arrow{display:none}
+  .about-split{grid-template-columns:1fr}.about-img{height:50vw}.about-text{padding:3rem 1.5rem}
+  .team-grid{grid-template-columns:1fr}
+  .testimonials-section{grid-template-columns:1fr;padding:5rem 1.5rem}
+  .process-steps{grid-template-columns:1fr 1fr}.process-steps::before{display:none}
+  .process-section{padding:4rem 1.5rem}
+  footer{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}
+  .footer-bar{padding:1.2rem 1.5rem;flex-direction:column;gap:.4rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="#"><span class="logo-bar"></span>Resilience Test 3</a>
+  <ul class="nav-links"><li><a href="#practice">Practice Areas</a></li><li><a href="#about">Our Firm</a></li><li><a href="#team">Attorneys</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="nav-cta" href="#contact">Reserve Now</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-parallax" id="hero-bg"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" alt="Resilience Test 3 Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Law · Atlanta</p>
+    <h1 class="hero-title">Fierce Advocacy.<br/><em>Proven Results.</em></h1>
+    <p class="hero-desc">Uncompromising advocacy. Unparalleled results. We stand beside our clients from the first call to the final verdict — with the experience, the strategy, and the relentless will to win.</p>
+    <div class="hero-btns">
+      <a class="btn-gold" href="#contact">Reserve Now</a>
+      <a class="btn-outline-g" href="#practice">{{SECONDARY_CTA}}</a>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-band" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Resilience Test 3</span><span class="ticker-dot">·</span><span>Law</span><span class="ticker-dot">·</span><span>Atlanta</span><span class="ticker-dot">·</span><span>No Win No Fee</span><span class="ticker-dot">·</span><span>Available 24/7</span><span class="ticker-dot">·</span><span>Free Consultation</span><span class="ticker-dot">·</span>
+    <span>Resilience Test 3</span><span class="ticker-dot">·</span><span>Law</span><span class="ticker-dot">·</span><span>Atlanta</span><span class="ticker-dot">·</span><span>No Win No Fee</span><span class="ticker-dot">·</span><span>Available 24/7</span><span class="ticker-dot">·</span><span>Free Consultation</span><span class="ticker-dot">·</span>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat"><div class="stat-n">$2B+</div><div class="stat-lbl">Recovered for Clients</div></div>
+  <div class="stat"><div class="stat-n">98%</div><div class="stat-lbl">Case Success Rate</div></div>
+  <div class="stat"><div class="stat-n">30yr</div><div class="stat-lbl">Combined Experience</div></div>
+  <div class="stat"><div class="stat-n">24/7</div><div class="stat-lbl">Free Consultation</div></div>
+</div>
+
+<section class="section" id="practice">
+  <div class="sec-top">
+    <div><p class="sec-sup">What We Handle</p><h2 class="sec-h">Practice <em>Areas</em></h2></div>
+    <a class="btn-outline-g" href="#contact">Free Case Review →</a>
+  </div>
+  <div class="practice-list">
+    <div class="prow"><span class="prow-num">01</span><h3 class="prow-name">Law</h3><p class="prow-desc">Aggressive representation with a relentless focus on maximum compensation for clients in Atlanta.</p><span class="prow-arrow">→</span></div>
+    <div class="prow"><span class="prow-num">02</span><h3 class="prow-name">Personal Injury</h3><p class="prow-desc">Vehicle accidents, slip and fall, workplace injuries — we fight to ensure every dollar you deserve.</p><span class="prow-arrow">→</span></div>
+    <div class="prow"><span class="prow-num">03</span><h3 class="prow-name">Criminal Defense</h3><p class="prow-desc">From misdemeanors to felonies, we build powerful defenses protecting your rights and your future.</p><span class="prow-arrow">→</span></div>
+    <div class="prow"><span class="prow-num">04</span><h3 class="prow-name">Family Law</h3><p class="prow-desc">Divorce, custody, and asset protection handled with strategic clarity and compassionate counsel.</p><span class="prow-arrow">→</span></div>
+    <div class="prow"><span class="prow-num">05</span><h3 class="prow-name">Business Litigation</h3><p class="prow-desc">Protecting your enterprise from contract disputes, partnership conflicts, and corporate liability.</p><span class="prow-arrow">→</span></div>
+  </div>
+</section>
+
+<div class="about-split" id="about">
+  <div class="about-img"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" alt="About Resilience Test 3" style="width:100%;height:100%;object-fit:cover;"/></div>
+  <div class="about-text">
+    <span class="about-badge">About Our Firm</span>
+    <p class="sec-sup">Why Resilience Test 3</p>
+    <h2 class="sec-h">We Don't Just Represent.<br/><em>We Fight.</em></h2>
+    <p class="about-body">Uncompromising advocacy. Unparalleled results. Based in Atlanta, our attorneys have mastered the courtroom, the negotiation table, and every strategy in between. We treat every case as if our own lives depend on the outcome.</p>
+    <ul class="checks">
+      <li>Board-certified specialists in Law</li>
+      <li>Contingency fee — you pay nothing unless we win</li>
+      <li>Direct attorney access — no paralegal runaround</li>
+      <li>Aggressive negotiators and experienced trial lawyers</li>
+      <li>Proudly serving Atlanta and surrounding areas</li>
+    </ul>
+    <a class="btn-gold" href="#contact" style="align-self:flex-start">Reserve Now</a>
+  </div>
+</div>
+
+<div class="process-section">
+  <p class="sec-sup">How It Works</p>
+  <h2 class="sec-h" style="margin-bottom:0">From Call to <em>Victory</em></h2>
+  <div class="process-steps">
+    <div class="pstep"><div class="pstep-num">01</div><h3 class="pstep-title">Free Consultation</h3><p class="pstep-body">Call us anytime — day or night. We assess your case with no cost and no obligation.</p></div>
+    <div class="pstep"><div class="pstep-num">02</div><h3 class="pstep-title">Case Evaluation</h3><p class="pstep-body">Our attorneys build your case strategy, gathering evidence and expert witnesses immediately.</p></div>
+    <div class="pstep"><div class="pstep-num">03</div><h3 class="pstep-title">Negotiation</h3><p class="pstep-body">We negotiate aggressively with insurance companies and opposing counsel on your behalf.</p></div>
+    <div class="pstep"><div class="pstep-num">04</div><h3 class="pstep-title">Maximum Recovery</h3><p class="pstep-body">Settlement or trial — we pursue every avenue until you receive the maximum compensation possible.</p></div>
+  </div>
+</div>
+
+<section class="section-dark" id="team">
+  <p class="sec-sup">Our Attorneys</p>
+  <h2 class="sec-h" style="margin-bottom:0">The Team Behind <em>Your Victory</em></h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-img"></div>
+      <div class="team-info"><div class="team-name">Senior Partner</div><div class="team-role">Law</div><div class="team-exp">25+ Years · Atlanta</div></div>
+    </div>
+    <div class="team-card">
+      <div class="team-img" style="background:rgba(255,255,255,.04)"></div>
+      <div class="team-info"><div class="team-name">Lead Litigator</div><div class="team-role">Criminal Defense</div><div class="team-exp">18 Years · Trial Specialist</div></div>
+    </div>
+    <div class="team-card">
+      <div class="team-img" style="background:rgba(255,255,255,.03)"></div>
+      <div class="team-info"><div class="team-name">Associate Attorney</div><div class="team-role">Family Law</div><div class="team-exp">12 Years · Atlanta</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div><p class="sec-sup">Client Outcomes</p><h2 class="sec-h">Results That <em>Speak</em></h2><p style="font-size:.87rem;color:var(--muted);margin-top:1rem;line-height:1.7">Every case we take, we take to win. These are the words of people whose lives we changed in Atlanta.</p></div>
+  <div class="t-deck">
+    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">"After my accident, Resilience Test 3 recovered three times what the insurance company offered. They never stopped fighting for me."</p><p class="t-who"><strong>Marcus T.</strong> — Personal Injury, Atlanta</p></div>
+    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">"Facing criminal charges was terrifying. The team had all charges dropped within weeks. Absolutely incredible."</p><p class="t-who"><strong>Sandra K.</strong> — Criminal Defense</p></div>
+    <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">"My custody case was complex and emotional. They guided me every step and I won full custody of my children."</p><p class="t-who"><strong>David O.</strong> — Family Law, Atlanta</p></div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="cta-parallax" id="cta-bg"></div>
+  <div class="cta-inner">
+    <p class="cta-tag">Free Consultation · No Fee Unless We Win</p>
+    <h2 class="cta-h">Your Case Starts <em>Here.</em></h2>
+    <p class="cta-sub">Premium industry solutions delivered with total precision. Call now or submit your case — we respond within the hour, 24 hours a day.</p>
+    <a class="btn-gold" href="tel:" style="font-size:.82rem;padding:1.1rem 3.2rem">Reserve Now</a>
+    <p class="cta-note">24/7 Emergency Line · Atlanta</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <a class="logo" href="#"><span class="logo-bar"></span>Resilience Test 3</a>
+    <p>Uncompromising advocacy. Unparalleled results. Serving Atlanta with proven legal excellence since day one.</p>
+  </div>
+  <div class="fcol"><h4>Practice Areas</h4><ul><li><a href="#">Law</a></li><li><a href="#">Personal Injury</a></li><li><a href="#">Criminal Defense</a></li><li><a href="#">Family Law</a></li><li><a href="#">Business Law</a></li></ul></div>
+  <div class="fcol"><h4>Our Firm</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Our Attorneys</a></li><li><a href="#">Case Results</a></li><li><a href="#">Testimonials</a></li></ul></div>
+  <div class="fcol"><h4>Contact</h4><ul><li><a href="#">Free Consultation</a></li><li><a href="#">Atlanta Office</a></li><li><a href="#">24/7 Emergency</a></li></ul></div>
+</footer>
+<div class="footer-bar"><span>© 2025 Resilience Test 3 · Atlanta · All Rights Reserved</span><span>Attorney Advertising · Results May Vary</span></div>
+
+<script>
+window.addEventListener('load',function(){
+  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined')return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to('#hero-bg',{yPercent:28,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('#cta-bg',{yPercent:22,ease:'none',scrollTrigger:{trigger:'.cta-section',start:'top bottom',end:'bottom top',scrub:true}});
+  gsap.set(['.hero-eyebrow','.hero-title','.hero-desc','.hero-btns'],{y:45,opacity:0});
+  gsap.to(['.hero-eyebrow','.hero-title','.hero-desc','.hero-btns'],{y:0,opacity:1,duration:1,stagger:.13,ease:'power3.out',delay:.25});
+  gsap.from('.stat',{opacity:0,y:30,stagger:.1,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.stats-row',start:'top 85%'}});
+  gsap.from('.prow',{opacity:0,x:-30,stagger:.08,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'.practice-list',start:'top 80%'}});
+  gsap.from('.team-card',{opacity:0,y:40,stagger:.12,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.team-grid',start:'top 80%'}});
+  gsap.from('.pstep',{opacity:0,y:30,stagger:.12,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.process-steps',start:'top 80%'}});
+  gsap.from('.t-card',{opacity:0,x:25,stagger:.1,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'.t-deck',start:'top 80%'}});
+});
+</script>
+</body>
+</html>
