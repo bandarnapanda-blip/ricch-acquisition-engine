@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>V16.3 Dental Pro — Dental Implants</title>
+<meta name="description" content="Precision dentistry. Life-changing results."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--teal:#4a8f8c;--slate:#202a2c;--cream:#f8f6f2;--white:#fff;--muted:#828c8d;--fd:'Fraunces',Georgia,serif;--fb:'Outfit',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--slate);font-family:var(--fb);font-weight:300;overflow-x:hidden;line-height:1.65}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3.5rem;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(74,143,140,.12)}
+.logo{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--slate);text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:.8rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.nav-pill{font-size:.78rem;font-weight:600;color:var(--white);background:var(--teal);padding:.65rem 1.6rem;border-radius:100px;text-decoration:none;transition:opacity .25s}
+.nav-pill:hover{opacity:.85}
+/* HERO */
+.hero{position:relative;min-height:90vh;display:flex;flex-direction:column;overflow:hidden;background:#afc8cb}
+.hero-bg-word{position:absolute;bottom:0;left:0;right:0;font-family:var(--fd);font-size:clamp(7rem,20vw,18rem);font-weight:700;color:rgba(255,255,255,.2);line-height:.9;text-transform:uppercase;text-align:center;z-index:1;pointer-events:none}
+.hero-top{display:grid;grid-template-columns:1fr auto 1fr;gap:2rem;padding:4rem 4rem 0;z-index:3;position:relative;flex:1;align-items:center}
+.hero-left h1{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4.2rem);font-weight:700;line-height:1.08;color:var(--white)}
+.hero-left h1 em{font-style:italic;font-weight:300}
+.hero-left p{font-size:.92rem;color:rgba(255,255,255,.75);margin-top:1rem;max-width:320px;line-height:1.7}
+.hero-image-col{height:480px;position:relative;z-index:2}
+.hero-image-col img{height:100%;object-fit:contain;display:block;margin:0 auto}
+<img src="https://images.unsplash.com/photo-1559839734-2b71f15320c2?auto=format&fit=crop&w=2000&q=80" alt="V16.3 Dental Pro Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+.hero-right{display:flex;flex-direction:column;gap:1.5rem;align-items:flex-end}
+.hstat{text-align:right}
+.hstat-n{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:var(--white);line-height:1}
+.hstat-l{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.hero-bar{background:rgba(32,42,44,.88);backdrop-filter:blur(10px);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;z-index:3;position:relative}
+.hbar-text{font-family:var(--fd);font-style:italic;font-size:1.05rem;color:rgba(255,255,255,.85)}
+.hbar-btns{display:flex;gap:1rem}
+.btn-teal{display:inline-block;font-size:.78rem;font-weight:600;color:var(--white);background:var(--teal);padding:.85rem 2rem;border-radius:100px;text-decoration:none;transition:opacity .25s}
+.btn-teal:hover{opacity:.85}
+.btn-wh{display:inline-block;font-size:.78rem;font-weight:500;color:var(--slate);background:var(--white);padding:.82rem 2rem;border-radius:100px;text-decoration:none;transition:opacity .25s}
+.btn-wh:hover{opacity:.85}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);background:var(--teal)}
+.srib{padding:2.2rem;border-right:1px solid rgba(255,255,255,.15);text-align:center}
+.srib:last-child{border-right:none}
+.srib-n{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:.3rem}
+.srib-l{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+/* SERVICES */
+.section{padding:6rem 3.5rem;max-width:1300px;margin:0 auto}
+.sec-chip{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);background:rgba(74,143,140,.1);padding:.35rem 1rem;border-radius:100px;margin-bottom:1rem}
+.sec-h{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15;color:var(--slate)}
+.sec-h em{font-style:italic;color:var(--teal)}
+.svcs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.scard{background:var(--cream);border-radius:20px;padding:2.2rem;position:relative;overflow:hidden;transition:transform .35s,box-shadow .35s}
+.scard:hover{transform:translateY(-5px);box-shadow:0 16px 50px rgba(74,143,140,.12)}
+.scard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.scard:hover::after{transform:scaleX(1)}
+.scard-icon{width:2.8rem;height:2.8rem;border-radius:12px;background:rgba(74,143,140,.12);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.2rem}
+.scard-name{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--slate);margin-bottom:.5rem}
+.scard-body{font-size:.83rem;color:var(--muted);line-height:1.65}
+/* ABOUT */
+.about-split{display:grid;grid-template-columns:1fr 1fr;min-height:70vh}
+.aimg{position:relative;overflow:hidden;background:var(--cream)}
+.aimg img{width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1641943523059-6ebe0dcb209a?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="About V16.3 Dental Pro" style="width:100%;height:100%;object-fit:cover;"/>
+.atext{background:var(--slate);padding:6rem 4.5rem;display:flex;flex-direction:column;justify-content:center}
+.atext .sec-chip{color:rgba(74,143,140,.9);background:rgba(74,143,140,.15)}
+.atext .sec-h{color:var(--white)}
+.atext .sec-h em{color:var(--teal)}
+.abody{font-size:.92rem;color:rgba(255,255,255,.6);line-height:1.8;margin:1.2rem 0 2rem;max-width:460px}
+.creds{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:2.5rem}
+.cred{background:rgba(255,255,255,.06);border-radius:10px;padding:.85rem 1rem;font-size:.78rem;color:rgba(255,255,255,.72);display:flex;align-items:center;gap:.5rem}
+.cred::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+/* GALLERY */
+.gallery-wrap{padding:6rem 3.5rem;background:var(--cream)}
+.gallery-inner{max-width:1300px;margin:0 auto}
+.gal-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:260px 260px;gap:1rem;margin-top:3rem}
+.gitem{border-radius:16px;overflow:hidden;position:relative;background:rgba(74,143,140,.08)}
+.gitem.tall{grid-row:span 2}
+.gitem img{width:100%;height:100%;object-fit:cover;transition:transform .7s;display:block}
+.gitem:hover img{transform:scale(1.05)}
+<img src="https://images.unsplash.com/photo-9_1Y_IKP4tY?auto=format&fit=crop&w=2000&q=80" alt="Procedure Result" style="width:100%;height:100%;object-fit:cover;"/>
+.glabel{position:absolute;bottom:.8rem;left:.8rem;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.9);background:rgba(32,42,44,.7);backdrop-filter:blur(5px);padding:.28rem .7rem;border-radius:100px}
+/* PROCESS */
+.proc-wrap{padding:6rem 3.5rem}
+.proc-inner{max-width:1300px;margin:0 auto}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem;position:relative}
+.proc-steps::before{content:'';position:absolute;top:1.8rem;left:12%;right:12%;height:1px;background:linear-gradient(to right,transparent,var(--teal),transparent)}
+.ps{text-align:center}
+.ps-num{width:3.6rem;height:3.6rem;border-radius:50%;border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.88rem;font-weight:700;color:var(--teal);margin:0 auto 1.3rem;background:var(--white);position:relative;z-index:1}
+.ps-title{font-family:var(--fd);font-size:.98rem;font-weight:700;color:var(--slate);margin-bottom:.5rem}
+.ps-body{font-size:.8rem;color:var(--muted);line-height:1.6}
+/* TESTIMONIALS */
+.t-wrap{padding:6rem 3.5rem;background:var(--cream)}
+.t-inner{max-width:1300px;margin:0 auto}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+.tc{background:var(--white);border-radius:20px;padding:2rem 2.2rem;border-bottom:3px solid transparent;transition:border-color .3s,transform .3s}
+.tc:hover{border-bottom-color:var(--teal);transform:translateY(-4px)}
+.tc-stars{color:var(--teal);letter-spacing:.1em;margin-bottom:.9rem;font-size:.8rem}
+.tc-text{font-family:var(--fd);font-style:italic;font-size:.93rem;color:var(--slate);line-height:1.65;margin-bottom:1.1rem}
+.tc-who{font-size:.7rem;font-weight:600;color:var(--muted)}
+.tc-who strong{color:var(--teal)}
+/* BOOKING */
+.book-wrap{padding:5rem 3.5rem}
+.book-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.book-text p{font-size:.92rem;color:var(--muted);line-height:1.75;margin:1rem 0 2rem}
+.book-card{background:var(--cream);border-radius:24px;padding:2.5rem;border:1.5px solid rgba(74,143,140,.15)}
+.bcard-title{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--slate);margin-bottom:1.4rem}
+.bopts{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.6rem}
+.bopt{display:flex;align-items:center;gap:.8rem;padding:1rem 1.2rem;background:var(--white);border-radius:12px;border:1.5px solid rgba(74,143,140,.12);cursor:pointer;transition:border-color .2s}
+.bopt:hover{border-color:var(--teal)}
+.bopt-icon{font-size:1.1rem;flex-shrink:0}
+.bopt-name{font-size:.83rem;font-weight:500;color:var(--slate)}
+.bopt-sub{font-size:.7rem;color:var(--muted)}
+/* CTA */
+.cta-wrap{position:relative;padding:7rem 3.5rem;overflow:hidden;text-align:center;background:var(--slate)}
+.cta-bg{position:absolute;inset:0;opacity:.1}
+.cta-bg img{width:100%;height:100%;object-fit:cover;display:block}
+
+.cta-content{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.cta-h{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1rem}
+.cta-h em{font-style:italic;color:var(--teal)}
+.cta-sub{font-size:.92rem;color:rgba(255,255,255,.6);margin-bottom:2.5rem}
+/* FOOTER */
+footer{background:#121d1e;padding:4rem 3.5rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem}
+.fbrand p{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.7;margin-top:.7rem;max-width:240px}
+.fcol h4{font-family:var(--fd);font-size:.63rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:1.1rem}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.fcol ul a{font-size:.78rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s}
+.fcol ul a:hover{color:var(--white)}
+.fbar{padding:1.4rem 3.5rem;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;font-size:.68rem;color:rgba(255,255,255,.28)}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}.nav-links{display:none}
+  .hero-top{grid-template-columns:1fr;}.hero-right{display:none}.hero-image-col{height:220px}
+  .hero-bar{flex-direction:column;gap:1rem;padding:1.5rem}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .section{padding:4rem 1.5rem}.svcs-grid{grid-template-columns:1fr}
+  .about-split{grid-template-columns:1fr}.aimg{height:50vw}.atext{padding:3rem 1.5rem}
+  .gallery-wrap{padding:4rem 1.5rem}.gal-grid{grid-template-columns:1fr;grid-template-rows:auto}.gitem.tall{grid-row:span 1}
+  .proc-wrap{padding:4rem 1.5rem}.proc-steps{grid-template-columns:1fr 1fr}.proc-steps::before{display:none}
+  .t-wrap{padding:4rem 1.5rem}.t-grid{grid-template-columns:1fr}
+  .book-wrap{padding:4rem 1.5rem}.book-inner{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}.fbar{padding:1.2rem 1.5rem;flex-direction:column;gap:.4rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="#"><span class="logo-dot"></span>V16.3 Dental Pro</a>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="nav-pill" href="#contact">Reserve Now</a>
+</nav>
+<section class="hero" id="home">
+  <div class="hero-bg-word">AESTHETICS</div>
+  <div class="hero-top">
+    <div class="hero-left">
+      <p style="font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:1rem">Dental Implants · Austin</p>
+      <h1 class="">Your Most <em>Confident</em> Smile Starts Here.</h1>
+      <p>Precision dentistry. Life-changing results.</p>
+      <div style="display:flex;gap:1rem;margin-top:2rem"><a class="btn-teal" href="#contact">Reserve Now</a><a class="btn-wh" href="#services">{{SECONDARY_CTA}}</a></div>
+    </div>
+    <div class="hero-image-col"><img src="https://images.unsplash.com/photo-1559839734-2b71f15320c2?auto=format&fit=crop&w=2000&q=80" alt="V16.3 Dental Pro Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
+    <div class="hero-right">
+      <div class="hstat"><div class="hstat-n">5,000+</div><div class="hstat-l">Patients Treated</div></div>
+      <div class="hstat"><div class="hstat-n">15yr</div><div class="hstat-l">Experience</div></div>
+      <div class="hstat"><div class="hstat-n">4.9★</div><div class="hstat-l">Average Rating</div></div>
+    </div>
+  </div>
+  <div class="hero-bar">
+    <p class="hbar-text">"Where clinical precision meets beautiful confidence."</p>
+    <div class="hbar-btns"><a class="btn-teal" href="#contact">Book Consultation</a></div>
+  </div>
+</section>
+<div class="stats-row">
+  <div class="srib"><div class="srib-n">5,000+</div><div class="srib-l">Patients Treated</div></div>
+  <div class="srib"><div class="srib-n">15yr</div><div class="srib-l">Clinical Excellence</div></div>
+  <div class="srib"><div class="srib-n">4.9★</div><div class="srib-l">Patient Rating</div></div>
+  <div class="srib"><div class="srib-n">Same Day</div><div class="srib-l">Appointments</div></div>
+</div>
+<section class="section" id="services">
+  <div data-aos="fade-up"><span class="sec-chip">What We Offer</span><h2 class="sec-h">Premium <em>Care</em>,<br/>Beautiful Results</h2></div>
+  <div class="svcs-grid">
+    <div class="scard" data-aos="fade-up"><div class="scard-icon">🦷</div><h3 class="scard-name">Dental Implants</h3><p class="scard-body">Premium industry solutions delivered with total precision. Every treatment is tailored precisely to you, your timeline, and your goals.</p></div>
+    <div class="scard" data-aos="fade-up" data-aos-delay="80"><div class="scard-icon">✨</div><h3 class="scard-name">Cosmetic Procedures</h3><p class="scard-body">Veneers, whitening, and smile design crafted to look natural, last long, and feel incredible.</p></div>
+    <div class="scard" data-aos="fade-up" data-aos-delay="160"><div class="scard-icon">🔬</div><h3 class="scard-name">Advanced Technology</h3><p class="scard-body">Digital scanning, 3D imaging, and same-day restorations using the latest clinical tools available.</p></div>
+    <div class="scard" data-aos="fade-up"><div class="scard-icon">😌</div><h3 class="scard-name">Comfort-First Care</h3><p class="scard-body">Sedation options and a calming environment designed for even the most anxious patients.</p></div>
+    <div class="scard" data-aos="fade-up" data-aos-delay="80"><div class="scard-icon">💎</div><h3 class="scard-name">Implants & Restoration</h3><p class="scard-body">Premium implants and full-mouth restoration by board-certified specialists in Austin.</p></div>
+    <div class="scard" data-aos="fade-up" data-aos-delay="160"><div class="scard-icon">📅</div><h3 class="scard-name">Flexible Scheduling</h3><p class="scard-body">Evening and weekend appointments available. Insurance accepted. Payment plans offered.</p></div>
+  </div>
+</section>
+<div class="about-split" id="about">
+  <div class="aimg"><img src="https://images.unsplash.com/photo-1641943523059-6ebe0dcb209a?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="About V16.3 Dental Pro" style="width:100%;height:100%;object-fit:cover;"/></div>
+  <div class="atext">
+    <span class="sec-chip" data-aos="fade-left">Our Practice</span>
+    <h2 class="sec-h" data-aos="fade-left" data-aos-delay="60">Clinical <em>Luxury</em><br/>Meets Precision</h2>
+    <p class="abody">Precision dentistry. Life-changing results. We're a boutique practice in Austin where every patient is known by name and every treatment is approached with genuine care and clinical excellence.</p>
+    <div class="creds">
+      <div class="cred">Board Certified</div><div class="cred">Sedation Available</div>
+      <div class="cred">Same Day Care</div><div class="cred">Insurance Accepted</div>
+      <div class="cred">5-Star Rated</div><div class="cred">Austin Based</div>
+    </div>
+    <a class="btn-teal" href="#contact" style="align-self:flex-start">Reserve Now</a>
+  </div>
+</div>
+<section class="gallery-wrap" id="gallery">
+  <div class="gallery-inner">
+    <div data-aos="fade-up"><span class="sec-chip">Our Work</span><h2 class="sec-h">Results That <em>Transform</em></h2></div>
+    <div class="gal-grid">
+      <div class="gitem tall"><img src="https://images.unsplash.com/photo-8OCLGI7ZXc0?auto=format&fit=crop&w=2000&q=80" alt="Procedure Result" style="width:100%;height:100%;object-fit:cover;"/><span class="glabel">Before / After</span></div>
+      <div class="gitem" style="background:rgba(74,143,140,.08)"><span class="glabel">Cosmetic</span></div>
+      <div class="gitem" style="background:rgba(74,143,140,.05)"><span class="glabel">Implants</span></div>
+      <div class="gitem" style="grid-column:span 2;background:rgba(32,42,44,.06)"><span class="glabel">Our Clinic</span></div>
+    </div>
+  </div>
+</section>
+<section class="proc-wrap">
+  <div class="proc-inner">
+    <div data-aos="fade-up"><span class="sec-chip">How It Works</span><h2 class="sec-h">Your Journey to a <em>Perfect Smile</em></h2></div>
+    <div class="proc-steps">
+      <div class="ps" data-aos="fade-up"><div class="ps-num">01</div><h3 class="ps-title">Free Consultation</h3><p class="ps-body">We assess your smile, discuss your goals, and answer every question with no pressure.</p></div>
+      <div class="ps" data-aos="fade-up" data-aos-delay="80"><div class="ps-num">02</div><h3 class="ps-title">Custom Plan</h3><p class="ps-body">Digital imaging and 3D modelling to design your perfect outcome before we begin.</p></div>
+      <div class="ps" data-aos="fade-up" data-aos-delay="160"><div class="ps-num">03</div><h3 class="ps-title">Expert Treatment</h3><p class="ps-body">Our specialists deliver precise, comfortable treatment at every stage of the process.</p></div>
+      <div class="ps" data-aos="fade-up" data-aos-delay="240"><div class="ps-num">04</div><h3 class="ps-title">Your New Smile</h3><p class="ps-body">Walk out confident — with a smile you're proud to show the world and ongoing support.</p></div>
+    </div>
+  </div>
+</section>
+<section class="t-wrap">
+  <div class="t-inner">
+    <div data-aos="fade-up"><span class="sec-chip">Patient Stories</span><h2 class="sec-h">They <em>Smiled.</em> You Will Too.</h2></div>
+    <div class="t-grid">
+      <div class="tc" data-aos="fade-up"><div class="tc-stars">★★★★★</div><p class="tc-text">"I was terrified of dentists my whole life. V16.3 Dental Pro changed that completely. Gentle, professional, and the results are stunning."</p><p class="tc-who"><strong>Ama K.</strong> — Austin</p></div>
+      <div class="tc" data-aos="fade-up" data-aos-delay="80"><div class="tc-stars">★★★★★</div><p class="tc-text">"My veneers look completely natural. People don't believe they're not real. Absolute masters at their craft in Austin."</p><p class="tc-who"><strong>Kofi M.</strong> — Cosmetic Patient</p></div>
+      <div class="tc" data-aos="fade-up" data-aos-delay="160"><div class="tc-stars">★★★★★</div><p class="tc-text">"Same-day implant. No pain. Perfect result. V16.3 Dental Pro is the only clinic I will ever recommend."</p><p class="tc-who"><strong>Serwa A.</strong> — Implants</p></div>
+    </div>
+  </div>
+</section>
+<section class="book-wrap" id="contact">
+  <div class="book-inner">
+    <div class="book-text" data-aos="fade-right">
+      <span class="sec-chip">Book Your Visit</span>
+      <h2 class="sec-h">Ready for a <em>New Smile?</em></h2>
+      <p>Premium industry solutions delivered with total precision. Same-week appointments available in Austin. Choose how you would like to start.</p>
+      <a class="btn-teal" href="tel:" style="font-size:.9rem">Reserve Now</a>
+    </div>
+    <div class="book-card" data-aos="fade-left">
+      <h3 class="bcard-title">How Would You Like to Start?</h3>
+      <div class="bopts">
+        <div class="bopt"><span class="bopt-icon">📞</span><div><div class="bopt-name">Call Us Now</div><div class="bopt-sub">Speak with our team directly · Austin</div></div></div>
+        <div class="bopt"><span class="bopt-icon">💬</span><div><div class="bopt-name">WhatsApp / Message</div><div class="bopt-sub">Send us a quick message anytime</div></div></div>
+        <div class="bopt"><span class="bopt-icon">📅</span><div><div class="bopt-name">Book Online</div><div class="bopt-sub">Pick your preferred time and date</div></div></div>
+      </div>
+      <a class="btn-teal" href="tel:" style="display:block;text-align:center;border-radius:12px;font-size:.85rem">Reserve Now</a>
+    </div>
+  </div>
+</section>
+<section class="cta-wrap">
+  <div class="cta-bg"></div>
+  <div class="cta-content">
+    <h2 class="cta-h">Your Best Smile is<br/><em>One Call Away.</em></h2>
+    <p class="cta-sub">Precision dentistry. Life-changing results. Serving Austin with clinical luxury and genuine care.</p>
+    <a class="btn-teal" href="tel:" style="font-size:.9rem;padding:1.1rem 3rem">Reserve Now</a>
+  </div>
+</section>
+<footer>
+  <div class="fbrand"><a class="logo" href="#"><span class="logo-dot"></span>V16.3 Dental Pro</a><p>Precision dentistry. Life-changing results. Clinical excellence in Austin.</p></div>
+  <div class="fcol"><h4>Services</h4><ul><li><a href="#">Dental Implants</a></li><li><a href="#">Cosmetic Dentistry</a></li><li><a href="#">Implants</a></li><li><a href="#">Whitening</a></li></ul></div>
+  <div class="fcol"><h4>Our Practice</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Our Team</a></li><li><a href="#">Patient Stories</a></li><li><a href="#">Gallery</a></li></ul></div>
+  <div class="fcol"><h4>Visit Us</h4><ul><li><a href="#">Austin</a></li><li><a href="#">Hours</a></li><li><a href="#">Book Now</a></li></ul></div>
+</footer>
+<div class="fbar"><span>© 2025 V16.3 Dental Pro · Austin</span><span>Healthcare Provider · All Rights Reserved</span></div>
+<script>window.addEventListener('load',function(){if(typeof AOS!=='undefined'){AOS.init({once:true,offset:60,duration:700,easing:'ease-out-cubic'})}})</script>
+</body>
+</html>
