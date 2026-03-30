@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>V16.3 Summit Hotel — Luxury Resort</title>
+<meta name="description" content="Industry-leading results, guaranteed."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050810;--fg:#e8e4dc;--accent:#c8a96e;--muted:#6a7080;--mid:#0d1220;--fd:'Bodoni Moda',Georgia,serif;--fb:'Barlow',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--fb);font-weight:300;overflow-x:hidden;line-height:1.65}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(200,169,110,.04) 0%,transparent 60%);pointer-events:none;z-index:0}
+
+/* NAV — glassmorphism */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;background:rgba(5,8,16,.6);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,169,110,.1)}
+.logo{font-family:var(--fd);font-size:1.2rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--fg);text-decoration:none}
+.nav-center{display:flex;gap:3rem;list-style:none}
+.nav-center a{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(232,228,220,.45);text-decoration:none;transition:color .25s}
+.nav-center a:hover{color:var(--accent)}
+.nav-enquire{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:.7rem 1.8rem;text-decoration:none;transition:opacity .3s}
+.nav-enquire:hover{opacity:.85}
+
+/* HERO — full bleed, text at bottom like AMALI */
+.hero{position:relative;height:100vh;min-height:720px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-parallax{position:absolute;inset:-20%;will-change:transform}
+.hero-parallax img,.hero-parallax>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1641943523059-6ebe0dcb209a?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="V16.3 Summit Hotel Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+.hero-parallax::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,8,16,.92) 0%,rgba(5,8,16,.3) 55%,rgba(5,8,16,.1) 100%)}
+.hero-bottom{position:relative;z-index:2;padding:4rem;display:flex;flex-direction:column;gap:1.5rem}
+.hero-label{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:1rem}
+.hero-label::before{content:'';width:35px;height:1px;background:var(--accent)}
+.hero-h1{font-family:var(--fd);font-size:clamp(4rem,10vw,9rem);font-weight:400;line-height:.92;color:var(--fg);letter-spacing:-.01em}
+.hero-h1 em{font-style:italic;color:var(--accent)}
+.hero-meta-bar{display:grid;grid-template-columns:repeat(4,auto) 1fr;gap:0;background:rgba(232,228,220,.06);backdrop-filter:blur(12px);border:1px solid rgba(200,169,110,.12);border-radius:4px}
+.hero-meta-item{padding:1.4rem 2.2rem;border-right:1px solid rgba(200,169,110,.1);display:flex;align-items:center;gap:1rem}
+.hero-meta-item:last-child{border-right:none;justify-content:flex-end}
+.hmeta-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.hmeta-val{font-family:var(--fd);font-size:.95rem;color:var(--fg)}
+.btn-glass{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg);background:rgba(200,169,110,.15);border:1px solid rgba(200,169,110,.35);padding:.85rem 2rem;text-decoration:none;transition:all .3s;backdrop-filter:blur(8px)}
+.btn-glass:hover{background:rgba(200,169,110,.25);border-color:var(--accent)}
+.scroll-side{position:absolute;right:2.5rem;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.scroll-side span{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(232,228,220,.3);writing-mode:vertical-rl}
+.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--accent),transparent);animation:sl 2.2s ease infinite}
+@keyframes sl{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* PROPERTIES TICKER */
+.ticker{overflow:hidden;background:var(--accent);padding:.8rem 0;white-space:nowrap}
+.ticker-inner{display:inline-flex;animation:tick 26s linear infinite}
+.ticker-inner span{font-family:var(--fd);font-size:.78rem;letter-spacing:.1em;color:var(--bg);padding:0 3rem}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(200,169,110,.08)}
+.sitem{padding:3rem 3.5rem;border-right:1px solid rgba(200,169,110,.07);transition:background .3s}
+.sitem:last-child{border-right:none}
+.sitem:hover{background:rgba(200,169,110,.04)}
+.snum{font-family:var(--fd);font-size:3rem;font-weight:400;color:var(--accent);line-height:1;margin-bottom:.4rem}
+.slbl{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* FEATURED PROPERTIES */
+.section{padding:7rem 4rem}
+.sec-eyebrow{font-size:.6rem;letter-spacing:.38em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem}
+.sec-eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+.sec-h{font-family:var(--fd);font-size:clamp(2.2rem,4.5vw,4rem);font-weight:400;line-height:1.08;color:var(--fg)}
+.sec-h em{font-style:italic;color:var(--accent)}
+.sec-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem}
+.prop-grid{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:420px 280px;gap:1.5px;background:rgba(200,169,110,.06)}
+.pcard{position:relative;overflow:hidden;background:var(--mid)}
+.pcard.tall{grid-row:span 2}
+.pcard img{width:100%;height:100%;object-fit:cover;transition:transform .9s ease;display:block}
+.pcard:hover img{transform:scale(1.06)}
+<img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="Procedure Result" style="width:100%;height:100%;object-fit:cover;"/>
+.pcard-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,8,16,.85) 0%,transparent 60%)}
+.pcard-info{position:absolute;bottom:0;left:0;right:0;padding:2rem 2.2rem}
+.pcard-tag{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.pcard-name{font-family:var(--fd);font-size:1.4rem;font-weight:400;color:var(--fg);margin-bottom:.4rem}
+.pcard-meta{font-size:.72rem;color:rgba(232,228,220,.55)}
+
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:80vh}
+.about-img{position:relative;overflow:hidden;background:var(--mid)}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1643660527070-03ed14b41677?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="About V16.3 Summit Hotel" style="width:100%;height:100%;object-fit:cover;"/>
+.about-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(5,8,16,.3))}
+.about-text{background:var(--mid);padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgba(200,169,110,.08)}
+.about-body{font-size:.95rem;color:rgba(232,228,220,.58);line-height:1.82;margin:1.5rem 0 2.5rem;max-width:460px}
+.about-features{display:flex;flex-direction:column;gap:1rem;margin-bottom:3rem}
+.afeat{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start;padding:1rem 0;border-bottom:1px solid rgba(200,169,110,.07)}
+.afeat-num{font-family:var(--fd);font-size:.8rem;color:var(--accent);font-style:italic}
+.afeat-text h4{font-family:var(--fd);font-size:.95rem;color:var(--fg);margin-bottom:.25rem}
+.afeat-text p{font-size:.8rem;color:var(--muted);line-height:1.5}
+
+/* SERVICES */
+.services-section{padding:7rem 4rem;background:var(--mid)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(200,169,110,.06);margin-top:4rem}
+.sv-card{background:var(--bg);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:background .35s}
+.sv-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .5s ease}
+.sv-card:hover{background:rgba(255,255,255,.018)}
+.sv-card:hover::after{width:100%}
+.sv-num{font-family:var(--fd);font-style:italic;font-size:.85rem;color:var(--accent);margin-bottom:1.5rem}
+.sv-name{font-family:var(--fd);font-size:1.3rem;font-weight:400;color:var(--fg);margin-bottom:.8rem}
+.sv-body{font-size:.83rem;color:var(--muted);line-height:1.68}
+
+/* TESTIMONIALS */
+.t-section{padding:7rem 4rem}
+.t-layout{display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:center;margin-top:4rem}
+.t-cards{display:flex;flex-direction:column;gap:2px}
+.tc{background:var(--mid);padding:2.2rem 2.5rem;border-left:2px solid transparent;transition:border-color .3s}
+.tc:hover{border-left-color:var(--accent)}
+.tc-quote{font-family:var(--fd);font-style:italic;font-size:1rem;color:var(--fg);line-height:1.65;margin-bottom:1.1rem}
+.tc-attr{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.tc-attr strong{color:var(--accent);font-weight:400}
+
+/* CTA */
+.cta-section{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:6rem 2rem}
+.cta-parallax{position:absolute;inset:-20%;will-change:transform}
+.cta-parallax img,.cta-parallax>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.25}
+
+.cta-parallax::after{content:'';position:absolute;inset:0;background:rgba(5,8,16,.82)}
+.cta-inner{position:relative;z-index:2;max-width:680px}
+.cta-h{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:400;line-height:1.08;color:var(--fg);margin-bottom:1.2rem}
+.cta-h em{font-style:italic;color:var(--accent)}
+.cta-sub{font-size:.93rem;color:rgba(232,228,220,.55);margin-bottom:3rem}
+.btn-accent{display:inline-block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:1rem 2.8rem;text-decoration:none;transition:opacity .3s}
+.btn-accent:hover{opacity:.85}
+
+/* FOOTER */
+footer{background:#02040c;padding:4rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid rgba(200,169,110,.07)}
+.fb p{font-size:.78rem;color:var(--muted);line-height:1.72;margin-top:.8rem;max-width:240px}
+.fc h4{font-family:var(--fd);font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.fc ul a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.fc ul a:hover{color:var(--fg)}
+.fbar{padding:1.5rem 4rem;border-top:1px solid rgba(200,169,110,.05);display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted)}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}.nav-center{display:none}
+  .hero-bottom{padding:2rem 1.5rem}.hero-h1{font-size:clamp(3rem,14vw,6rem)}
+  .hero-meta-bar{grid-template-columns:1fr 1fr;border-radius:0}.hero-meta-item:nth-child(5){display:none}
+  .stats{grid-template-columns:1fr 1fr}
+  .section{padding:5rem 1.5rem}.prop-grid{grid-template-columns:1fr;grid-template-rows:auto}.pcard.tall{grid-row:span 1}
+  .about-wrap{grid-template-columns:1fr}.about-img{height:50vw}.about-text{padding:3rem 1.5rem}
+  .services-section{padding:5rem 1.5rem}.svc-grid{grid-template-columns:1fr}
+  .t-section{padding:5rem 1.5rem}.t-layout{grid-template-columns:1fr;gap:2rem}
+  footer{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}
+  .fbar{padding:1.2rem 1.5rem;flex-direction:column;gap:.4rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="#">V16.3 Summit Hotel</a>
+  <ul class="nav-center"><li><a href="#properties">Properties</a></li><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="nav-enquire" href="#contact">Reserve Now</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-parallax" id="hero-bg"><img src="https://images.unsplash.com/photo-1641943523059-6ebe0dcb209a?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="V16.3 Summit Hotel Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
+  <div class="scroll-side"><span>Discover</span><div class="scroll-line"></div></div>
+  <div class="hero-bottom">
+    <p class="hero-label">Luxury Resort · Aspen</p>
+    <h1 class="hero-h1">Where Luxury<br/><em>Meets Vision.</em></h1>
+    <div class="hero-meta-bar">
+      <div class="hero-meta-item"><div><div class="hmeta-label">Location</div><div class="hmeta-val">Aspen</div></div></div>
+      <div class="hero-meta-item"><div><div class="hmeta-label">Specialty</div><div class="hmeta-val">Luxury Resort</div></div></div>
+      <div class="hero-meta-item"><div><div class="hmeta-label">Established</div><div class="hmeta-val">Since 2005</div></div></div>
+      <div class="hero-meta-item"><div><div class="hmeta-label">Portfolio</div><div class="hmeta-val">200+ Projects</div></div></div>
+      <div class="hero-meta-item"><a class="btn-glass" href="#contact">Reserve Now</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>V16.3 Summit Hotel</span><span>·</span><span>Luxury Resort</span><span>·</span><span>Aspen</span><span>·</span><span>Luxury Properties</span><span>·</span><span>Elite Architecture</span><span>·</span><span>Premium Listings</span><span>·</span>
+    <span>V16.3 Summit Hotel</span><span>·</span><span>Luxury Resort</span><span>·</span><span>Aspen</span><span>·</span><span>Luxury Properties</span><span>·</span><span>Elite Architecture</span><span>·</span><span>Premium Listings</span><span>·</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="sitem"><div class="snum">200+</div><div class="slbl">Projects Delivered</div></div>
+  <div class="sitem"><div class="snum">$2B+</div><div class="slbl">Portfolio Value</div></div>
+  <div class="sitem"><div class="snum">18yr</div><div class="slbl">Market Expertise</div></div>
+  <div class="sitem"><div class="snum">98%</div><div class="slbl">Client Satisfaction</div></div>
+</div>
+
+<section class="section" id="properties">
+  <div class="sec-top">
+    <div><p class="sec-eyebrow">Featured Portfolio</p><h2 class="sec-h">Exceptional <em>Properties</em></h2></div>
+    <a class="btn-glass" href="#contact">View All →</a>
+  </div>
+  <div class="prop-grid">
+    <div class="pcard tall">
+      <img src="https://images.unsplash.com/photo-1643660527070-03ed14b41677?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="Procedure Result" style="width:100%;height:100%;object-fit:cover;"/>
+      <div class="pcard-overlay"></div>
+      <div class="pcard-info"><div class="pcard-tag">Premium Listing</div><div class="pcard-name">Signature Estate</div><div class="pcard-meta">Aspen · 6 Bed · 8,500 sqft</div></div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-info"><div class="pcard-tag">New Listing</div><div class="pcard-name">Modern Villa</div><div class="pcard-meta">Aspen · 4 Bed · 5,200 sqft</div></div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-info"><div class="pcard-tag">Investment</div><div class="pcard-name">Penthouse Collection</div><div class="pcard-meta">Aspen · 3 Bed · 3,800 sqft</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="about-wrap" id="about">
+  <div class="about-img"><img src="https://images.unsplash.com/photo-1643660527070-03ed14b41677?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="About V16.3 Summit Hotel" style="width:100%;height:100%;object-fit:cover;"/></div>
+  <div class="about-text">
+    <p class="sec-eyebrow">Our Legacy</p>
+    <h2 class="sec-h">Architecture That<br/><em>Defines Cities.</em></h2>
+    <p class="about-body">Industry-leading results, guaranteed. For nearly two decades, V16.3 Summit Hotel has shaped the most coveted addresses in Aspen and beyond — with an obsessive commitment to precision, beauty, and lasting value.</p>
+    <div class="about-features">
+      <div class="afeat"><span class="afeat-num">01.</span><div class="afeat-text"><h4>Bespoke Design</h4><p>Every project is conceived from scratch — no templates, no shortcuts, no compromises.</p></div></div>
+      <div class="afeat"><span class="afeat-num">02.</span><div class="afeat-text"><h4>Investment Grade</h4><p>Our properties consistently outperform the market, delivering superior long-term returns.</p></div></div>
+      <div class="afeat"><span class="afeat-num">03.</span><div class="afeat-text"><h4>White Glove Service</h4><p>From first consultation to final handover, you have direct access to our senior team.</p></div></div>
+    </div>
+    <a class="btn-accent" href="#contact">Reserve Now</a>
+  </div>
+</div>
+
+<section class="services-section" id="services">
+  <p class="sec-eyebrow">What We Do</p>
+  <h2 class="sec-h">Full-Spectrum <em>Excellence</em></h2>
+  <div class="svc-grid">
+    <div class="sv-card"><div class="sv-num">I.</div><h3 class="sv-name">Luxury Resort</h3><p class="sv-body">Premium industry solutions delivered with total precision. We handle every dimension of the transaction with precision and discretion.</p></div>
+    <div class="sv-card"><div class="sv-num">II.</div><h3 class="sv-name">Architecture & Design</h3><p class="sv-body">Custom architectural solutions that balance aesthetic vision with structural excellence and longevity.</p></div>
+    <div class="sv-card"><div class="sv-num">III.</div><h3 class="sv-name">Property Investment</h3><p class="sv-body">Strategic acquisitions and portfolio management for high-net-worth individuals in Aspen.</p></div>
+    <div class="sv-card"><div class="sv-num">IV.</div><h3 class="sv-name">Interior Consultancy</h3><p class="sv-body">Award-winning interior design that transforms spaces into personal sanctuaries of luxury.</p></div>
+    <div class="sv-card"><div class="sv-num">V.</div><h3 class="sv-name">Development Management</h3><p class="sv-body">End-to-end project management ensuring on-time, on-budget delivery without compromise.</p></div>
+    <div class="sv-card"><div class="sv-num">VI.</div><h3 class="sv-name">Valuation & Advisory</h3><p class="sv-body">Expert market analysis and valuation services backed by decades of Aspen market data.</p></div>
+  </div>
+</section>
+
+<section class="t-section">
+  <p class="sec-eyebrow">Client Voices</p>
+  <h2 class="sec-h">Trust Built Over <em>Decades</em></h2>
+  <div class="t-layout">
+    <div><p style="font-size:.92rem;color:var(--muted);line-height:1.78;margin-top:1rem">Every client relationship at V16.3 Summit Hotel is built on transparency, integrity, and a commitment to results that exceed expectations.</p><a class="btn-accent" href="#contact" style="margin-top:2rem;display:inline-block">Reserve Now</a></div>
+    <div class="t-cards">
+      <div class="tc"><p class="tc-quote">"V16.3 Summit Hotel didn't just sell our property — they crafted an entire strategy that netted 40% above the market estimate. Unparalleled."</p><p class="tc-attr"><strong>Harrison B.</strong> — Private Client, Aspen</p></div>
+      <div class="tc"><p class="tc-quote">"The most professional team we've worked with. From design brief to completion, every detail was handled with extraordinary care."</p><p class="tc-attr"><strong>Elena V.</strong> — Development Client</p></div>
+      <div class="tc"><p class="tc-quote">"Our third project with V16.3 Summit Hotel. There is simply no one else we trust with our real estate portfolio in Aspen."</p><p class="tc-attr"><strong>The Mensah Family</strong> — Repeat Clients</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="cta-parallax" id="cta-bg"></div>
+  <div class="cta-inner">
+    <p class="sec-eyebrow" style="justify-content:center">Private Consultation</p>
+    <h2 class="cta-h">Your Legacy Property<br/><em>Awaits.</em></h2>
+    <p class="cta-sub">Premium industry solutions delivered with total precision. Let us show you what is possible in Aspen.</p>
+    <a class="btn-accent" href="tel:" style="font-size:.82rem;padding:1.1rem 3.2rem">Reserve Now</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fb"><a class="logo" href="#">V16.3 Summit Hotel</a><p>Industry-leading results, guaranteed. Defining luxury in Aspen and beyond.</p></div>
+  <div class="fc"><h4>Properties</h4><ul><li><a href="#">Luxury Resort</a></li><li><a href="#">Luxury Homes</a></li><li><a href="#">Commercial</a></li><li><a href="#">Investment</a></li></ul></div>
+  <div class="fc"><h4>Services</h4><ul><li><a href="#">Architecture</a></li><li><a href="#">Interior Design</a></li><li><a href="#">Valuation</a></li><li><a href="#">Development</a></li></ul></div>
+  <div class="fc"><h4>Connect</h4><ul><li><a href="#">Aspen Office</a></li><li><a href="#">Private Viewing</a></li><li><a href="#">Contact Us</a></li></ul></div>
+</footer>
+<div class="fbar"><span>© 2025 V16.3 Summit Hotel · Aspen</span><span>Licensed Real Estate · All Rights Reserved</span></div>
+
+<script>
+window.addEventListener('load',function(){
+  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined')return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to('#hero-bg',{yPercent:28,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('#cta-bg',{yPercent:22,ease:'none',scrollTrigger:{trigger:'.cta-section',start:'top bottom',end:'bottom top',scrub:true}});
+  gsap.set(['.hero-label','.hero-h1','.hero-meta-bar'],{y:40,opacity:0});
+  gsap.to(['.hero-label','.hero-h1','.hero-meta-bar'],{y:0,opacity:1,duration:1.1,stagger:.15,ease:'power3.out',delay:.3});
+  gsap.from('.sitem',{opacity:0,y:30,stagger:.1,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.stats',start:'top 85%'}});
+  gsap.from('.pcard',{opacity:0,scale:.96,stagger:.12,duration:.9,ease:'power3.out',scrollTrigger:{trigger:'.prop-grid',start:'top 80%'}});
+  gsap.from('.sv-card',{opacity:0,y:35,stagger:.08,duration:.8,ease:'power2.out',scrollTrigger:{trigger:'.svc-grid',start:'top 80%'}});
+  gsap.from('.tc',{opacity:0,x:25,stagger:.1,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'.t-cards',start:'top 80%'}});
+  gsap.from('.afeat',{opacity:0,x:-25,stagger:.1,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'.about-features',start:'top 80%'}});
+});
+</script>
+</body>
+</html>
