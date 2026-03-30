@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Resilience Test 2 — Beauty</title>
+<meta name="description" content="Industry-leading results, guaranteed."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#f9f6f1;--parchment:#f2ece3;--plum:#1a0d1a;--deep:#0d080d;
+  --rose:#c49a7c;--rose2:#d8b090;--blush:#e8d5c4;
+  --muted:#8a7a82;--fg:#1a0d1a;
+  --fd:'Italiana',Georgia,serif;--fb:'DM Sans',sans-serif
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--fg);font-family:var(--fb);font-weight:300;overflow-x:hidden;line-height:1.65}
+
+/* NAV — light minimal */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.8rem 4rem;background:rgba(249,246,241,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,154,124,.12)}
+.logo{font-family:var(--fd);font-size:1.4rem;color:var(--plum);text-decoration:none;letter-spacing:.08em}
+.nav-links{display:flex;gap:3rem;list-style:none}
+.nav-links a{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--rose)}
+.nav-book{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--plum);border:1px solid rgba(26,13,26,.2);padding:.7rem 2rem;text-decoration:none;transition:all .25s}
+.nav-book:hover{background:var(--plum);color:var(--cream);border-color:var(--plum)}
+
+/* HERO — magazine split */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;padding-top:80px}
+.hero-text-col{display:flex;flex-direction:column;justify-content:center;padding:6rem 5rem 6rem 5rem;background:var(--cream);position:relative;overflow:hidden}
+.hero-text-col::before{content:'BEAUTY';position:absolute;bottom:-2rem;left:-1rem;font-family:var(--fd);font-size:12rem;color:rgba(196,154,124,.06);pointer-events:none;line-height:1;white-space:nowrap}
+.hero-issue{font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;color:var(--rose);margin-bottom:2rem;display:flex;align-items:center;gap:.8rem}
+.hero-issue::before{content:'';width:30px;height:1px;background:var(--rose)}
+.hero-h1{font-family:var(--fd);font-size:clamp(4rem,8vw,7rem);line-height:.95;color:var(--plum);letter-spacing:.01em}
+.hero-h1 em{font-style:italic;color:var(--rose)}
+.hero-pull{font-size:.95rem;color:var(--muted);font-style:italic;line-height:1.75;max-width:380px;margin:2rem 0}
+.hero-btns{display:flex;gap:1.2rem;align-items:center;margin-top:.5rem}
+.btn-plum{display:inline-block;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);background:var(--plum);padding:.9rem 2.4rem;text-decoration:none;transition:background .25s}
+.btn-plum:hover{background:#2e1a2e}
+.btn-rose-text{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:gap .25s}
+.btn-rose-text:hover{gap:.9rem}
+.hero-img-col{position:relative;overflow:hidden;background:var(--blush)}
+.hero-img-col img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.06);will-change:transform}
+<img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="Resilience Test 2 Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+.hero-img-badge{position:absolute;bottom:3rem;left:-1.5rem;background:var(--plum);color:var(--cream);padding:1.2rem 1.8rem;max-width:220px}
+.hib-label{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:.4rem}
+.hib-text{font-family:var(--fd);font-size:1.1rem;line-height:1.2}
+
+/* MARQUEE */
+.marquee{overflow:hidden;padding:.85rem 0;border-top:1px solid rgba(196,154,124,.2);border-bottom:1px solid rgba(196,154,124,.2);background:var(--parchment)}
+.marquee-track{display:inline-flex;animation:mq 25s linear infinite;white-space:nowrap}
+.marquee-track span{font-family:var(--fd);font-size:.88rem;letter-spacing:.12em;color:var(--plum);padding:0 2.5rem}
+.marquee-track .dot{color:var(--rose)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* EDITORIAL STRIP - 3 cards side-by-side full width */
+.editorial-strip{display:grid;grid-template-columns:repeat(3,1fr);min-height:55vh}
+.es-card{position:relative;overflow:hidden;background:var(--blush)}
+.es-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s ease}
+.es-card:hover img{transform:scale(1.06)}
+
+.es-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,13,26,.7) 0%,transparent 50%)}
+.es-info{position:absolute;bottom:0;left:0;right:0;padding:2rem}
+.es-cat{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:.4rem}
+.es-name{font-family:var(--fd);font-size:1.3rem;color:var(--cream);line-height:1.15}
+
+/* SERVICES SECTION */
+.services{padding:8rem 4rem;background:var(--cream)}
+.services-inner{max-width:1300px;margin:0 auto}
+.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:5rem}
+.eyebrow{font-size:.6rem;letter-spacing:.38em;text-transform:uppercase;color:var(--rose);margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem}
+.eyebrow::before{content:'';width:25px;height:1px;background:var(--rose)}
+.sec-h{font-family:var(--fd);font-size:clamp(2.5rem,4.5vw,4rem);line-height:1.05;color:var(--plum)}
+.sec-h em{font-style:italic;color:var(--rose)}
+.sec-desc{font-size:.92rem;color:var(--muted);line-height:1.78;padding-top:1.5rem}
+.svc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:rgba(196,154,124,.15)}
+.svc-item{background:var(--cream);display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:center;padding:2.2rem 2.5rem;transition:background .25s;cursor:pointer}
+.svc-item:hover{background:var(--parchment)}
+.svc-item:hover .si-name{color:var(--rose)}
+.si-num{font-family:var(--fd);font-size:.88rem;font-style:italic;color:var(--blush)}
+.si-name{font-family:var(--fd);font-size:1.05rem;color:var(--plum);transition:color .25s}
+.si-sub{font-size:.75rem;color:var(--muted);margin-top:.25rem}
+.si-time{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rose);white-space:nowrap}
+.si-arrow{font-size:.8rem;color:var(--rose);opacity:0;transform:translateX(-5px);transition:all .25s}
+.svc-item:hover .si-arrow{opacity:1;transform:translateX(0)}
+
+/* PARALLAX QUOTE */
+.quote-break{position:relative;height:50vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.qb-parallax{position:absolute;inset:-20%;will-change:transform}
+.qb-parallax img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.45) saturate(.7)}
+.qb-content{position:relative;z-index:2;text-align:center;padding:2rem;max-width:700px}
+.qb-content blockquote{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3.2rem);font-style:italic;color:var(--cream);line-height:1.25;margin-bottom:1rem}
+.qb-content cite{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose)}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;background:var(--plum)}
+.about-img{position:relative;overflow:hidden}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="About Resilience Test 2" style="width:100%;height:100%;object-fit:cover;"/>
+.about-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(26,13,26,.2))}
+.about-text{padding:7rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.about-text .eyebrow::before{background:var(--rose)}
+.about-text .sec-h{color:var(--cream)}
+.about-text .sec-h em{color:var(--rose)}
+.about-body{font-size:.93rem;color:rgba(249,246,241,.55);line-height:1.82;margin:1.5rem 0 2.5rem;max-width:420px}
+.cred-list{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:3rem}
+.cred{background:rgba(249,246,241,.05);padding:.9rem 1.2rem;font-size:.72rem;color:rgba(249,246,241,.65);display:flex;align-items:center;gap:.5rem;transition:background .2s}
+.cred:hover{background:rgba(249,246,241,.09)}
+.cred::before{content:'·';color:var(--rose);font-size:1.2rem}
+.btn-rose{display:inline-block;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--plum);background:var(--rose);padding:.9rem 2.4rem;text-decoration:none;transition:background .25s}
+.btn-rose:hover{background:var(--rose2)}
+
+/* TEAM */
+.team{padding:8rem 4rem;background:var(--parchment)}
+.team-inner{max-width:1300px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:4rem}
+.team-card{position:relative}
+.team-photo{position:relative;overflow:hidden;aspect-ratio:.72/1;background:var(--blush);margin-bottom:1.2rem}
+.team-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.team-card:hover .team-photo img{transform:scale(1.05)}
+
+.team-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,13,26,.5) 0%,transparent 60%);opacity:0;transition:opacity .4s}
+.team-card:hover .team-photo::after{opacity:1}
+.tm-role{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--rose);margin-bottom:.3rem}
+.tm-name{font-family:var(--fd);font-size:1.1rem;color:var(--plum)}
+.tm-spec{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+
+/* BOOKING */
+.booking{padding:8rem 4rem;background:var(--cream)}
+.booking-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.book-left p{font-size:.93rem;color:var(--muted);line-height:1.78;margin:1.2rem 0 2rem}
+.book-right{background:var(--parchment);padding:3rem;border:1px solid rgba(196,154,124,.2)}
+.br-title{font-family:var(--fd);font-size:1.3rem;color:var(--plum);margin-bottom:2rem}
+.book-options{display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem}
+.book-opt{display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.1rem 1.3rem;background:var(--cream);border:1px solid rgba(196,154,124,.15);cursor:pointer;transition:border-color .25s}
+.book-opt:hover{border-color:var(--rose)}
+.bo-icon{font-size:1rem}
+.bo-name{font-family:var(--fd);font-size:.93rem;color:var(--plum)}
+.bo-sub{font-size:.68rem;color:var(--muted);margin-top:.1rem}
+.bo-arrow{color:var(--rose);font-size:.8rem;opacity:0;transition:opacity .2s}
+.book-opt:hover .bo-arrow{opacity:1}
+
+/* TESTIMONIALS */
+.testimonials{padding:8rem 4rem;background:var(--plum);overflow:hidden}
+.testi-inner{max-width:1300px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.tc{padding:2.5rem;border:1px solid rgba(249,246,241,.07);transition:border-color .3s}
+.tc:hover{border-color:rgba(196,154,124,.3)}
+.tc-score{display:flex;gap:.3rem;margin-bottom:1.2rem}
+.tc-score span{width:8px;height:8px;border-radius:50%;background:var(--rose)}
+.tc-text{font-family:var(--fd);font-style:italic;font-size:1.02rem;color:rgba(249,246,241,.78);line-height:1.65;margin-bottom:1.4rem}
+.tc-who{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.tc-who strong{color:var(--rose);font-weight:300}
+
+/* CTA */
+.cta{padding:9rem 4rem;text-align:center;background:var(--cream);position:relative;overflow:hidden}
+.cta::before{content:'BEAUTY';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:clamp(8rem,20vw,18rem);color:rgba(196,154,124,.05);pointer-events:none;white-space:nowrap}
+.cta-inner{position:relative;z-index:2;max-width:620px;margin:0 auto}
+.cta-h{font-family:var(--fd);font-size:clamp(3rem,6vw,5rem);line-height:1.05;color:var(--plum);margin-bottom:1rem}
+.cta-h em{font-style:italic;color:var(--rose)}
+.cta-sub{font-size:.93rem;color:var(--muted);font-style:italic;margin-bottom:3rem;line-height:1.75}
+
+/* FOOTER */
+footer{background:var(--deep);padding:5.5rem 4rem;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:4rem;border-top:1px solid rgba(196,154,124,.1)}
+.fb p{font-size:.78rem;color:rgba(249,246,241,.35);line-height:1.75;margin-top:.8rem;max-width:240px}
+.fc h4{font-family:var(--fd);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:1.3rem}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.fc ul a{font-size:.78rem;color:rgba(249,246,241,.38);text-decoration:none;transition:color .2s}
+.fc ul a:hover{color:var(--cream)}
+.fbar{background:var(--deep);padding:1.5rem 4rem;border-top:1px solid rgba(249,246,241,.04);display:flex;justify-content:space-between;font-size:.65rem;color:rgba(249,246,241,.25)}
+
+@media(max-width:960px){
+  nav{padding:1.3rem 1.5rem}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}.hero-text-col{padding:4rem 1.5rem}
+  .hero-img-col{height:65vw}.hero-img-badge{display:none}
+  .editorial-strip{grid-template-columns:1fr;min-height:auto}.es-card{height:55vw}
+  .services{padding:5rem 1.5rem}.sec-head{grid-template-columns:1fr}.svc-list{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr}.about-img{height:55vw}.about-text{padding:3.5rem 1.5rem}
+  .team{padding:5rem 1.5rem}.team-grid{grid-template-columns:1fr 1fr}
+  .booking{padding:5rem 1.5rem}.booking-inner{grid-template-columns:1fr}
+  .testimonials{padding:5rem 1.5rem}.testi-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:2.5rem;padding:3.5rem 1.5rem}
+  .fbar{padding:1.2rem 1.5rem;flex-direction:column;gap:.3rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">Resilience Test 2</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+  <a class="nav-book" href="#contact">Reserve Now</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-text-col">
+    <p class="hero-issue">Beauty · Phoenix</p>
+    <h1 class="hero-h1">Where<br/>Beauty<br/><em>Becomes Art.</em></h1>
+    <p class="hero-pull">Industry-leading results, guaranteed. A sanctuary for those who understand that true beauty is a ritual, not a routine.</p>
+    <div class="hero-btns">
+      <a class="btn-plum" href="#contact">Reserve Now</a>
+      <a class="btn-rose-text" href="#services">Explore →</a>
+    </div>
+  </div>
+  <div class="hero-img-col">
+    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="Resilience Test 2 Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+    <div class="hero-img-badge">
+      <div class="hib-label">Now Open</div>
+      <div class="hib-text">Phoenix's Premier Beauty Studio</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Resilience Test 2</span><span class="dot">◆</span>
+    <span>Beauty</span><span class="dot">◆</span>
+    <span>Phoenix</span><span class="dot">◆</span>
+    <span>Luxury Treatments</span><span class="dot">◆</span>
+    <span>Artisan Beauty</span><span class="dot">◆</span>
+    <span>Expert Hands</span><span class="dot">◆</span>
+    <span>Resilience Test 2</span><span class="dot">◆</span>
+    <span>Beauty</span><span class="dot">◆</span>
+    <span>Phoenix</span><span class="dot">◆</span>
+    <span>Luxury Treatments</span><span class="dot">◆</span>
+    <span>Artisan Beauty</span><span class="dot">◆</span>
+    <span>Expert Hands</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<div class="editorial-strip">
+  <div class="es-card">
+    
+    <div class="es-info">
+      <div class="es-cat">Signature Service</div>
+      <div class="es-name">The Glow Treatment</div>
+    </div>
+  </div>
+  <div class="es-card" style="background:var(--blush)">
+    <div class="es-info">
+      <div class="es-cat">Editorial Collection</div>
+      <div class="es-name">Bridal Artistry</div>
+    </div>
+  </div>
+  <div class="es-card" style="background:#d4c4b8">
+    <div class="es-info">
+      <div class="es-cat">Exclusive</div>
+      <div class="es-name">VIP Experience</div>
+    </div>
+  </div>
+</div>
+
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">What We Do</p>
+        <h2 class="sec-h">Services That<br/><em>Transform.</em></h2>
+      </div>
+      <p class="sec-desc">Premium industry solutions delivered with total precision. Every treatment at Resilience Test 2 is a choreographed ritual — precise, luxurious, and utterly personalised to your beauty goals in Phoenix.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc-item">
+        <span class="si-num">01</span>
+        <div><div class="si-name">Beauty</div><div class="si-sub">Premium industry solutions delivered with total precision.</div></div>
+        <div style="display:flex;align-items:center;gap:1rem"><span class="si-time">60 min</span><span class="si-arrow">→</span></div>
+      </div>
+      <div class="svc-item">
+        <span class="si-num">02</span>
+        <div><div class="si-name">Luxury Facial</div><div class="si-sub">Deep cleanse, exfoliation, and custom mask treatment</div></div>
+        <div style="display:flex;align-items:center;gap:1rem"><span class="si-time">75 min</span><span class="si-arrow">→</span></div>
+      </div>
+      <div class="svc-item">
+        <span class="si-num">03</span>
+        <div><div class="si-name">Bridal Package</div><div class="si-sub">Full beauty prep from trial to the big day</div></div>
+        <div style="display:flex;align-items:center;gap:1rem"><span class="si-time">Half Day</span><span class="si-arrow">→</span></div>
+      </div>
+      <div class="svc-item">
+        <span class="si-num">04</span>
+        <div><div class="si-name">Editorial Makeup</div><div class="si-sub">Professional artistry for campaigns, shoots, events</div></div>
+        <div style="display:flex;align-items:center;gap:1rem"><span class="si-time">90 min</span><span class="si-arrow">→</span></div>
+      </div>
+      <div class="svc-item">
+        <span class="si-num">05</span>
+        <div><div class="si-name">Hair Styling</div><div class="si-sub">Cuts, colour, blowouts, and scalp treatments</div></div>
+        <div style="display:flex;align-items:center;gap:1rem"><span class="si-time">45+ min</span><span class="si-arrow">→</span></div>
+      </div>
+      <div class="svc-item">
+        <span class="si-num">06</span>
+        <div><div class="si-name">Nail Artistry</div><div class="si-sub">Gel, acrylic, nail art, and pedicure experiences</div></div>
+        <div style="display:flex;align-items:center;gap:1rem"><span class="si-time">60 min</span><span class="si-arrow">→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quote-break">
+  <div class="qb-parallax" id="qbParallax">
+    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="About Resilience Test 2" style="width:100%;height:100%;object-fit:cover;"/>
+  </div>
+  <div class="qb-content">
+    <blockquote>"Beauty is not something you wear — it is something you feel, deeply and quietly."</blockquote>
+    <cite>Resilience Test 2 · Phoenix</cite>
+  </div>
+</div>
+
+<div class="about" id="about">
+  <div class="about-img">
+    
+  </div>
+  <div class="about-text">
+    <p class="eyebrow">Our Story</p>
+    <h2 class="sec-h">A Studio<br/>Built on <em>Passion.</em></h2>
+    <p class="about-body">Industry-leading results, guaranteed. Founded in Phoenix by artists obsessed with craft, Resilience Test 2 was designed as a counterpoint to the rushed, impersonal beauty appointment. Here, time slows down.</p>
+    <div class="cred-list">
+      <div class="cred">Certified Artisans</div>
+      <div class="cred">Premium Products Only</div>
+      <div class="cred">5-Star Reviews</div>
+      <div class="cred">Same-Day Booking</div>
+      <div class="cred">Phoenix Based</div>
+      <div class="cred">Private Studio</div>
+    </div>
+    <a class="btn-rose" href="#contact">Reserve Now</a>
+  </div>
+</div>
+
+<section class="team" id="team">
+  <div class="team-inner">
+    <p class="eyebrow">Our Artists</p>
+    <h2 class="sec-h" style="color:var(--plum)">Hands That <em>Know Beauty.</em></h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo"></div>
+        <div class="tm-role">Lead Artist</div>
+        <div class="tm-name">Ama C.</div>
+        <div class="tm-spec">Makeup · Bridal</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"></div>
+        <div class="tm-role">Skin Specialist</div>
+        <div class="tm-name">Nana S.</div>
+        <div class="tm-spec">Facials · Skincare</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"></div>
+        <div class="tm-role">Hair Stylist</div>
+        <div class="tm-name">Adwoa B.</div>
+        <div class="tm-spec">Cuts · Colour</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"></div>
+        <div class="tm-role">Nail Artist</div>
+        <div class="tm-name">Efua M.</div>
+        <div class="tm-spec">Nail Art · Gel</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="contact">
+  <div class="booking-inner">
+    <div class="book-left">
+      <p class="eyebrow">Book Your Visit</p>
+      <h2 class="sec-h" style="color:var(--plum)">Begin Your<br/><em>Ritual.</em></h2>
+      <p>Premium industry solutions delivered with total precision. Same-week appointments available in Phoenix. Choose how you'd like to get started.</p>
+      <a class="btn-plum" href="tel:" style="display:inline-block;margin-top:1.5rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none">Reserve Now</a>
+    </div>
+    <div class="book-right">
+      <h3 class="br-title">How would you like to start?</h3>
+      <div class="book-options">
+        <div class="book-opt"><span class="bo-icon">📞</span><div><div class="bo-name">Call to Book</div><div class="bo-sub">Speak with our team · Phoenix</div></div><span class="bo-arrow">→</span></div>
+        <div class="book-opt"><span class="bo-icon">💬</span><div><div class="bo-name">WhatsApp Us</div><div class="bo-sub">Quick message, fast response</div></div><span class="bo-arrow">→</span></div>
+        <div class="book-opt"><span class="bo-icon">🗓</span><div><div class="bo-name">Book Online</div><div class="bo-sub">Choose date, service, artist</div></div><span class="bo-arrow">→</span></div>
+      </div>
+      <a class="btn-plum" href="tel:" style="display:block;text-align:center;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:.95rem">Reserve Now</a>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="testi-inner">
+    <p class="eyebrow" style="color:var(--rose)">Client Love</p>
+    <h2 class="sec-h" style="color:var(--cream)">They Felt It.<br/><em>You Will Too.</em></h2>
+    <div class="testi-grid">
+      <div class="tc"><div class="tc-score"><span></span><span></span><span></span><span></span><span></span></div><p class="tc-text">"I don't go anywhere else. Resilience Test 2 understands what I want before I even say it. Every visit leaves me feeling like a different person."</p><p class="tc-who"><strong>Akosua M.</strong> — Regular Client, Phoenix</p></div>
+      <div class="tc"><div class="tc-score"><span></span><span></span><span></span><span></span><span></span></div><p class="tc-text">"My bridal makeup was an absolute dream. Ama and the team captured exactly the vision I had — effortless, glowing, and timeless."</p><p class="tc-who"><strong>Serwaah O.</strong> — Bridal Client</p></div>
+      <div class="tc"><div class="tc-score"><span></span><span></span><span></span><span></span><span></span></div><p class="tc-text">"The luxury facial is unlike anything I've experienced in Phoenix. The products, the technique, the ambiance — perfection."</p><p class="tc-who"><strong>Esi A.</strong> — Skincare Client</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-inner">
+    <p class="eyebrow" style="justify-content:center;margin-bottom:1.2rem">First Visit Offer</p>
+    <h2 class="cta-h">Your <em>Transformation</em><br/>Starts Today.</h2>
+    <p class="cta-sub">Industry-leading results, guaranteed. Book your first appointment in Phoenix and receive a complimentary consultation with our lead artist.</p>
+    <a class="btn-plum" href="tel:" style="font-size:.72rem;letter-spacing:.22em;padding:1rem 3rem;text-decoration:none;display:inline-block">Reserve Now</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fb">
+    <a class="logo" href="#" style="text-decoration:none">Resilience Test 2</a>
+    <p>Industry-leading results, guaranteed. The definitive beauty studio in Phoenix.</p>
+  </div>
+  <div class="fc"><h4>Services</h4><ul><li><a href="#">Beauty</a></li><li><a href="#">Facials</a></li><li><a href="#">Hair</a></li><li><a href="#">Nails</a></li><li><a href="#">Bridal</a></li></ul></div>
+  <div class="fc"><h4>Studio</h4><ul><li><a href="#">About</a></li><li><a href="#">Our Artists</a></li><li><a href="#">Portfolio</a></li><li><a href="#">Reviews</a></li></ul></div>
+  <div class="fc"><h4>Visit</h4><ul><li><a href="#">Phoenix</a></li><li><a href="#">Book Now</a></li><li><a href="#">Gift Cards</a></li></ul></div>
+</footer>
+<div class="fbar"><span>© 2025 Resilience Test 2 · Phoenix</span><span>Beauty & Aesthetics · All Rights Reserved</span></div>
+
+<script>
+window.addEventListener('load',function(){
+  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined')return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero img parallax scale
+  gsap.to('.hero-img-col img',{scale:1.0,yPercent:8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+  // Quote break parallax
+  gsap.to('#qbParallax',{yPercent:22,ease:'none',scrollTrigger:{trigger:'.quote-break',start:'top bottom',end:'bottom top',scrub:true}});
+
+  // Hero text stagger
+  gsap.set(['.hero-issue','.hero-h1','.hero-pull','.hero-btns'],{y:40,opacity:0});
+  gsap.to(['.hero-issue','.hero-h1','.hero-pull','.hero-btns'],{y:0,opacity:1,duration:1.1,stagger:.13,ease:'power3.out',delay:.3});
+
+  // Editorial strip
+  gsap.from('.es-card',{opacity:0,y:30,stagger:.12,duration:.9,scrollTrigger:{trigger:'.editorial-strip',start:'top 80%'}});
+
+  // Services
+  gsap.from('.svc-item',{opacity:0,y:20,stagger:.06,duration:.6,scrollTrigger:{trigger:'.svc-list',start:'top 80%'}});
+
+  // About split
+  gsap.from('.about-img',{x:-40,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.about',start:'top 75%'}});
+  gsap.from('.about-text',{x:40,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.about',start:'top 75%'}});
+
+  // Team cards
+  gsap.from('.team-card',{opacity:0,y:35,stagger:.1,duration:.8,scrollTrigger:{trigger:'.team-grid',start:'top 80%'}});
+
+  // Booking
+  gsap.from('.book-options .book-opt',{opacity:0,x:20,stagger:.1,duration:.6,scrollTrigger:{trigger:'.booking-inner',start:'top 80%'}});
+
+  // Testimonials
+  gsap.from('.tc',{opacity:0,y:30,stagger:.12,duration:.8,scrollTrigger:{trigger:'.testi-grid',start:'top 80%'}});
+});
+</script>
+</body>
+</html>
