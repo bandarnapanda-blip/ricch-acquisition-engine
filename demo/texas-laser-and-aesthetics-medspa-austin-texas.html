@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Texas Laser and Aesthetics Medspa — Medical Aesthetics</title>
+<meta name="description" content="Industry-leading results, guaranteed."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--slate:#1e2f2f;--teal:#5a9e9e;--teal2:#7cbebe;--light:#f5fafa;--white:#ffffff;--muted:#7a9a9a;--fd:'Jost',sans-serif;--fb:'Outfit',sans-serif}
+html{scroll-behavior:smooth}body{background:var(--white);color:var(--slate);font-family:var(--fb);font-weight:300;line-height:1.7;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(90,158,158,.12);display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem}
+.nav-logo{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--slate);text-decoration:none}.nav-logo span{color:var(--teal)}
+.nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{font-size:.8rem;letter-spacing:.08em;color:#999;text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--teal)}
+.nav-cta{font-size:.78rem;letter-spacing:.1em;color:var(--white);background:var(--teal);padding:.7rem 1.8rem;text-decoration:none;border-radius:100px;transition:opacity .25s}.nav-cta:hover{opacity:.85}
+.hero{position:relative;background:var(--slate);overflow:hidden;min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:clamp(5rem,18vw,16rem);font-weight:700;color:rgba(255,255,255,.04);text-transform:uppercase;white-space:nowrap;pointer-events:none;user-select:none}
+.hero-full{position:absolute;inset:0}.hero-full img{width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.55;display:block}
+.hero-full::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(30,47,47,.94) 0%,rgba(30,47,47,.48) 55%,rgba(30,47,47,.12) 100%)}
+.hero-content{position:relative;z-index:2;padding:4rem 4rem 5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal2);background:rgba(90,158,158,.12);border:1px solid rgba(90,158,158,.25);padding:.4rem 1rem;border-radius:100px;margin-bottom:2rem}
+.hero-title{font-family:var(--fd);font-size:clamp(2.5rem,5.5vw,5rem);font-weight:700;line-height:1.05;color:var(--white);margin-bottom:1.5rem;max-width:700px}
+.hero-title em{font-style:italic;font-weight:300;color:var(--teal2)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.58);max-width:480px;line-height:1.75;margin-bottom:2.5rem}
+.hero-ctas{display:flex;gap:1.2rem;flex-wrap:wrap}
+.btn-teal{display:inline-block;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--teal);padding:.95rem 2.4rem;border-radius:100px;text-decoration:none;transition:opacity .25s}.btn-teal:hover{opacity:.85}
+.btn-out{display:inline-block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);border:1px solid rgba(255,255,255,.3);padding:.9rem 2.2rem;border-radius:100px;text-decoration:none;transition:border-color .25s}.btn-out:hover{border-color:var(--teal2)}
+.stats-float{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;padding:3rem 4rem;background:var(--light)}
+.sf-card{background:var(--white);padding:2rem;border-radius:16px;box-shadow:0 4px 20px rgba(90,158,158,.07);transition:transform .3s}.sf-card:hover{transform:translateY(-3px)}
+.sf-n{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:var(--teal);line-height:1;margin-bottom:.3rem}.sf-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.sf-sub{font-size:.8rem;color:#aaa;margin-top:.25rem}
+.section-services{padding:6rem 4rem;background:var(--white)}
+.services-header{text-align:center;max-width:600px;margin:0 auto 4rem}
+.section-chip{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;display:block}
+.section-h{font-family:var(--fd);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.15;color:var(--slate)}.section-h em{font-style:italic;color:var(--teal)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.svc-card{padding:2.5rem;background:var(--light);border-radius:20px;transition:transform .3s,box-shadow .3s,border-color .3s;border:1px solid transparent}.svc-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(90,158,158,.1);border-color:rgba(90,158,158,.15)}
+.svc-icon{width:3rem;height:3rem;border-radius:14px;background:rgba(90,158,158,.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem}
+.svc-name{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--slate);margin-bottom:.5rem}.svc-desc{font-size:.86rem;color:var(--muted);line-height:1.7}
+.section-about{display:grid;grid-template-columns:1fr 1fr;min-height:75vh;background:var(--light)}
+.about-img-col{overflow:hidden;position:relative;background:var(--slate)}.about-img-col img{width:100%;height:100%;object-fit:cover;display:block}
+.about-text-col{padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.about-feat-list{list-style:none;margin:1.5rem 0 2rem}.about-feat-list li{display:flex;gap:.8rem;font-size:.9rem;color:var(--slate);padding:.55rem 0;border-bottom:1px solid rgba(90,158,158,.1)}.about-feat-list li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+.section-team{padding:6rem 4rem;background:var(--white)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.team-card{border-radius:20px;overflow:hidden;background:var(--light)}
+.tp{height:320px;overflow:hidden;background:#f0f7f7;position:relative}.tp img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block;transition:transform .6s;z-index:2}.tp::before{content:'';position:absolute;inset:0;background:linear-gradient(45deg,#f0f7f7,#e0eeee);z-index:1;animation:shimmer 2s infinite linear;background-size:200% 100%}@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}.team-card:hover .tp img{transform:scale(1.05)}
+.ti{padding:1.5rem}.t-nm{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--slate);margin-bottom:.25rem}.t-role{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem}.t-bio{font-size:.82rem;color:var(--muted);line-height:1.65}
+.section-transform{padding:6rem 4rem;background:var(--slate)}
+.transform-header{text-align:center;margin-bottom:4rem}.transform-header .section-h{color:var(--white)}
+.ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.ba-card{border-radius:16px;overflow:hidden;position:relative;min-height:300px;background:rgba(255,255,255,.04)}.ba-card img{width:100%;height:100%;object-fit:cover;display:block}
+.ba-label{position:absolute;top:1rem;left:1rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:var(--teal);padding:.3rem .8rem;border-radius:100px}
+.ba-cap{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(to top,rgba(30,47,47,.9),transparent)}.ba-cap-title{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--white)}.ba-cap-desc{font-size:.8rem;color:rgba(255,255,255,.65);margin-top:.25rem}
+.section-testi{padding:6rem 4rem;background:var(--light)}.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.tc{background:var(--white);border-radius:20px;padding:2.2rem}.tc-stars{color:var(--teal);font-size:.85rem;margin-bottom:1rem}.tc-text{font-size:.92rem;color:var(--slate);line-height:1.72;margin-bottom:1.5rem;font-weight:300}.tc-nm{font-size:.88rem;font-weight:600;color:var(--slate)}.tc-role{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+.section-cta{background:var(--teal);padding:5rem 4rem;text-align:center}
+.cta-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--white);margin-bottom:1.2rem;line-height:1.15}
+.cta-sub{font-size:.98rem;color:rgba(255,255,255,.72);max-width:500px;margin:0 auto 2.5rem}
+.btn-white{display:inline-block;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);background:var(--white);padding:1.1rem 3rem;border-radius:100px;text-decoration:none;transition:opacity .25s}.btn-white:hover{opacity:.88}
+footer{padding:3rem 4rem;background:var(--slate);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--white)}.footer-copy{font-size:.72rem;color:rgba(255,255,255,.35)}
+.footer-links{display:flex;gap:2rem;list-style:none}.footer-links a{font-size:.72rem;color:rgba(245,240,232,.45);text-decoration:none;transition:color .2s}.footer-links a:hover{color:var(--teal2)}
+@media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links{display:none}.hero-content{padding:3rem 1.5rem 4rem}.stats-float{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.section-services{padding:4rem 1.5rem}.svc-grid{grid-template-columns:1fr}.section-about{grid-template-columns:1fr}.about-img-col{min-height:55vw}.about-text-col{padding:3rem 1.5rem}.section-team{padding:4rem 1.5rem}.team-grid{grid-template-columns:1fr}.section-transform{padding:4rem 1.5rem}.ba-grid{grid-template-columns:1fr}.section-testi{padding:4rem 1.5rem}.testi-grid{grid-template-columns:1fr}.section-cta{padding:4rem 1.5rem}footer{flex-direction:column;gap:1.5rem;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="#">Texas Laser and Aesthetics Medspa<span>.</span></a>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="nav-cta" href="#contact">Reserve Now</a>
+</nav>
+<section class="hero" id="home">
+  <div class="hero-bg-text">Medical Aesthetics</div>
+  <div class="hero-full"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="Texas Laser and Aesthetics Medspa Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
+  <div class="hero-content">
+    <div class="hero-badge">Elite Performance</div>
+    <h1 class="hero-title">Elite<br/><em>Performance.</em></h1>
+    <p class="hero-sub">Industry-leading results, guaranteed. We provide sophisticated solutions for complex challenges. Our reputation is built on a foundation of integrity and results.</p>
+    <div class="hero-ctas"><a class="btn-teal" href="#contact">Book Consultation</a><a class="btn-out" href="#services">Our Services</a></div>
+  </div>
+</section>
+<div class="stats-float">
+  <div class="sf-card" data-aos="fade-up">
+    <div class="sf-n">100%</div>
+    <div class="sf-label">Satisfaction Rate</div>
+    <div class="sf-sub">In Austin, Texas</div>
+  </div>
+  <div class="sf-card" data-aos="fade-up" data-aos-delay="80">
+    <div class="sf-n">Verified</div>
+    <div class="sf-label">Top Performance</div>
+    <div class="sf-sub">Verified excellence</div>
+  </div>
+  <div class="sf-card" data-aos="fade-up" data-aos-delay="160">
+    <div class="sf-n">A-Tier</div>
+    <div class="sf-label">Quality Control</div>
+    <div class="sf-sub">Expert care</div>
+  </div>
+</div>
+<section class="section-services" id="services">
+  <div class="services-header" data-aos="fade-up">
+    <span class="section-chip">What We Offer</span>
+    <h2 class="section-h">Our Excellence<br/><em>every visit</em></h2>
+    <p style="font-size:.92rem;color:var(--muted);margin-top:1rem;line-height:1.75">Uncompromising quality for every project.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card" data-aos="fade-up">
+      <div class="svc-icon">🦷</div>
+      <h3 class="svc-name">Primary Service</h3>
+      <p class="svc-desc">High-authority execution of our core industry solutions, delivered with total precision.</p>
+    </div>
+    <div class="svc-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="svc-icon">✨</div>
+      <h3 class="svc-name">Strategic Growth</h3>
+      <p class="svc-desc">Optimizing every aspect of your project for maximum ROI and long-term durability.</p>
+    </div>
+    <div class="svc-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="svc-icon">🔬</div>
+      <h3 class="svc-name">Elite Support</h3>
+      <p class="svc-desc">Dedicated consultation and white-glove service to ensure your total satisfaction.</p>
+    </div>
+  </div>
+</section>
+<section class="section-about" id="about">
+  <div class="about-img-col"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1600&q=80" alt="About Texas Laser and Aesthetics Medspa" style="width:100%;height:100%;object-fit:cover;"/></div>
+  <div class="about-text-col">
+    <span class="section-chip">Our Philosophy</span>
+    <h2 class="section-h" style="margin-bottom:1rem">Aesthetics that<br/><em>inspire confidence</em></h2>
+    <p style="font-size:.9rem;color:var(--muted);line-height:1.78;margin-bottom:1rem">We provide sophisticated solutions for complex challenges. Our reputation is built on a foundation of integrity and results.</p>
+    <ul class="about-feat-list">
+      <li>Certified Industry Leader</li>
+      <li>Over 500 Successful Projects</li>
+      <li>Award-Winning Service</li>
+      <li>Serving Austin, Texas with excellence</li>
+    </ul>
+    <a class="btn-teal" href="#contact" style="align-self:flex-start">Meet Our Team</a>
+  </div>
+</section>
+<section class="section-transform">
+  <div class="transform-header" data-aos="fade-up">
+    <span class="section-chip" style="color:var(--teal2)">Case Studies</span>
+    <h2 class="section-h">Results that<br/><em style="color:var(--teal2)">speak for themselves</em></h2>
+  </div>
+  <div class="ba-grid">
+    <div class="ba-card" data-aos="fade-up"><span class="ba-label">Transformation</span></div>
+    <div class="ba-card" data-aos="fade-up" data-aos-delay="100"><span class="ba-label">Precision</span></div>
+  </div>
+</section>
+<section class="section-team" id="team">
+  <div data-aos="fade-up"><span class="section-chip">Our Specialists</span><h2 class="section-h">Meet your<br/><em>care team</em></h2></div>
+  <div class="team-grid">
+    <div class="team-card" data-aos="fade-up">
+      <div class="tp"><img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1400&q=80" alt="Team Representative 1" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"/></div>
+      <div class="ti">
+        <div class="t-nm">Alexander Vance</div>
+        <div class="t-role">Medical Director</div>
+        <p class="t-bio">Board-certified specialist in aesthetic medicine and non-invasive rejuvenation.</p>
+      </div>
+    </div>
+    <div class="team-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="tp"></div>
+      <div class="ti">
+        <div class="t-nm">Specialist Associate</div>
+        <div class="t-role">Aesthetic Specialist</div>
+        <p class="t-bio">Lead clinician specializing in advanced skin treatments and dermal artistry.</p>
+      </div>
+    </div>
+    <div class="team-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="tp"></div>
+      <div class="ti">
+        <div class="t-nm">Clinical Specialist</div>
+        <div class="t-role">Care Coordinator</div>
+        <p class="t-bio">Ensuring a seamless, personalized journey for every client's aesthetic goals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section-testi" id="reviews">
+  <div style="text-align:center;max-width:500px;margin:0 auto 3.5rem" data-aos="fade-up">
+    <span class="section-chip">Client Reviews</span>
+    <h2 class="section-h">What clients<br/><em>say about us</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="tc" data-aos="fade-up"><div class="tc-stars">★★★★★</div><p class="tc-text">"Professional, precise, and highly recommended."</p><div class="tc-nm">Robert Chen</div><div class="tc-role">Verified Client</div></div>
+    <div class="tc" data-aos="fade-up" data-aos-delay="80"><div class="tc-stars">★★★★★</div><p class="tc-text">"The most professional team in Austin, Texas. Truly life-changing results."</p><div class="tc-nm">Happy Patient</div><div class="tc-role">Cosmetic Client</div></div>
+    <div class="tc" data-aos="fade-up" data-aos-delay="160"><div class="tc-stars">★★★★★</div><p class="tc-text">"Incredible attention to detail and a luxury experience from start to finish."</p><div class="tc-nm">Verified Reviewer</div><div class="tc-role">Austin Local</div></div>
+  </div>
+</section>
+<section class="section-cta" id="contact">
+  <h2 class="cta-title" data-aos="fade-up">Ready to enhance<br/>your natural beauty?</h2>
+  <p class="cta-sub" data-aos="fade-up" data-aos-delay="80">Excellence. Precision. Results.</p>
+  <a class="btn-white" href="#contact">Contact Us</a>
+</section>
+<footer>
+  <div class="footer-logo">Texas Laser and Aesthetics Medspa</div>
+  <p class="footer-copy">© 2012 Texas Laser and Aesthetics Medspa · Austin, Texas</p>
+  <ul class="footer-links"><li><a href="#services">Services</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul>
+</footer>
+<script>window.addEventListener('load',function(){if(typeof AOS!=='undefined')AOS.init({once:true,offset:60,duration:700,easing:'ease-out-cubic'});});</script>
+</body>
+</html>
