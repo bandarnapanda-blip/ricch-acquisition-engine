@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Toothbar Austin — Austin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* ── Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #0a0a08;
+    color: #d4c9a8;
+    overflow-x: hidden;
+  }
+
+  :root {
+    --bg:         #0a0a08;
+    --bg2:        #111109;
+    --bg3:        #181714;
+    --gold:       #ff3366;
+    --gold-light: #ff3366;
+    --gold-dim:   rgba(201,168,76,0.2);
+    --gold-line:  rgba(201,168,76,0.18);
+    --cream:      #d4c9a8;
+    --muted:      rgba(212,201,168,0.45);
+    --border:     rgba(201,168,76,0.12);
+    --border-hi:  rgba(201,168,76,0.28);
+    --white:      #f0ebe0;
+  }
+
+  .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+  /* Subtle grain */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 72px;
+    background: rgba(10,10,8,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo-wrap {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .nav-logo-sub {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .nav-center {
+    display: flex; gap: 2.8rem;
+  }
+  .nav-center span {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-cta {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--gold);
+    padding: 0.6rem 1.6rem;
+    border-radius: 2px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+  .hero-left {
+    position: relative;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 4rem 5rem;
+    z-index: 2;
+    background: var(--bg);
+  }
+  /* Gold vertical rule */
+  .hero-left::after {
+    content: '';
+    position: absolute; right: 0; top: 15%; bottom: 15%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold-line) 30%, var(--gold-line) 70%, transparent);
+  }
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-img {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600&q=80');
+    background-size: cover;
+    background-position: center top;
+    filter: brightness(0.45) saturate(0.5) sepia(0.15);
+    transform: scale(1.05);
+    animation: heroZoom 14s ease-out forwards;
+  }
+  @keyframes heroZoom { to { transform: scale(1); } }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--bg) 0%, transparent 30%),
+                linear-gradient(to top, rgba(10,10,8,0.6) 0%, transparent 50%);
+  }
+
+  /* Gold corner ornament */
+  .hero-ornament {
+    position: absolute; top: 4rem; right: 2.5rem; z-index: 3;
+    opacity: 0.5;
+  }
+  .hero-ornament svg { width: 48px; height: 48px; }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.8rem;
+    animation: fadeIn 1s ease 0.3s both;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-line);
+    max-width: 60px;
+  }
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 5vw, 5.2rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 1.8rem;
+    animation: fadeIn 1s ease 0.45s both;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-divider {
+    width: 48px; height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 1.8rem;
+    animation: fadeIn 1s ease 0.6s both;
+  }
+  .hero-sub {
+    font-size: 0.92rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--muted);
+    max-width: 380px;
+    margin-bottom: 2.5rem;
+    animation: fadeIn 1s ease 0.7s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center;
+    animation: fadeIn 1s ease 0.85s both;
+  }
+  .btn-gold {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    border-radius: 2px;
+  }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--border-hi);
+    color: var(--cream);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+  }
+
+  /* Credentials floating panel */
+  .hero-credentials {
+    position: absolute;
+    left: 0; bottom: 3rem; right: 0;
+    z-index: 3;
+    display: flex; gap: 1px;
+  }
+  .cred-item {
+    flex: 1;
+    background: rgba(10,10,8,0.75);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+  }
+  .cred-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .cred-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ── GOLD RULE DIVIDER ── */
+  .rule-divider {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 0 3rem;
+    margin: 0;
+  }
+  .rule-line { flex: 1; height: 1px; background: var(--border); }
+  .rule-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    opacity: 0.5;
+    line-height: 1;
+  }
+
+  /* ── PRACTICE AREAS / SERVICES ── */
+  .practice-section {
+    background: var(--bg);
+    padding: 6rem 3rem;
+  }
+  .practice-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+  .section-eyebrow {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--white);
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .section-desc {
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+    align-self: end;
+  }
+
+  .practice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .practice-card {
+    background: var(--bg2);
+    padding: 2.8rem 2.2rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .practice-card:hover { background: var(--bg3); }
+  .practice-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .practice-card:hover::before { opacity: 1; }
+
+  .practice-roman {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--gold);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+  .practice-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .practice-desc {
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  .practice-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  /* ── AUTHORITY STRIP ── */
+  .authority-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 3rem;
+  }
+  .authority-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    align-items: center;
+  }
+  .authority-item {
+    text-align: center;
+    padding: 2rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    position: relative;
+  }
+  .authority-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .authority-denom {
+    font-size: 1rem;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .authority-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.6rem;
+    line-height: 1.5;
+  }
+
+  /* ── PROFILE / ABOUT ── */
+  .profile-section {
+    background: var(--bg);
+    padding: 6rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .profile-img-wrap {
+    position: relative;
+  }
+  .profile-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: top;
+    filter: brightness(0.7) saturate(0.6) sepia(0.1);
+    border-radius: 4px;
+  }
+  /* Gold frame accent */
+  .profile-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: -12px;
+    right: 12px; bottom: 12px;
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .profile-img-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(to top, var(--bg), transparent);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .profile-badge {
+    position: absolute;
+    bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    background: rgba(10,10,8,0.9);
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    white-space: nowrap;
+    backdrop-filter: blur(12px);
+  }
+  .profile-badge-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+  }
+  .profile-badge-title {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+  .profile-content {}
+  .profile-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--gold-light);
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--gold);
+    border-left-color: rgba(201,168,76,0.4);
+  }
+  .profile-text {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .credentials-list {
+    margin-top: 2rem;
+    display: flex; flex-direction: column; gap: 0.7rem;
+  }
+  .credential-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .credential-row:first-child { border-top: 1px solid var(--border); }
+  .cred-bullet {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .cred-text {
+    font-size: 0.8rem;
+    color: var(--cream);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-section {
+    background: var(--bg2);
+    padding: 6rem 3rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .testimonial-quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 600;
+    color: var(--gold);
+    opacity: 0.2;
+    line-height: 0.7;
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.55;
+    max-width: 720px;
+    margin: 0 auto 2rem;
+  }
+  .testimonial-author {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--bg);
+    padding: 6rem 3rem;
+  }
+  .cta-inner {
+    position: relative;
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    padding: 5rem 4rem;
+    background: var(--bg2);
+    text-align: center;
+    overflow: hidden;
+  }
+  /* Gold corner accents */
+  .cta-inner::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 60px; height: 60px;
+    border-top: 1px solid var(--gold);
+    border-left: 1px solid var(--gold);
+    opacity: 0.4;
+    border-radius: 0;
+  }
+  .cta-inner::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0;
+    width: 60px; height: 60px;
+    border-bottom: 1px solid var(--gold);
+    border-right: 1px solid var(--gold);
+    opacity: 0.4;
+  }
+  .cta-eyebrow {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 1.2rem;
+  }
+  .cta-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .cta-sub {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 1rem 2.8rem;
+    border-radius: 2px;
+  }
+  .cta-expiry {
+    margin-top: 1.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+    opacity: 0.6;
+    letter-spacing: 0.06em;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+  .footer-note {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    opacity: 0.35;
+    text-transform: uppercase;
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { height: 60vw; }
+    .hero-left { padding: 7rem 1.5rem 3rem; }
+    .hero-left::after { display: none; }
+    .hero-credentials { position: static; display: grid; grid-template-columns: repeat(3,1fr); }
+    .practice-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .practice-grid { grid-template-columns: 1fr; }
+    .authority-grid { grid-template-columns: repeat(2, 1fr); }
+    .profile-section { grid-template-columns: 1fr; gap: 3rem; }
+    nav { padding: 0 1.2rem; }
+    .nav-center { display: none; }
+    .practice-section, .authority-section,
+    .profile-section, .testimonial-section,
+    .cta-section { padding: 4rem 1.5rem; }
+    .cta-inner { padding: 3rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo-wrap">
+    <div class="nav-logo">Toothbar Austin</div>
+    <div class="nav-logo-sub">Austin, PROD</div>
+  </div>
+  <div class="nav-center">
+    <span>Services</span>
+    <span>Case Studies</span>
+    <span>The Firm</span>
+    <span>Contact</span>
+  </div>
+  <a href="https://kinsley-nonconducting-faustino.ngrok-free.dev/api/public/claim?lead_id=preview" class="nav-cta">Claim This Site</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Austin, PROD · Est. 2012</div>
+    <h1 class="hero-h1">Precision.<br/><em>Redefined.</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Toothbar Austin has served Austin with uncompromising standards for over 12 years. Uncompromising quality for every project.</p>
+    <div class="hero-actions">
+      <a href="https://kinsley-nonconducting-faustino.ngrok-free.dev/api/public/claim?lead_id=preview" class="btn-gold">Request a Consultation</a>
+      <div class="btn-outline">Our Practice →</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img"></div>
+    <div class="hero-img-overlay"></div>
+    <!-- SVG ornament -->
+    <div class="hero-ornament">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="46" height="46" stroke="#c9a84c" stroke-width="0.5"/>
+        <rect x="8" y="8" width="32" height="32" stroke="#c9a84c" stroke-width="0.3" stroke-dasharray="2 3"/>
+        <circle cx="24" cy="24" r="4" stroke="#c9a84c" stroke-width="0.5"/>
+        <line x1="24" y1="8" x2="24" y2="20" stroke="#c9a84c" stroke-width="0.4"/>
+        <line x1="24" y1="28" x2="24" y2="40" stroke="#c9a84c" stroke-width="0.4"/>
+        <line x1="8" y1="24" x2="20" y2="24" stroke="#c9a84c" stroke-width="0.4"/>
+        <line x1="28" y1="24" x2="40" y2="24" stroke="#c9a84c" stroke-width="0.4"/>
+      </svg>
+    </div>
+    <!-- Credentials strip -->
+    <div class="hero-credentials">
+      <div class="cred-item">
+        <div class="cred-num">15k+</div>
+        <div class="cred-label">Successful Procedures</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-num">Advanced</div>
+        <div class="cred-label">3D Imaging Tech</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-num">Elite</div>
+        <div class="cred-label">Patient Care</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RULE ── -->
+<div class="rule-divider" style="padding:1.5rem 3rem;">
+  <div class="rule-line"></div>
+  <div class="rule-ornament">✦</div>
+  <div class="rule-line"></div>
+</div>
+
+<!-- ── PRACTICE AREAS ── -->
+<section class="practice-section reveal">
+  <div class="practice-header">
+    <div>
+      <div class="section-eyebrow">Our Excellence</div>
+      <h2 class="section-title">Excellence in<br/><em>every matter</em></h2>
+    </div>
+    <p class="section-desc">Toothbar Austin handles each case with the same level of precision and dedication — because your situation deserves nothing less than our absolute best.</p>
+  </div>
+  <div class="practice-grid">
+    <div class="practice-card">
+      <div class="practice-roman">I</div>
+      <div class="practice-title">Dental Implants</div>
+      <div class="practice-desc">Permanent, high-durability tooth replacement using medical-grade titanium and aesthetic porcelain.</div>
+      <div class="practice-link">Learn More →</div>
+    </div>
+    <div class="practice-card">
+      <div class="practice-roman">II</div>
+      <div class="practice-title">Cosmetic Veneers</div>
+      <div class="practice-desc">Total smile transformations handcrafted for natural brilliance and long-lasting confidence.</div>
+      <div class="practice-link">Learn More →</div>
+    </div>
+    <div class="practice-card">
+      <div class="practice-roman">III</div>
+      <div class="practice-title">Full Arch Restoration</div>
+      <div class="practice-desc">Complex restorative solutions to return full function and aesthetic beauty in just one day.</div>
+      <div class="practice-link">Learn More →</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AUTHORITY STRIP ── -->
+<section class="authority-section reveal">
+  <div class="authority-grid">
+    <div class="authority-item">
+      <div class="authority-num">15k+<span class="authority-denom">+</span></div>
+      <div class="authority-label">Successful Procedures</div>
+    </div>
+    <div class="authority-item">
+      <div class="authority-num">12<span class="authority-denom">yr</span></div>
+      <div class="authority-label">Years Serving Austin</div>
+    </div>
+    <div class="authority-item">
+      <div class="authority-num">Advanced<span class="authority-denom">%</span></div>
+      <div class="authority-label">3D Imaging Tech</div>
+    </div>
+    <div class="authority-item">
+      <div class="authority-num">Elite<span class="authority-denom">★</span></div>
+      <div class="authority-label">Average Google Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROFILE ── -->
+<section class="profile-section reveal">
+  <div class="profile-img-wrap">
+    <img class="profile-img" src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=1400&q=80" alt="Alexander Vance"/>
+    <div class="profile-badge">
+      <div class="profile-badge-name">Alexander Vance</div>
+      <div class="profile-badge-title">Managing Director</div>
+    </div>
+  </div>
+  <div class="profile-content">
+    <div class="section-eyebrow">About The Firm</div>
+    <h2 class="section-title" style="margin-bottom:1.8rem;">A reputation<br/><em>built on results</em></h2>
+    <p class="profile-quote">"Every client deserves our absolute best."</p>
+    <p class="profile-text">We provide sophisticated solutions for complex challenges. Our reputation is built on a foundation of integrity and results.</p>
+    <div class="credentials-list">
+      <div class="credential-row">
+        <div class="cred-bullet"></div>
+        <div class="cred-text">Certified Industry Leader</div>
+      </div>
+      <div class="credential-row">
+        <div class="cred-bullet"></div>
+        <div class="cred-text">Over 500 Successful Projects</div>
+      </div>
+      <div class="credential-row">
+        <div class="cred-bullet"></div>
+        <div class="cred-text">Award-Winning Service</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ── -->
+<section class="testimonial-section reveal">
+  <div class="testimonial-quote-mark">"</div>
+  <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+  <blockquote class="testimonial-text">Professional, precise, and highly recommended.</blockquote>
+  <div class="testimonial-author">— Robert Chen, Austin</div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="cta-eyebrow">✦ Exclusive Preview · 48 Hours Only</div>
+    <h2 class="cta-title">Your new site is waiting.<br/><em>Claim it today.</em></h2>
+    <p class="cta-sub">This site was designed exclusively for <strong style="color:var(--gold-light);font-weight:400;">Toothbar Austin</strong> in Austin. Reply to our email to unlock it — fully live on your domain within 24 hours.</p>
+    <a href="https://kinsley-nonconducting-faustino.ngrok-free.dev/api/public/claim?lead_id=preview" class="cta-btn">🔒 Claim This Site</a>
+    <div class="cta-expiry">This preview expires in 48 hours · Not publicly available</div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Toothbar Austin</div>
+  <div class="footer-tagline">"Excellence. Precision. Results."</div>
+  <div class="footer-note">Austin, PROD · Preview by RI2CH Agency</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
