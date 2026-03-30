@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>V16.3 Pulse Gym — Crossfit & Wellness</title>
+<meta name="description" content="Industry-leading results, guaranteed."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050505;--fg:#f0ede8;--lime:#b4ff00;--lime2:#c8ff3a;
+  --mid:#0f0f0f;--gray:#1a1a1a;--muted:#555;
+  --fd:'Syne',sans-serif;--fb:'Space Grotesk',sans-serif
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--fb);font-weight:300;overflow-x:hidden;line-height:1.6}
+
+/* CURSOR */
+.cursor{position:fixed;width:10px;height:10px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,width .25s,height .25s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(180,255,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .18s,width .3s,height .3s,opacity .3s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;mix-blend-mode:difference}
+.logo{font-family:var(--fd);font-size:1rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,232,.5);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--lime)}
+.nav-cta{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--lime);padding:.7rem 1.8rem;text-decoration:none;clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:700px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;background:var(--bg)}
+.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(180,255,0,.07),transparent)}
+.hero-noise{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero-big-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:clamp(12rem,22vw,22rem);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;color:rgba(240,237,232,.035);white-space:nowrap;pointer-events:none;line-height:1;user-select:none}
+.hero-content{position:relative;z-index:2;padding:0 3rem 4rem;width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:flex-end;gap:2rem}
+.hero-left .label{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--lime);margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem}
+.hero-left .label::before{content:'';width:30px;height:1px;background:var(--lime)}
+.hero-left h1{font-family:var(--fd);font-size:clamp(4rem,9vw,8rem);font-weight:800;line-height:.9;letter-spacing:-.03em;text-transform:uppercase}
+.hero-left h1 .lime{color:var(--lime)}
+.hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:2rem}
+.hero-stat-row{display:flex;gap:2.5rem;align-items:flex-end;justify-content:flex-end}
+.hstat .n{font-family:var(--fd);font-size:2.5rem;font-weight:800;color:var(--lime);line-height:1}
+.hstat .l{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.hero-desc{font-size:.9rem;color:rgba(240,237,232,.55);line-height:1.7;max-width:320px;text-align:right}
+.hero-btns{display:flex;gap:1rem;justify-content:flex-end}
+.btn-lime{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--lime);padding:.9rem 2.2rem;text-decoration:none;transition:background .2s}
+.btn-lime:hover{background:var(--lime2)}
+.btn-outline{display:inline-block;font-size:.72rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--fg);border:1px solid rgba(240,237,232,.2);padding:.88rem 2.2rem;text-decoration:none;transition:border-color .2s}
+.btn-outline:hover{border-color:var(--lime);color:var(--lime)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2}
+.hero-scroll span{font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
+.scroll-bar{width:1px;height:50px;background:linear-gradient(var(--lime),transparent);animation:sb 2s ease infinite}
+@keyframes sb{0%,100%{opacity:.3;transform:scaleY(.5);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+
+/* TICKER */
+.ticker{overflow:hidden;border-top:1px solid rgba(180,255,0,.15);border-bottom:1px solid rgba(180,255,0,.15);padding:.9rem 0;background:var(--mid)}
+.ticker-track{display:inline-flex;animation:tick 30s linear infinite;white-space:nowrap}
+.ticker-track span{font-family:var(--fd);font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);padding:0 2.5rem}
+.ticker-track .dot{color:var(--lime)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(240,237,232,.06)}
+.sb-item{padding:3rem;border-right:1px solid rgba(240,237,232,.06);position:relative;overflow:hidden}
+.sb-item::before{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--lime);transition:width .6s ease}
+.sb-item:hover::before{width:100%}
+.sb-item:last-child{border-right:none}
+.sb-n{font-family:var(--fd);font-size:2.8rem;font-weight:800;color:var(--lime);line-height:1;margin-bottom:.4rem}
+.sb-l{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* ABOUT SPLIT */
+.about{display:grid;grid-template-columns:1fr 1fr;min-height:85vh}
+.about-visual{position:relative;overflow:hidden;background:var(--gray)}
+.about-visual img{width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1643660527070-03ed14b41677?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="About V16.3 Pulse Gym" style="width:100%;height:100%;object-fit:cover;"/>
+.about-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(180,255,0,.08),transparent)}
+.about-num{position:absolute;top:3rem;left:3rem;font-family:var(--fd);font-size:8rem;font-weight:800;color:rgba(180,255,0,.08);line-height:1;pointer-events:none}
+.about-text{background:var(--mid);padding:6rem;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;color:var(--lime);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+.eyebrow::before{content:'';width:25px;height:1px;background:var(--lime)}
+.section-h{font-family:var(--fd);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;line-height:1.05;letter-spacing:-.02em;text-transform:uppercase;color:var(--fg)}
+.section-h .lime{color:var(--lime)}
+.about-body{font-size:.93rem;color:rgba(240,237,232,.55);line-height:1.78;margin:1.5rem 0 2.5rem;max-width:440px}
+.features-list{display:flex;flex-direction:column;gap:.8rem;margin-bottom:3rem}
+.fl-item{display:flex;align-items:center;gap:1rem;padding:.9rem 1.2rem;border:1px solid rgba(240,237,232,.06);position:relative;overflow:hidden;transition:border-color .3s}
+.fl-item:hover{border-color:rgba(180,255,0,.3)}
+.fl-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--lime);transform:scaleY(0);transition:transform .3s}
+.fl-item:hover::before{transform:scaleY(1)}
+.fl-icon{width:2rem;height:2rem;background:rgba(180,255,0,.1);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.fl-text h4{font-family:var(--fd);font-size:.88rem;font-weight:700;color:var(--fg);text-transform:uppercase;letter-spacing:.05em}
+.fl-text p{font-size:.75rem;color:var(--muted)}
+
+/* PROGRAMS */
+.programs{padding:7rem 3rem;background:var(--bg)}
+.sec-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem}
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(240,237,232,.06)}
+.prog-card{background:var(--bg);padding:3rem 2.5rem;position:relative;overflow:hidden;cursor:pointer;transition:background .35s}
+.prog-card:hover{background:var(--mid)}
+.prog-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--lime);transition:width .5s}
+.prog-card:hover::after{width:100%}
+.prog-num{font-family:var(--fd);font-size:4rem;font-weight:800;color:rgba(180,255,0,.06);line-height:1;margin-bottom:1.5rem;transition:color .35s}
+.prog-card:hover .prog-num{color:rgba(180,255,0,.15)}
+.prog-icon{font-size:1.5rem;margin-bottom:1.2rem}
+.prog-name{font-family:var(--fd);font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--fg);margin-bottom:.7rem}
+.prog-body{font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:1.5rem}
+.prog-tag{display:inline-block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);border:1px solid rgba(180,255,0,.25);padding:.3rem .8rem}
+
+/* PARALLAX IMAGE BREAK */
+.parallax-break{position:relative;height:60vh;overflow:hidden}
+.parallax-img{position:absolute;inset:-20%;will-change:transform}
+.parallax-img img{width:100%;height:100%;object-fit:cover;display:block}
+<img src="https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="V16.3 Pulse Gym Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+.parallax-img::after{content:'';position:absolute;inset:0;background:rgba(5,5,5,.6)}
+.parallax-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;z-index:2;padding:2rem}
+.parallax-text h2{font-family:var(--fd);font-size:clamp(3rem,7vw,6rem);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:.95}
+.parallax-text h2 em{font-style:normal;color:var(--lime)}
+
+/* SCHEDULE / CLASSES */
+.schedule{padding:7rem 3rem;background:var(--mid)}
+.class-list{margin-top:4rem;display:flex;flex-direction:column;gap:1px;background:rgba(240,237,232,.05)}
+.class-row{background:var(--mid);display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:2rem;align-items:center;padding:1.8rem 2.5rem;transition:background .25s;cursor:pointer}
+.class-row:hover{background:rgba(180,255,0,.04)}
+.class-row:hover .cr-name{color:var(--lime)}
+.cr-name{font-family:var(--fd);font-size:.98rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--fg);transition:color .25s}
+.cr-trainer{font-size:.78rem;color:var(--muted)}
+.cr-time{font-size:.78rem;color:rgba(240,237,232,.6)}
+.cr-intensity{display:flex;gap:3px}
+.cr-dot{width:8px;height:8px;border-radius:50%;background:rgba(180,255,0,.2)}
+.cr-dot.active{background:var(--lime)}
+.cr-book{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);border:1px solid rgba(180,255,0,.3);padding:.5rem 1.2rem;text-decoration:none;transition:all .2s;white-space:nowrap}
+.cr-book:hover{background:var(--lime);color:var(--bg)}
+
+/* TRAINERS */
+.trainers{padding:7rem 3rem;background:var(--bg)}
+.trainer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:4rem}
+.trainer-card{position:relative;overflow:hidden;aspect-ratio:.75/1;background:var(--gray)}
+.trainer-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.trainer-card:hover img{transform:scale(1.06)}
+<img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="Procedure Result" style="width:100%;height:100%;object-fit:cover;"/>
+.trainer-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.88) 0%,transparent 55%)}
+.trainer-info{position:absolute;bottom:0;left:0;right:0;padding:1.8rem}
+.t-role{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);margin-bottom:.4rem}
+.t-name{font-family:var(--fd);font-size:1.1rem;font-weight:800;text-transform:uppercase;color:var(--fg)}
+.t-spec{font-size:.72rem;color:rgba(240,237,232,.5)}
+
+/* TESTIMONIALS */
+.testimonials{padding:7rem 3rem;background:var(--mid);overflow:hidden}
+.testi-inner{max-width:1300px;margin:0 auto}
+.testi-marquee{display:flex;gap:1.5rem;margin-top:4rem;overflow:hidden}
+.testi-track{display:flex;gap:1.5rem;animation:tmove 35s linear infinite}
+.testi-card{min-width:380px;background:var(--bg);padding:2.5rem;border:1px solid rgba(240,237,232,.06);flex-shrink:0;transition:border-color .3s}
+.testi-card:hover{border-color:rgba(180,255,0,.2)}
+.tc-stars{color:var(--lime);letter-spacing:.08em;font-size:.75rem;margin-bottom:1rem}
+.tc-text{font-family:var(--fd);font-size:.95rem;font-weight:400;color:var(--fg);line-height:1.6;margin-bottom:1.3rem}
+.tc-who{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.tc-who strong{color:var(--lime);font-weight:400}
+@keyframes tmove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* PRICING */
+.pricing{padding:7rem 3rem;background:var(--bg)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.price-card{border:1px solid rgba(240,237,232,.08);padding:3rem;position:relative;overflow:hidden;transition:border-color .35s}
+.price-card:hover{border-color:rgba(180,255,0,.25)}
+.price-card.featured{border-color:var(--lime);background:rgba(180,255,0,.03)}
+.price-tag{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);margin-bottom:1.2rem}
+.price-name{font-family:var(--fd);font-size:1.3rem;font-weight:800;text-transform:uppercase;color:var(--fg);margin-bottom:.5rem}
+.price-amount{font-family:var(--fd);font-size:3rem;font-weight:800;color:var(--fg);line-height:1;margin-bottom:.3rem}
+.price-amount sup{font-size:1.2rem;vertical-align:top;margin-top:.5rem}
+.price-period{font-size:.72rem;color:var(--muted);margin-bottom:2rem}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2.5rem}
+.price-features li{font-size:.82rem;color:rgba(240,237,232,.6);display:flex;align-items:center;gap:.7rem}
+.price-features li::before{content:'→';color:var(--lime);font-size:.75rem;flex-shrink:0}
+.price-features li.off{color:var(--muted)}
+.price-features li.off::before{content:'—';color:var(--muted)}
+
+/* CTA */
+.cta-section{position:relative;padding:9rem 3rem;overflow:hidden;text-align:center;background:var(--bg)}
+.cta-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:clamp(8rem,18vw,18rem);font-weight:800;color:rgba(180,255,0,.03);text-transform:uppercase;white-space:nowrap;pointer-events:none;letter-spacing:-.03em}
+.cta-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.cta-h{font-family:var(--fd);font-size:clamp(3rem,6vw,5.5rem);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;color:var(--fg);line-height:.95;margin-bottom:1.5rem}
+.cta-h .lime{color:var(--lime)}
+.cta-sub{font-size:.95rem;color:rgba(240,237,232,.5);margin-bottom:3rem;line-height:1.7}
+.cta-form{display:flex;gap:.8rem;max-width:440px;margin:0 auto}
+.cta-input{flex:1;background:rgba(240,237,232,.06);border:1px solid rgba(240,237,232,.12);color:var(--fg);font-family:var(--fb);font-size:.85rem;padding:.95rem 1.3rem;outline:none;transition:border-color .2s}
+.cta-input::placeholder{color:var(--muted)}
+.cta-input:focus{border-color:var(--lime)}
+
+/* FOOTER */
+footer{background:#000;padding:5rem 3rem;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:4rem;border-top:1px solid rgba(180,255,0,.1)}
+.fb-brand{display:flex;flex-direction:column;gap:.8rem}
+.fb-brand p{font-size:.8rem;color:rgba(240,237,232,.35);line-height:1.7;max-width:240px}
+.fb-col h4{font-family:var(--fd);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:1.2rem}
+.fb-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.fb-col ul a{font-size:.78rem;color:rgba(240,237,232,.38);text-decoration:none;transition:color .2s}
+.fb-col ul a:hover{color:var(--fg)}
+.fbar{background:#000;padding:1.5rem 3rem;border-top:1px solid rgba(240,237,232,.04);display:flex;justify-content:space-between;font-size:.65rem;color:rgba(240,237,232,.25)}
+
+@media(max-width:960px){
+  nav{padding:1rem 1.5rem}.nav-links{display:none}
+  .hero-content{grid-template-columns:1fr}.hero-right{display:none}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .about{grid-template-columns:1fr}.about-visual{height:55vw}.about-text{padding:3rem 1.5rem}
+  .programs{padding:5rem 1.5rem}.prog-grid{grid-template-columns:1fr}
+  .schedule{padding:5rem 1.5rem}.class-row{grid-template-columns:1fr 1fr;gap:1rem}
+  .cr-time,.cr-intensity{display:none}
+  .trainers{padding:5rem 1.5rem}.trainer-grid{grid-template-columns:1fr 1fr}
+  .testimonials{padding:5rem 1.5rem}
+  .pricing{padding:5rem 1.5rem}.price-grid{grid-template-columns:1fr}
+  .cta-section{padding:6rem 1.5rem}
+  .cta-form{flex-direction:column}
+  footer{grid-template-columns:1fr;gap:2.5rem;padding:3.5rem 1.5rem}
+  .fbar{padding:1.2rem 1.5rem;flex-direction:column;gap:.3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a class="logo" href="#">V16.3 Pulse Gym</a>
+  <ul class="nav-links">
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Reserve Now</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-big-text" aria-hidden="true">LIFT</div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="label">Crossfit & Wellness · Raleigh</p>
+      <h1 id="hero-h1">Your Body.<br/>Your <span class="lime">Power.</span></h1>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-row">
+        <div class="hstat"><div class="n">2,000+</div><div class="l">Members</div></div>
+        <div class="hstat"><div class="n">40+</div><div class="l">Programs</div></div>
+        <div class="hstat"><div class="n">4.9★</div><div class="l">Rating</div></div>
+      </div>
+      <p class="hero-desc">Industry-leading results, guaranteed. Elite coaching. Cutting-edge equipment. Results that speak louder than excuses.</p>
+      <div class="hero-btns">
+        <a class="btn-lime" href="#contact">Reserve Now</a>
+        <a class="btn-outline" href="#programs">{{SECONDARY_CTA}}</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>V16.3 Pulse Gym</span><span class="dot">✦</span>
+    <span>Crossfit & Wellness</span><span class="dot">✦</span>
+    <span>Raleigh</span><span class="dot">✦</span>
+    <span>Train Harder</span><span class="dot">✦</span>
+    <span>Get Results</span><span class="dot">✦</span>
+    <span>Elite Coaching</span><span class="dot">✦</span>
+    <span>V16.3 Pulse Gym</span><span class="dot">✦</span>
+    <span>Crossfit & Wellness</span><span class="dot">✦</span>
+    <span>Raleigh</span><span class="dot">✦</span>
+    <span>Train Harder</span><span class="dot">✦</span>
+    <span>Get Results</span><span class="dot">✦</span>
+    <span>Elite Coaching</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="sb-item"><div class="sb-n">2,000+</div><div class="sb-l">Active Members</div></div>
+  <div class="sb-item"><div class="sb-n">40+</div><div class="sb-l">Weekly Classes</div></div>
+  <div class="sb-item"><div class="sb-n">12yr</div><div class="sb-l">In Raleigh</div></div>
+  <div class="sb-item"><div class="sb-n">98%</div><div class="sb-l">Retention Rate</div></div>
+</div>
+
+<div class="about" id="about">
+  <div class="about-visual">
+    <img src="https://images.unsplash.com/photo-1643660527070-03ed14b41677?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="About V16.3 Pulse Gym" style="width:100%;height:100%;object-fit:cover;"/>
+    <div class="about-num" aria-hidden="true">01</div>
+  </div>
+  <div class="about-text">
+    <p class="eyebrow">Who We Are</p>
+    <h2 class="section-h">Not Just a Gym.<br/>A <span class="lime">System.</span></h2>
+    <p class="about-body">Industry-leading results, guaranteed. At V16.3 Pulse Gym, we've engineered every detail of your training environment — from the programming to the playlist — to extract maximum performance from every session.</p>
+    <div class="features-list">
+      <div class="fl-item"><div class="fl-icon">⚡</div><div class="fl-text"><h4>Precision Programming</h4><p>Every program is science-backed and results-driven.</p></div></div>
+      <div class="fl-item"><div class="fl-icon">🏆</div><div class="fl-text"><h4>World-Class Coaching</h4><p>Certified coaches with elite performance backgrounds.</p></div></div>
+      <div class="fl-item"><div class="fl-icon">📊</div><div class="fl-text"><h4>Performance Tracking</h4><p>Real-time metrics and monthly progress reports.</p></div></div>
+      <div class="fl-item"><div class="fl-icon">🥗</div><div class="fl-text"><h4>Nutrition Support</h4><p>Meal planning integrated with your training cycles.</p></div></div>
+    </div>
+    <a class="btn-lime" href="#contact">Reserve Now</a>
+  </div>
+</div>
+
+<section class="programs" id="programs">
+  <div class="sec-top">
+    <div>
+      <p class="eyebrow">What We Offer</p>
+      <h2 class="section-h">Choose Your<br/><span class="lime">Battle Plan.</span></h2>
+    </div>
+    <a class="btn-outline" href="#schedule">Full Schedule →</a>
+  </div>
+  <div class="prog-grid">
+    <div class="prog-card">
+      <div class="prog-num">01</div>
+      <div class="prog-icon">🔥</div>
+      <h3 class="prog-name">Crossfit & Wellness</h3>
+      <p class="prog-body">Premium industry solutions delivered with total precision. High-intensity programming built to forge strength and burn fat simultaneously. No filler, all results.</p>
+      <span class="prog-tag">High Intensity</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-num">02</div>
+      <div class="prog-icon">💪</div>
+      <h3 class="prog-name">Strength & Power</h3>
+      <p class="prog-body">Progressive overload protocols designed by strength coaches with national competition experience.</p>
+      <span class="prog-tag">Strength</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-num">03</div>
+      <div class="prog-icon">🧘</div>
+      <h3 class="prog-name">Mobility & Recovery</h3>
+      <p class="prog-body">Because longevity matters. Deep tissue mobility, yoga flows, and active recovery sessions.</p>
+      <span class="prog-tag">Recovery</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-num">04</div>
+      <div class="prog-icon">🏃</div>
+      <h3 class="prog-name">Cardio Performance</h3>
+      <p class="prog-body">Zone training, sprint intervals, and VO2 max improvement sessions for elite conditioning.</p>
+      <span class="prog-tag">Cardio</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-num">05</div>
+      <div class="prog-icon">🎯</div>
+      <h3 class="prog-name">Personal Training</h3>
+      <p class="prog-body">One-on-one with a dedicated coach. Your goals, your pace, your transformation.</p>
+      <span class="prog-tag">1-on-1</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-num">06</div>
+      <div class="prog-icon">🌙</div>
+      <h3 class="prog-name">Early Morning Grind</h3>
+      <p class="prog-body">5AM club. The session that separates the serious from the serious-ish. Raleigh's finest.</p>
+      <span class="prog-tag">5AM Classes</span>
+    </div>
+  </div>
+</section>
+
+<div class="parallax-break">
+  <div class="parallax-img" id="pb1">
+    <img src="https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="V16.3 Pulse Gym Hero" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+  </div>
+  <div class="parallax-text">
+    <h2>"The Only <em>Bad Workout</em><br/>Is the One You Missed."</h2>
+  </div>
+</div>
+
+<section class="schedule" id="schedule">
+  <p class="eyebrow">This Week</p>
+  <h2 class="section-h">Class <span class="lime">Schedule.</span></h2>
+  <div class="class-list">
+    <div class="class-row">
+      <div class="cr-name">Crossfit & Wellness</div>
+      <div class="cr-trainer">Coach Marcus</div>
+      <div class="cr-time">Mon · 6:00 AM</div>
+      <div class="cr-intensity"><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot"></div></div>
+      <a class="cr-book" href="#contact">Book →</a>
+    </div>
+    <div class="class-row">
+      <div class="cr-name">Strength & Power</div>
+      <div class="cr-trainer">Coach Ama</div>
+      <div class="cr-time">Tue · 7:30 AM</div>
+      <div class="cr-intensity"><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div></div>
+      <a class="cr-book" href="#contact">Book →</a>
+    </div>
+    <div class="class-row">
+      <div class="cr-name">Mobility Flow</div>
+      <div class="cr-trainer">Coach Nana</div>
+      <div class="cr-time">Wed · 8:00 AM</div>
+      <div class="cr-intensity"><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot"></div><div class="cr-dot"></div><div class="cr-dot"></div></div>
+      <a class="cr-book" href="#contact">Book →</a>
+    </div>
+    <div class="class-row">
+      <div class="cr-name">Cardio Burn</div>
+      <div class="cr-trainer">Coach Kofi</div>
+      <div class="cr-time">Thu · 6:30 AM</div>
+      <div class="cr-intensity"><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot"></div></div>
+      <a class="cr-book" href="#contact">Book →</a>
+    </div>
+    <div class="class-row">
+      <div class="cr-name">HIIT Ignite</div>
+      <div class="cr-trainer">Coach Selorm</div>
+      <div class="cr-time">Fri · 5:45 AM</div>
+      <div class="cr-intensity"><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div></div>
+      <a class="cr-book" href="#contact">Book →</a>
+    </div>
+    <div class="class-row">
+      <div class="cr-name">Weekend Warrior</div>
+      <div class="cr-trainer">All Coaches</div>
+      <div class="cr-time">Sat · 8:00 AM</div>
+      <div class="cr-intensity"><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div><div class="cr-dot active"></div></div>
+      <a class="cr-book" href="#contact">Book →</a>
+    </div>
+  </div>
+</section>
+
+<section class="trainers" id="trainers">
+  <div class="sec-top">
+    <div>
+      <p class="eyebrow">The Team</p>
+      <h2 class="section-h">Coached By the <span class="lime">Best.</span></h2>
+    </div>
+  </div>
+  <div class="trainer-grid">
+    <div class="trainer-card">
+      <img src="https://images.unsplash.com/photo-1643660527070-03ed14b41677?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="Procedure Result" style="width:100%;height:100%;object-fit:cover;"/>
+      <div class="trainer-info">
+        <div class="t-role">Head Coach</div>
+        <div class="t-name">Marcus O.</div>
+        <div class="t-spec">HIIT · Strength</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-info">
+        <div class="t-role">Performance Coach</div>
+        <div class="t-name">Ama K.</div>
+        <div class="t-spec">Powerlifting · Nutrition</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-info">
+        <div class="t-role">Wellness Coach</div>
+        <div class="t-name">Nana A.</div>
+        <div class="t-spec">Mobility · Yoga</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-info">
+        <div class="t-role">Cardio Specialist</div>
+        <div class="t-name">Kofi M.</div>
+        <div class="t-spec">Endurance · Sprint</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="testi-inner">
+    <p class="eyebrow">Real Results</p>
+    <h2 class="section-h">They Did It.<br/>Now <span class="lime">You Go.</span></h2>
+  </div>
+  <div class="testi-marquee" style="margin-top:3rem">
+    <div class="testi-track">
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"Lost 18kg in 5 months. V16.3 Pulse Gym changed my entire relationship with fitness. The coaches actually care."</p><p class="tc-who"><strong>Kwame D.</strong> — Member since 2023</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"Best facility in Raleigh period. The programming is intelligent, not just exhausting for the sake of it."</p><p class="tc-who"><strong>Abena F.</strong> — Competitive Athlete</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"I tried 4 gyms before this. None came close. The 5AM community alone is worth every cedi."</p><p class="tc-who"><strong>Isaac N.</strong> — 18 Months Strong</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"My physique, energy, and confidence have all transformed. The coaches at V16.3 Pulse Gym are elite."</p><p class="tc-who"><strong>Efua B.</strong> — Personal Training</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"Lost 18kg in 5 months. V16.3 Pulse Gym changed my entire relationship with fitness. The coaches actually care."</p><p class="tc-who"><strong>Kwame D.</strong> — Member since 2023</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"Best facility in Raleigh period. The programming is intelligent, not just exhausting for the sake of it."</p><p class="tc-who"><strong>Abena F.</strong> — Competitive Athlete</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"I tried 4 gyms before this. None came close. The 5AM community alone is worth every cedi."</p><p class="tc-who"><strong>Isaac N.</strong> — 18 Months Strong</p></div>
+      <div class="testi-card"><div class="tc-stars">★★★★★</div><p class="tc-text">"My physique, energy, and confidence have all transformed. The coaches at V16.3 Pulse Gym are elite."</p><p class="tc-who"><strong>Efua B.</strong> — Personal Training</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <p class="eyebrow">Investment</p>
+  <h2 class="section-h">Pick Your <span class="lime">Level.</span></h2>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-tag">Starter</div>
+      <div class="price-name">Basic Access</div>
+      <div class="price-amount"><sup>$</sup>49</div>
+      <div class="price-period">per month</div>
+      <ul class="price-features">
+        <li>Full Gym Access</li>
+        <li>2 Group Classes/Week</li>
+        <li>App Access</li>
+        <li class="off">Personal Coaching</li>
+        <li class="off">Nutrition Plan</li>
+      </ul>
+      <a class="btn-outline" href="#contact" style="display:block;text-align:center;padding:.9rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--fg);border:1px solid rgba(240,237,232,.2);transition:all .2s">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-tag">Most Popular ✦</div>
+      <div class="price-name">Elite Member</div>
+      <div class="price-amount"><sup>$</sup>89</div>
+      <div class="price-period">per month</div>
+      <ul class="price-features">
+        <li>Full Gym Access</li>
+        <li>Unlimited Group Classes</li>
+        <li>App Access + Tracking</li>
+        <li>Monthly Coach Check-In</li>
+        <li class="off">Dedicated Personal Coach</li>
+      </ul>
+      <a class="btn-lime" href="#contact" style="display:block;text-align:center;padding:.9rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none">Join Now</a>
+    </div>
+    <div class="price-card">
+      <div class="price-tag">Performance</div>
+      <div class="price-name">Pro Athlete</div>
+      <div class="price-amount"><sup>$</sup>149</div>
+      <div class="price-period">per month</div>
+      <ul class="price-features">
+        <li>Full Gym Access 24/7</li>
+        <li>Unlimited All Classes</li>
+        <li>Full App Suite</li>
+        <li>Dedicated Personal Coach</li>
+        <li>Custom Nutrition Plan</li>
+      </ul>
+      <a class="btn-outline" href="#contact" style="display:block;text-align:center;padding:.9rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--fg);border:1px solid rgba(240,237,232,.2);transition:all .2s">Go Pro</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="cta-bg-text" aria-hidden="true">START</div>
+  <div class="cta-inner">
+    <p class="eyebrow" style="justify-content:center;margin-bottom:1rem">Free Trial</p>
+    <h2 class="cta-h">First Session<br/>Is On <span class="lime">Us.</span></h2>
+    <p class="cta-sub">Premium industry solutions delivered with total precision. Walk in today. No commitment, no contract. Just results. Serving Raleigh.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="text" placeholder="Your name"/>
+      <input class="cta-input" type="tel" placeholder="Phone number"/>
+      <a class="btn-lime" href="tel:" style="white-space:nowrap;padding:.95rem 1.8rem;text-decoration:none;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600">Claim It →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb-brand">
+    <a class="logo" href="#">V16.3 Pulse Gym</a>
+    <p>Industry-leading results, guaranteed. The premier fitness destination in Raleigh.</p>
+  </div>
+  <div class="fb-col"><h4>Programs</h4><ul><li><a href="#">Crossfit & Wellness</a></li><li><a href="#">Strength</a></li><li><a href="#">Cardio</a></li><li><a href="#">Mobility</a></li><li><a href="#">Personal Training</a></li></ul></div>
+  <div class="fb-col"><h4>Gym</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Our Coaches</a></li><li><a href="#">Facilities</a></li><li><a href="#">Schedule</a></li></ul></div>
+  <div class="fb-col"><h4>Join Us</h4><ul><li><a href="#">Membership</a></li><li><a href="#">Free Trial</a></li><li><a href="#">Raleigh</a></li><li><a href="#">Contact</a></li></ul></div>
+</footer>
+<div class="fbar"><span>© 2025 V16.3 Pulse Gym · Raleigh</span><span>Fitness & Performance · All Rights Reserved</span></div>
+
+<script>
+// Cursor
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button,.prog-card,.class-row,.trainer-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='18px';cursor.style.height='18px';ring.style.width='60px';ring.style.height='60px'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='40px';ring.style.height='40px'});
+});
+
+// GSAP
+window.addEventListener('load',function(){
+  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined')return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero parallax
+  gsap.to('#pb1',{yPercent:30,ease:'none',scrollTrigger:{trigger:'.parallax-break',start:'top bottom',end:'bottom top',scrub:true}});
+
+  // Hero text reveal
+  gsap.set(['.label','.hero-left h1','.hero-desc','.hero-btns'],{y:50,opacity:0});
+  gsap.to(['.label','.hero-left h1','.hero-desc','.hero-btns'],{y:0,opacity:1,duration:1,stagger:.12,ease:'power3.out',delay:.2});
+
+  // Stats bar count-up feel
+  gsap.from('.sb-item',{opacity:0,y:30,stagger:.08,duration:.8,scrollTrigger:{trigger:'.stats-bar',start:'top 85%'}});
+
+  // About section
+  gsap.from('.about-visual',{x:-50,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.about',start:'top 75%'}});
+  gsap.from('.about-text',{x:50,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.about',start:'top 75%'}});
+
+  // Programs
+  gsap.from('.prog-card',{opacity:0,y:40,stagger:.1,duration:.8,ease:'power2.out',scrollTrigger:{trigger:'.prog-grid',start:'top 80%'}});
+
+  // Class rows stagger
+  gsap.from('.class-row',{opacity:0,x:-30,stagger:.07,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'.class-list',start:'top 80%'}});
+
+  // Trainer cards
+  gsap.from('.trainer-card',{opacity:0,scale:.95,stagger:.1,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.trainer-grid',start:'top 80%'}});
+
+  // Price cards
+  gsap.from('.price-card',{opacity:0,y:40,stagger:.12,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.price-grid',start:'top 80%'}});
+
+  // CTA bg text drift
+  gsap.to('.cta-bg-text',{x:-80,ease:'none',scrollTrigger:{trigger:'.cta-section',start:'top bottom',end:'bottom top',scrub:true}});
+
+  // Feature list items
+  gsap.from('.fl-item',{opacity:0,x:20,stagger:.08,duration:.6,scrollTrigger:{trigger:'.features-list',start:'top 80%'}});
+});
+</script>
+</body>
+</html>
