@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Firm | Premium Dental in Dallas, PROD</title>
+    <meta name="description" content="The Firm offers premium Dental services in Dallas, PROD. Get a free estimate today!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --accent: #6c63ff;
+            --accent-glow: rgba(108, 99, 255, 0.3);
+            --gold: #fbbf24;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background:
+                radial-gradient(ellipse at 20% 50%, var(--accent-glow) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(251,191,36,0.1) 0%, transparent 40%),
+                var(--bg-dark);
+        }
+        .hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><rect fill="none" width="60" height="60"/><path d="M0 30h60M30 0v60" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></svg>');
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(108,99,255,0.15);
+            border: 1px solid rgba(108,99,255,0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ─── CTA ─── */
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 24px var(--accent-glow);
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--accent-glow);
+        }
+        .cta-secondary {
+            display: inline-block;
+            color: var(--text-muted);
+            margin-left: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* ─── SECTIONS ─── */
+        section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* ─── FEATURES ─── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108,99,255,0.3);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ─── TESTIMONIALS ─── */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        .stars { color: var(--gold); font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .testimonial-card p { font-style: italic; color: var(--text-muted); margin-bottom: 1rem; }
+        .testimonial-card strong { color: var(--text); }
+
+        /* ─── CTA SECTION ─── */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background:
+                radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 60%),
+                var(--bg-dark);
+            border-radius: 24px;
+            margin: 3rem auto;
+            max-width: 900px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        @media (max-width: 768px) {
+            .cta-secondary { display: block; margin: 1rem 0 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Dallas's Trusted Pros</div>
+            <h1>Transform Your Garage With <span>Premium Dental</span></h1>
+            <p>We bring durability, beauty, and lasting value to every floor we touch. Serving Dallas and surrounding areas in PROD.</p>
+            <a href="#contact" class="cta-btn">Get Your Free Estimate →</a>
+            <a href="#services" class="cta-secondary">See Our Work ↓</a>
+        </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section id="services">
+        <h2 class="section-title">Why Choose Us</h2>
+        <p class="section-subtitle">We combine cutting-edge materials with expert craftsmanship to deliver floors that last a lifetime.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Industrial-Grade Coating</h3>
+                <p>Our coatings withstand heavy traffic, chemicals, and extreme temperatures with ease.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>1-Day Installation</h3>
+                <p>Most projects completed in a single day. Your garage is back in action by tomorrow.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Custom Designs</h3>
+                <p>Choose from metallic, flake, solid, or custom patterns to match your style.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>15-Year Warranty</h3>
+                <p>We stand behind every floor we install with a comprehensive warranty.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section>
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p class="section-subtitle">Real results from real homeowners in Dallas.</p>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Absolutely transformed our garage. The team was professional, fast, and the result looks incredible."</p>
+                <strong>— Happy Homeowner, Dallas</strong>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Best investment we've made for our home. The floor still looks brand new after 2 years."</p>
+                <strong>— Satisfied Customer, Dallas</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section" id="contact">
+        <h2 class="section-title">Ready to Upgrade Your Floor?</h2>
+        <p class="section-subtitle" style="margin: 0 auto 2rem;">Get a free, no-obligation estimate today. We'll come to you.</p>
+        <a href="tel:5550000000" class="cta-btn">📞 Call For Free Estimate</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 The Firm · Dallas, PROD · All rights reserved.</p>
+    </footer>
+<script src="https://kinsley-nonconducting-faustino.ngrok-free.dev/tracking.js" data-lead-id="{{LEAD_ID}}"></script>
+</body>
+</html>
